@@ -20,9 +20,9 @@ public class UserLoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if(session.getAttribute("username") == null
-                && !req.getRequestURI().endsWith("/authen/login")
-                && (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("USER"))){
+        if((session.getAttribute("username") == null
+                && !req.getRequestURI().endsWith("/authen/login"))
+                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("USER"))){
             res.sendRedirect("authen/login");
         } else {
             chain.doFilter(request, response);
