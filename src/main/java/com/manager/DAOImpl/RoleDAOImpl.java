@@ -3,7 +3,6 @@ package com.manager.DAOImpl;
 import com.manager.DAO.RoleDAO;
 import com.manager.config.DatabaseSource;
 import com.manager.entity.Role;
-import com.manager.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
 
 @WebServlet(urlPatterns = "/authen/login")
 public class AuthenCtrl extends HttpServlet {
@@ -38,7 +39,7 @@ public class AuthenCtrl extends HttpServlet {
             flag = 1;
         }
         if(flag != 0 && user.getPassword().equals(password) && role != null){
-            session.setAttribute("role", role);
+            session.setAttribute("role", role.getRoleCode().toUpperCase(Locale.ROOT));
             session.setAttribute("username", username);
             if(role.getRoleCode().equalsIgnoreCase("admin")){
                 resp.sendRedirect("/manager_hotel_war/admin");
