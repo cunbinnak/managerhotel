@@ -29,7 +29,4 @@ public class Customer  extends EntityBase {
     @Column(name = "type")
     private String type;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private UserCustomerRel userCustomerRel;
 }

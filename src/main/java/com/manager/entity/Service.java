@@ -21,9 +21,5 @@ public class Service  extends EntityBase {
     @Column(name = "unit")
     private String unit;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<BillServiceRels> billServiceRels;
-
 
 }

@@ -29,8 +29,5 @@ public class Room  extends EntityBase {
     @Column(name = "status")
     private String status;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<BillRoomRel> billRoomRel;
 
 }

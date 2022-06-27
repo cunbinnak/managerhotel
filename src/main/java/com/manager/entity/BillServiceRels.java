@@ -23,11 +23,4 @@ public class BillServiceRels  extends EntityBase {
     @Column(name = "unit")
     private String unit;
 
-    @ManyToOne
-    @JoinColumn(name = "bill_id")
-    private Bill bill;
-
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
 }

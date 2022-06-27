@@ -23,10 +23,4 @@ public class BillRoomRel  extends EntityBase {
     @Column(name = "in_date")
     private Timestamp inDate;
 
-    @ManyToOne
-    @JoinColumn(name = "bill_id")
-    private Bill bill;
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
 }

@@ -28,11 +28,4 @@ public class Bill  extends EntityBase {
     @Column(name = "status")
     private String status;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<BillRoomRel> billRoomRel;
-
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<BillServiceRels> billServiceRels;
 }
