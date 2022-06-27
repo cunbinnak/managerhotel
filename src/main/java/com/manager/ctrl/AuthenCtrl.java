@@ -2,6 +2,7 @@ package com.manager.ctrl;
 
 import com.manager.entity.*;
 import com.manager.serviceImpl.UserServiceImpl;
+import com.mysql.cj.util.StringUtils;
 import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
@@ -84,8 +85,6 @@ public class AuthenCtrl extends HttpServlet {
         List<Role> roles = new ArrayList<>();
         User user = null;
         Customer customer = new Customer();
-        UserRoleRels userRoleRels = new UserRoleRels();
-        UserCustomerRel userCustomerRel = new UserCustomerRel();
         try {
             roles.addAll(userService.findAllRole());
             //user
@@ -96,36 +95,29 @@ public class AuthenCtrl extends HttpServlet {
             String customerId = String.valueOf(UUID.randomUUID());
             String name = request.getParameter("name");
             Date birthDay = null;
-            try {
-                birthDay = new SimpleDateFormat("dd-mm-yyyy").parse(request.getParameter("birthDay"));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(request.getParameter("birthDay") != null && !request.getParameter("birthDay").isEmpty()){
+                    birthDay = new SimpleDateFormat("dd-mm-yyyy").parse(request.getParameter("birthDay"));
             }
             String address = request.getParameter("address");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String type = "1";
             // user customer
-            String userCusId = String.valueOf(UUID.randomUUID());
             // user role
+            String roleCode = "USER";
             String roleId = "";
             for (Role role : roles) {
-                if (role.getRoleCode().equalsIgnoreCase("USER")) {
+                if (role.getRoleCode().equalsIgnoreCase(roleCode)) {
                     roleId = role.getId();
                 }
             }
             // check user có tồn tại hay không
             user = userService.findByUserName(username);
-            if (user != null || user.getUsername() != null) {
+            if (user != null && user.getUsername() != null) {
                 request.setAttribute("message", "Tài khoản đã tồn tại");
                 request.getRequestDispatcher("/views/authen/register.jsp").forward(request, response);
             }
-            //create user
-            User user1 = new User();
-            user1.setId(userId);
-            user1.setUsername(username);
-            user1.setPassword(password);
-            userService.create(user1);
+
             //create customer
             customer.setName(name);
             customer.setBirthDay(birthDay);
@@ -135,21 +127,23 @@ public class AuthenCtrl extends HttpServlet {
             customer.setPhone(phone);
             customer.setType(type);
             userService.createCustomer(customer);
-            // create user customer
-            userCustomerRel.setId(userCusId);
-            userCustomerRel.setCustomerId(customerId);
-            userCustomerRel.setUserId(userId);
-            userService.createUserCustomer(userCustomerRel);
-            // create user role
-            userRoleRels.setId(String.valueOf(UUID.randomUUID()));
-            userRoleRels.setUserId(userId);
-            userRoleRels.setRoleId(roleId);
-            userService.createUserRole(userRoleRels);
+            //create user
+            User user1 = new User();
+            user1.setId(userId);
+            user1.setUsername(username);
+            user1.setPassword(password);
+            user1.setCustomerId(customerId);
+            user1.setRoleCode(roleCode);
+            user1.setRoleId(roleId);
+            user1.setIsDeleted(false);
+            userService.create(user1);
             request.setAttribute("message", "Đăng ký thành công, vui lòng đăng nhập lại");
-            response.sendRedirect("/manager_hotel_war/authen/login");
+            response.sendRedirect("/managerhotel_war/authen/login");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

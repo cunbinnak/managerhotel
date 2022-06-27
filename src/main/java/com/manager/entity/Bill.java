@@ -6,14 +6,22 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @MappedSuperclass
-public class Bill  extends EntityBase {
+public class Bill
+        extends EntityBase
+{
+
+//    @Id
+//    @Column(name = "id", length = 36)
+//    private String id;
+//
+//    @Column(name = "created_user")
+//    private String createdUser;
 
     @Column(name = "invoice_date")
     private Timestamp invoiceDate;
@@ -21,11 +29,15 @@ public class Bill  extends EntityBase {
     private Timestamp checkinDate;
     @Column(name = "checkout_date")
     private Timestamp checkoutDate;
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "customer_id")
+    private String customerId;
     @Column(name = "people_number")
     private Integer peopleNumber;
     @Column(name = "status")
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
 }

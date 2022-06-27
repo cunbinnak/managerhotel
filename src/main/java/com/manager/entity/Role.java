@@ -12,7 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "role")
 @MappedSuperclass
-public class Role extends EntityBase{
+public class Role
+        extends EntityBase
+{
+
+//    @Id
+//    @Column(name = "id", length = 36)
+//    private String id;
+//
+//    @Column(name = "created_user")
+//    private String createdUser;
 
     @Column(name = "role_code")
     private String roleCode;

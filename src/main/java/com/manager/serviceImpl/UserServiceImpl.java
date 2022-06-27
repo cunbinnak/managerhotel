@@ -1,7 +1,5 @@
 package com.manager.serviceImpl;
 
-import com.manager.DAO.UserCustomerRelDAO;
-import com.manager.DAO.UserRoleDAO;
 import com.manager.DAOImpl.*;
 import com.manager.entity.*;
 import com.manager.service.UserService;
@@ -53,16 +51,5 @@ public class UserServiceImpl implements UserService {
         customerDAO.create(customer);
     }
 
-    @Override
-    public void createUserCustomer(UserCustomerRel userCustomerRel) throws SQLException {
-        UserCustomerRelDAOImpl userCustomerRelDAO = new UserCustomerRelDAOImpl();
-        userCustomerRelDAO.create(userCustomerRel);
-    }
-
-    @Override
-    public void createUserRole(UserRoleRels userRoleRels) throws SQLException {
-        UserRoleDAOImpl userRoleDAO = new UserRoleDAOImpl();
-        userRoleDAO.create(userRoleRels);
-    }
 
 }

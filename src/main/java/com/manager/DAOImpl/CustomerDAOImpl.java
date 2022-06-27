@@ -12,7 +12,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void create(Customer customer) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`customer` (`id`, `created_user`, `name`, `birth_day`, `address`, `email`, `phone`, `type`) VALUES (?, ?, ?, ?, ?, ? ,?, ?)";
+        String query = "INSERT INTO `managerhotel`.`customer` (`id`, `created_user`, `name`, `birth_day`, `address`, `email`, `phone_number`, `type`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection =  databaseSource.getDatasource();
         CallableStatement prepare = connection.prepareCall(query);
         try{
@@ -24,6 +24,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             prepare.setString(6, customer.getEmail());
             prepare.setString(7, customer.getPhone());
             prepare.setString(8, customer.getType());
+            prepare.setBoolean(9, false);
             prepare.execute();
         }catch (SQLException e) {
             e.printStackTrace();

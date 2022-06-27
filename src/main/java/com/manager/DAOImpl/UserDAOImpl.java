@@ -15,7 +15,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void createUser(User user) throws SQLException {
-        String query = "INSERT INTO user (`id`, `created_user`, `username`, `password`) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO `managerhotel`.`user` (`id`, `created_user`, `username`, `password`, `role_code`, `customer_id`, `is_deleted`, `role_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
@@ -23,6 +23,10 @@ public class UserDAOImpl implements UserDAO {
             prepare.setString(2, "SYSTEM");
             prepare.setString(3, user.getUsername());
             prepare.setString(4, user.getPassword());
+            prepare.setString(5, user.getRoleCode());
+            prepare.setString(6, user.getCustomerId());
+            prepare.setBoolean(7, false);
+            prepare.setString(8, user.getRoleId());
             prepare.execute();
         }catch (SQLException e) {
             e.printStackTrace();

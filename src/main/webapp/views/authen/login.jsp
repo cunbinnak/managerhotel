@@ -156,7 +156,7 @@
             <button class="submit_class" type="submit" form="login_form" onclick="return validarLogin()">Đăng nhập</button>
         </div>
         <div class="info_div">
-            <p>Bạn đã có tài khoản chưa? <a href="<c:url value='/register'/>">Đăng ký ngay!</a></p>
+            <p>Bạn đã có tài khoản chưa? <a href="<c:url value='/authen/register'/>">Đăng ký ngay!</a></p>
         </div>
     </form>
 </main>
