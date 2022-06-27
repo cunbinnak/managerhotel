@@ -18,6 +18,7 @@ public class UserRoleRels extends EntityBase{
     @Column(name = "user_id")
     private String userId;
 
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

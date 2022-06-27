@@ -4,9 +4,9 @@ import com.manager.DAO.UserDAO;
 import com.manager.config.DatabaseSource;
 import com.manager.entity.User;
 
-import java.security.Security;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -39,8 +39,22 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUser(User user) {
-        return null;
+    public User getUser(String username) {
+        User userDto = new User();
+        String query = "select * from user where username = ?";
+        try (Connection connection = jdbcConnect.openConnect();
+             PreparedStatement prepare = connection.prepareStatement(query)){
+            prepare.setString(1, username);
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()){
+                userDto.setUsername(rs.getString("username"));
+                userDto.setPassword(rs.getString("password"));
+                userDto.setId(rs.getString("id"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userDto;
     }
 
     @Override

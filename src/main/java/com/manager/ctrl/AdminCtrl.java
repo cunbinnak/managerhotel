@@ -13,10 +13,13 @@ public class AdminCtrl extends HttpServlet {
 
     public static long serialVersionUID = -8899517213540670829L;
 
+    public AdminCtrl(){
+        super();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("/view/authen/login.jsp");
-        super.doGet(req, resp);
+        req.getRequestDispatcher("/views/admin/AdminController.jsp").forward(req, resp);
     }
 
 

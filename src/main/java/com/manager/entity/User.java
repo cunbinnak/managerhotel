@@ -1,6 +1,6 @@
 package com.manager.entity;
 
-import com.sun.istack.internal.NotNull;
+//import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +14,11 @@ import javax.persistence.*;
 @MappedSuperclass
 public class User extends EntityBase {
 
-    @NotNull
+//    @NotNull
     @Column(name = "username")
     private String username;
 
-    @NotNull
+//    @NotNull
     @Column(name = "password")
     private String password;
 
