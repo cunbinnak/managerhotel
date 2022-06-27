@@ -11,14 +11,15 @@ import java.sql.SQLException;
 
 public class UserRoleDAOImpl implements UserRoleDAO {
 
-    public static DatabaseSource jdbcConnect = new DatabaseSource();
+    public static DatabaseSource databaseSource = new DatabaseSource();
 
     @Override
-    public UserRoleRels findByUserId(String userId) {
+    public UserRoleRels findByUserId(String userId) throws SQLException {
         UserRoleRels userRoleRels = new UserRoleRels();
         String query = "select * from USER_ROLE_RELS where user_id = ?";
-        try (Connection connection = jdbcConnect.openConnect();
-             PreparedStatement prepare = connection.prepareStatement(query)){
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
             prepare.setString(1, userId);
             ResultSet rs = prepare.executeQuery();
             while (rs.next()){
@@ -30,6 +31,22 @@ public class UserRoleDAOImpl implements UserRoleDAO {
             e.printStackTrace();
         }
         return userRoleRels;
+    }
+
+    @Override
+    public void create(UserRoleRels userRoleRels) throws SQLException {
+        String query = "INSERT INTO `managerhotel`.`user_role_rels` (`id`, `created_user`, `role_id`, `user_id`) VALUES (?, ?, ?, ?)";
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            prepare.setString(1, userRoleRels.getId());
+            prepare.setString(2, "SYSTEM");
+            prepare.setString(3, userRoleRels.getRoleId());
+            prepare.setString(4, userRoleRels.getUserId());
+            prepare.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

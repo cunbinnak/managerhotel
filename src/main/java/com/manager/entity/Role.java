@@ -19,8 +19,4 @@ public class Role extends EntityBase{
     @Column(name = "role_name")
     private String roleName;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<UserRoleRels> userRoleRelsList;
-
 }

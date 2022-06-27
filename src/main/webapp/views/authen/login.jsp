@@ -22,7 +22,8 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td><input type="submit" value="Login"></td>
+                <td><input type="submit" value="Đăng nhập"></td>
+                <br> ${ message } <br>
             </tr>
         </table>
     </form>

@@ -25,7 +25,7 @@ public class Customer  extends EntityBase {
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
-    private Double phone;
+    private String phone;
     @Column(name = "type")
     private String type;
 

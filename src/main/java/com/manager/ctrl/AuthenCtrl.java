@@ -3,6 +3,7 @@ package com.manager.ctrl;
 import com.manager.entity.Role;
 import com.manager.entity.User;
 import com.manager.serviceImpl.UserServiceImpl;
+import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 
-@WebServlet(urlPatterns = "/authen/login")
+@WebServlet({"/authen/login", "/authen/register", })
 public class AuthenCtrl extends HttpServlet {
 
     public AuthenCtrl(){
@@ -25,16 +26,21 @@ public class AuthenCtrl extends HttpServlet {
         req.getRequestDispatcher("/views/authen/login.jsp").forward(req, resp);
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        String uri = req.getRequestURI();
+        if(uri.equalsIgnoreCase("/")){
+
+        }
         String username =  req.getParameter("username");
         String password =  req.getParameter("password");
         UserServiceImpl userService = new UserServiceImpl();
         User user = userService.findByUserName(username);
         Role role = new Role();
         Integer flag = 0;
-        if(user != null){
+        if(user != null && user.getUsername() != null){
             role =  userService.findRoleUser(user.getId());
             flag = 1;
         }

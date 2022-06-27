@@ -9,28 +9,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
-
 public class UserDAOImpl implements UserDAO {
 
-    public static DatabaseSource jdbcConnect = new DatabaseSource();
+    public static DatabaseSource databaseSource = new DatabaseSource();
 
     @Override
-    public User createUser(User user) {
-        User newUser = new User();
-
-        String query = "INSERT INTO user (`id`, `created_user`, `username`, `password`) VALUES (?, ?, ?, ?);";
-        try (Connection connection = jdbcConnect.openConnect();
-             PreparedStatement prepare = connection.prepareStatement(query)){
-            prepare.setString(1, String.valueOf(UUID.randomUUID()));
+    public void createUser(User user) throws SQLException {
+        String query = "INSERT INTO user (`id`, `created_user`, `username`, `password`) VALUES (?, ?, ?, ?)";
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            prepare.setString(1, user.getId());
             prepare.setString(2, "SYSTEM");
             prepare.setString(3, user.getUsername());
             prepare.setString(4, user.getPassword());
-
+            prepare.execute();
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override
@@ -39,11 +35,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUser(String username) {
+    public User getUser(String username) throws SQLException {
         User userDto = new User();
         String query = "select * from user where username = ?";
-        try (Connection connection = jdbcConnect.openConnect();
-             PreparedStatement prepare = connection.prepareStatement(query)){
+        Connection connection =  databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
             prepare.setString(1, username);
             ResultSet rs = prepare.executeQuery();
             while (rs.next()){
