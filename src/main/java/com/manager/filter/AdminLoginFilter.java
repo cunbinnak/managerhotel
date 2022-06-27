@@ -23,7 +23,7 @@ public class AdminLoginFilter implements Filter {
         if(session.getAttribute("username") == null
                 && !req.getRequestURI().endsWith("/authen/login")
                 && (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("ADMIN"))){
-            res.sendRedirect("/manager_hotel_war/authen/login");
+            res.sendRedirect("authen/login");
         } else {
                 chain.doFilter(request, response);
         }

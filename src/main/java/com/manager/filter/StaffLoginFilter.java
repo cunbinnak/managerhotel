@@ -20,14 +20,14 @@ public class StaffLoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if((session.getAttribute("username") == null
+        if ((session.getAttribute("username") == null
                 && !req.getRequestURI().endsWith("/authen/login"))
-                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("STAFF"))){
+                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("STAFF"))) {
             session.removeAttribute("username");
             session.removeAttribute("role");
-            res.sendRedirect("/manager_hotel_war/authen/login");
+            res.sendRedirect("authen/login");
         } else {
-                chain.doFilter(request, response);
+            chain.doFilter(request, response);
         }
 
     }
