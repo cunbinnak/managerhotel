@@ -18,7 +18,7 @@ import java.util.*;
 
 @WebServlet({"/authen/login", "/authen/register" })
 public class AuthenCtrl extends HttpServlet {
-    private static final String PATH = "/managerhotel_war/authen/";
+    private static final String PATH = "/authen/";
     private static final String PATH_JSP = "/views/authen/";
     public AuthenCtrl(){
         super();
@@ -26,7 +26,7 @@ public class AuthenCtrl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String uri = req.getRequestURI();
+        String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             req.getRequestDispatcher(PATH_JSP + "login.jsp").forward(req, resp);
         }
@@ -39,7 +39,7 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String uri = req.getRequestURI();
+        String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             login(req, resp, session);
         }
