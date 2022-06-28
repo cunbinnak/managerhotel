@@ -18,6 +18,8 @@ public class UserCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        String userName = session.getAttribute("username").toString();
+        req.setAttribute("userName",userName);
         session.setAttribute("pathTomcat", "/managerhotel");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
@@ -25,6 +27,8 @@ public class UserCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        String userName = session.getAttribute("username").toString();
+        req.setAttribute("userName",userName);
         session.setAttribute("pathTomcat", "/managerhotel_war");
         super.doPost(req, resp);
     }

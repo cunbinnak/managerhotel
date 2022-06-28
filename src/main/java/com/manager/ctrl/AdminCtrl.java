@@ -38,23 +38,18 @@ public class AdminCtrl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getServletPath();
         HttpSession session = req.getSession();
+        String userName = session.getAttribute("username").toString();
+        req.setAttribute("userName",userName);
         UserServiceImpl userService = new UserServiceImpl();
         try {
             if (url.equalsIgnoreCase(PATH + "search/user")) {
-                String userName = session.getAttribute("username").toString();
-                req.setAttribute("userName",userName);
                 searchUserGet(req, resp, userService, session);
             }
             if (url.equalsIgnoreCase(PATH + "create/user")) {
-                String userName = session.getAttribute("username").toString();
-                req.setAttribute("userName",userName);
                 req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);
             }if(url.equalsIgnoreCase("/admin")){
-
-                String userName = session.getAttribute("username").toString();;
                 List<User> listUser = userService.getListUser();
                 req.setAttribute("listUser", listUser);
-                req.setAttribute("userName",userName);
                 req.getRequestDispatcher("/views"+PATH + "AdminController.jsp").forward(req,resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
