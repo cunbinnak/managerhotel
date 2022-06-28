@@ -27,6 +27,8 @@ public class AuthenCtrl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        session.setAttribute("pathTomcat", "/managerhotel_war");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             req.getRequestDispatcher(PATH_JSP + "login.jsp").forward(req, resp);
@@ -40,6 +42,7 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        session.setAttribute("pathTomcat", "/managerhotel_war");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             login(req, resp, session);
@@ -51,7 +54,6 @@ public class AuthenCtrl extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp, HttpSession session  ) throws SQLException, IOException, ServletException {
-
         String username =  req.getParameter("username");
         String password =  req.getParameter("password");
         UserServiceImpl userService = new UserServiceImpl();
@@ -65,14 +67,15 @@ public class AuthenCtrl extends HttpServlet {
         if(flag != 0 && user.getPassword().equals(password) && role != null){
             session.setAttribute("role", role.getRoleCode().toUpperCase(Locale.ROOT));
             session.setAttribute("username", username);
+
             if(role.getRoleCode().equalsIgnoreCase("admin")){
-                resp.sendRedirect("/managerhotel_war/admin");
+                resp.sendRedirect(session.getAttribute("pathTomcat") +"/admin");
             }
             if(role.getRoleCode().equalsIgnoreCase("staff")){
-                resp.sendRedirect("/managerhotel_war/staff");
+                resp.sendRedirect(session.getAttribute("pathTomcat") +"/staff");
             }
             if(role.getRoleCode().equalsIgnoreCase("user")){
-                resp.sendRedirect("/managerhotel_war/user");
+                resp.sendRedirect(session.getAttribute("pathTomcat") +"/user");
             }
         } else {
             req.setAttribute("message", "Tài khoản mật khẩu không chính xác");
@@ -138,7 +141,7 @@ public class AuthenCtrl extends HttpServlet {
             user1.setIsDeleted(false);
             userService.create(user1);
             request.setAttribute("message", "Đăng ký thành công, vui lòng đăng nhập lại");
-            response.sendRedirect("/managerhotel_war/authen/login");
+            response.sendRedirect(session.getAttribute("pathTomcat") +"/authen/login");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ServletException e) {
