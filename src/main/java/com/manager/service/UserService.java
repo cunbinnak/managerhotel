@@ -1,9 +1,9 @@
 package com.manager.service;
 
-import com.manager.entity.Customer;
-import com.manager.entity.Role;
-import com.manager.entity.User;
+import com.manager.dto.SearchUserDto;
+import com.manager.entity.*;
 
+import java.awt.print.Pageable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,4 +18,6 @@ public interface UserService {
     List<Role> findAllRole() throws SQLException;
 
     void createCustomer(Customer customer) throws SQLException;
+
+    List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException;
 }

@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -29,31 +31,61 @@ public class UserDAOImpl implements UserDAO {
             prepare.setBoolean(7, false);
             prepare.setString(8, user.getRoleId());
             prepare.execute();
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public User getAllUser() {
-        return null;
+    public List<User> getAllUser(Map<String, String> spec) throws SQLException {
+        List<User> userDtos = new ArrayList<>();
+        String query = "select * from user ";
+        List<String> predicates =  new ArrayList<>();
+        if(!spec.isEmpty()){
+             query = query + "where";
+             for(Map.Entry<String, String> entry : spec.entrySet()){
+                 predicates.add(" " + entry.getKey() + "=" + entry.getValue());
+             }
+             String predicate = String.join(" AND ", predicates);
+             query = query + predicate;
+        }
+        Connection connection =  databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()){
+                User userDto = new User();
+                userDto.setUsername(rs.getString("username"));
+                userDto.setPassword(rs.getString("password"));
+                userDto.setRoleCode(rs.getString("role_code"));
+                userDto.setRoleId(rs.getString("role_id"));
+                userDto.setCustomerId(rs.getString("customer_id"));
+                userDto.setId(rs.getString("id"));
+                userDtos.add(userDto);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userDtos;
     }
+
+
 
     @Override
     public User getUser(String username) throws SQLException {
         User userDto = new User();
         String query = "select * from user where username = ?";
-        Connection connection = databaseSource.getDatasource();
+        Connection connection =  databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
             prepare.setString(1, username);
             ResultSet rs = prepare.executeQuery();
-            while (rs.next()) {
+            while (rs.next()){
                 userDto.setUsername(rs.getString("username"));
                 userDto.setPassword(rs.getString("password"));
                 userDto.setId(rs.getString("id"));
             }
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             e.printStackTrace();
         }
         return userDto;
