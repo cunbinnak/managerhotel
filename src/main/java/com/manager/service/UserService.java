@@ -16,8 +16,4 @@ public interface UserService {
     List<Role> findAllRole() throws SQLException;
 
     void createCustomer(Customer customer) throws SQLException;
-
-    void createUserCustomer(UserCustomerRel userCustomerRel) throws SQLException;
-
-    void createUserRole(UserRoleRels userRoleRels) throws SQLException;
 }

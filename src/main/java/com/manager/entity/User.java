@@ -12,8 +12,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name = "user")
 @MappedSuperclass
-public class User extends EntityBase {
+public class User
+        extends EntityBase
+{
 
+//    @Id
+//    @Column(name = "id", length = 36)
+//    private String id;
+//
+//    @Column(name = "created_user")
+//    private String createdUser;
 //    @NotNull
     @Column(name = "username")
     private String username;
@@ -22,11 +30,20 @@ public class User extends EntityBase {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private UserCustomerRel userCustomerRel;
+    @Column(name = "role_code")
+    private String roleCode;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private UserRoleRels userRoleRelsList;
+    @Column(name = "customer_id", length = 36)
+    private String customerId;
+
+    @Column(name = "role_id", length = 36)
+    private String roleId;
+
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

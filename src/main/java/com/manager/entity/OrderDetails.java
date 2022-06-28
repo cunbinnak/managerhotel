@@ -5,34 +5,37 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.File;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "service")
+@Entity
 @MappedSuperclass
-public class Service
-        extends EntityBase
-{
+public class OrderDetails extends EntityBase{
+
 //    @Id
 //    @Column(name = "id", length = 36)
 //    private String id;
-//
+
 //    @Column(name = "created_user")
 //    private String createdUser;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "price")
-    private Double price;
+
+    @Column(name = "order_id")
+    private String orderId;
+    @Column(name = "ref_id")
+    private String refId;
+    @Column(name = "ref_type")
+    private String refType;
+    @Column(name = "price_ref")
+    private Double priceRef;
+    @Column(name = "name_ref")
+    private Double nameRef;
     @Column(name = "unit")
     private String unit;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "unit")
-    private File image;
     @Column(name = "amount")
     private String amount;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Order order;
 }

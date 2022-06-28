@@ -39,7 +39,7 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role findByUserId(String userId) {
-        String query = "select * from role where id in (select role_id from USER_ROLE_RELS where user_id = ?)";
+        String query = "select * from role where id in (select role_id from user where id = ?)";
         Role role = new Role();
         try (Connection connection = databaseSource.getDatasource();
              PreparedStatement prepare = connection.prepareStatement(query)){

@@ -21,4 +21,7 @@ public class EntityBase {
 
     @Column(name = "created_user")
     private String createdUser;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 }

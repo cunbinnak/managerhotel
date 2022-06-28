@@ -12,12 +12,23 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "room")
 @MappedSuperclass
-public class Room  extends EntityBase {
+public class Room
+        extends EntityBase
+{
 
+//    @Id
+//    @Column(name = "id", length = 36)
+//    private String id;
+//
+//    @Column(name = "created_user")
+//    private String createdUser;
+
+    @Column(name = "name")
+    private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "acreage")
-    private String acreage;
+    @Column(name = "square")
+    private String square;
     @Column(name = "bed_number")
     private String bedNumber;
     @Column(name = "people_number")
