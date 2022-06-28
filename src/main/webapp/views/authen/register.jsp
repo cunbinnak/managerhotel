@@ -173,7 +173,7 @@
 <main>
 
     <form id="register_form" class="form_class" name="registerform" action="" method="post">
-        <h3> ${ message } <h3>
+        <h3> ${ message } </h3>
             <div class="form_div">
                 <label>Tên tài khoản:</label>
                 <input class="field_class" name="username" type="text" placeholder="nhập tên tài khoản" autofocus>
@@ -192,7 +192,7 @@
                 <button class="submit_class" type="submit" form="register_form" onclick="return validarLogin()">Đăng ký</button>
             </div>
             <div class="info_div">
-                <p>Trở về trang đăng nhập? <a href="<c:url value='/authen/login'/>">Trở lại</a></p>
+                <p>Trở về trang đăng nhập? <a href="${pageContext.request.contextPath}/authen/login">Trở lại</a></p>
             </div>
     </form>
 </main>

@@ -20,4 +20,6 @@ public interface UserService {
     void createCustomer(Customer customer) throws SQLException;
 
     List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException;
+
+    List<User> getListUser() throws SQLException;
 }
