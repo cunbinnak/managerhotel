@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @MappedSuperclass
-public class OrderDetails extends EntityBase{
+public class OrderDetails extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)

@@ -12,7 +12,7 @@ public class AdminCtrl extends HttpServlet {
 
     public static long serialVersionUID = -8899517213540670829L;
 
-    public AdminCtrl(){
+    public AdminCtrl() {
         super();
     }
 
@@ -20,7 +20,6 @@ public class AdminCtrl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/admin/AdminController.jsp").forward(req, resp);
     }
-
 
 
 }

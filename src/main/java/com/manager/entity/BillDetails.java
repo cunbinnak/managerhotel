@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,8 +12,7 @@ import java.util.List;
 @Entity
 @MappedSuperclass
 public class BillDetails
-        extends EntityBase
-{
+        extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)

@@ -1,7 +1,7 @@
 package com.manager.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,9 +20,9 @@ public class UserLoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if((session.getAttribute("username") == null
+        if ((session.getAttribute("username") == null
                 && !req.getRequestURI().endsWith("/authen/login"))
-                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("USER"))){
+                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("USER"))) {
             res.sendRedirect("authen/login");
         } else {
             chain.doFilter(request, response);

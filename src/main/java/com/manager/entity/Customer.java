@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Date;
 
 @Getter
@@ -15,13 +16,12 @@ import java.util.Date;
 @Entity(name = "customer")
 //@MappedSuperclass
 public class Customer
-        extends EntityBase
-{
+        extends EntityBase {
 //    @Id
 //    @Column(name = "id", nullable = false, length = 36)
 //    private String id;
 
-//    @Column(name = "created_user")
+    //    @Column(name = "created_user")
 //    private String createdUser;
     @Column(name = "name")
     private String name;

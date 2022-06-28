@@ -1,7 +1,11 @@
 package com.manager.serviceImpl;
 
-import com.manager.DAOImpl.*;
-import com.manager.entity.*;
+import com.manager.DAOImpl.CustomerDAOImpl;
+import com.manager.DAOImpl.RoleDAOImpl;
+import com.manager.DAOImpl.UserDAOImpl;
+import com.manager.entity.Customer;
+import com.manager.entity.Role;
+import com.manager.entity.User;
 import com.manager.service.UserService;
 
 import java.sql.SQLException;
@@ -22,7 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public Role findRoleUser(String userId) {
         RoleDAOImpl roleDAO = new RoleDAOImpl();
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> findAllRole() throws SQLException {
         long currentTime = System.currentTimeMillis();
-        if(currentTime - LAST_CACHE_TIME > CACHE_DURATION) {
+        if (currentTime - LAST_CACHE_TIME > CACHE_DURATION) {
             RoleDAOImpl roleDAO = new RoleDAOImpl();
             roles.addAll(roleDAO.getAllRole());
         }

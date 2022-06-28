@@ -20,12 +20,12 @@ public class AdminLoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if((session.getAttribute("username") == null
+        if ((session.getAttribute("username") == null
                 && !req.getRequestURI().endsWith("/authen/login"))
-                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("ADMIN"))){
+                || (session.getAttribute("role") == null || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("ADMIN"))) {
             res.sendRedirect("authen/login");
         } else {
-                chain.doFilter(request, response);
+            chain.doFilter(request, response);
         }
 
     }

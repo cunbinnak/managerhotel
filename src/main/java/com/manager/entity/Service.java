@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import java.io.File;
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,9 +15,8 @@ import java.util.List;
 @Entity(name = "service")
 @MappedSuperclass
 public class Service
-        extends EntityBase
-{
-//    @Id
+        extends EntityBase {
+    //    @Id
 //    @Column(name = "id", length = 36)
 //    private String id;
 //

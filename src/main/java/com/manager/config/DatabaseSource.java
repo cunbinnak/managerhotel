@@ -14,11 +14,12 @@ public class DatabaseSource {
     @SneakyThrows
     public static Connection getConnection() throws SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(DB_URL,USER_NAME,PASSWORD);
+        Connection conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
         System.out.println("connect database success");
         return conn;
     }
+
     public Connection getDatasource() throws SQLException {
-       return getConnection();
+        return getConnection();
     }
 }

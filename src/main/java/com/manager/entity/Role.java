@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @Setter
@@ -13,8 +14,7 @@ import java.util.List;
 @Entity(name = "role")
 @MappedSuperclass
 public class Role
-        extends EntityBase
-{
+        extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)

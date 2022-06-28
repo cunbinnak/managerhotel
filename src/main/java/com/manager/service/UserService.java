@@ -1,6 +1,8 @@
 package com.manager.service;
 
-import com.manager.entity.*;
+import com.manager.entity.Customer;
+import com.manager.entity.Role;
+import com.manager.entity.User;
 
 import java.sql.SQLException;
 import java.util.List;

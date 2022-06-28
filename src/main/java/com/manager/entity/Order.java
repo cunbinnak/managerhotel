@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 
 @Getter
@@ -13,7 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @MappedSuperclass
-public class Order extends EntityBase{
+public class Order extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)

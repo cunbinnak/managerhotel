@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @Setter
@@ -13,8 +14,7 @@ import java.util.List;
 @Entity(name = "room")
 @MappedSuperclass
 public class Room
-        extends EntityBase
-{
+        extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)
@@ -34,7 +34,7 @@ public class Room
     @Column(name = "people_number")
     private String peopleNumber;
     @Column(name = "price")
-    private String price;
+    private Double price;
     @Column(name = "discount_price")
     private String discountPrice;
     @Column(name = "status")

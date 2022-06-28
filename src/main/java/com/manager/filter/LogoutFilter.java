@@ -1,7 +1,7 @@
 package com.manager.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ public class LogoutFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if(req.getRequestURI().endsWith("/authen/logout")){
+        if (req.getRequestURI().endsWith("/authen/logout")) {
             session.removeAttribute("username");
             session.removeAttribute("role");
             res.sendRedirect("/managerhotel_war/authen/login");

@@ -24,14 +24,14 @@ public class RoleDAOImpl implements RoleDAO {
 
         try {
             ResultSet rs = prepare.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 Role role = new Role();
                 role.setId(rs.getString("id"));
                 role.setRoleCode(rs.getString("role_code"));
                 role.setRoleName(rs.getString("role_name"));
                 roles.add(role);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return roles;
@@ -42,15 +42,15 @@ public class RoleDAOImpl implements RoleDAO {
         String query = "select * from role where id in (select role_id from user where id = ?)";
         Role role = new Role();
         try (Connection connection = databaseSource.getDatasource();
-             PreparedStatement prepare = connection.prepareStatement(query)){
+             PreparedStatement prepare = connection.prepareStatement(query)) {
             prepare.setString(1, userId);
             ResultSet rs = prepare.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 role.setId(rs.getString("id"));
                 role.setRoleCode(rs.getString("role_code"));
                 role.setRoleName(rs.getString("role_name"));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return role;

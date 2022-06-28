@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 public class UserDAOImpl implements UserDAO {
 
     public static DatabaseSource databaseSource = new DatabaseSource();
@@ -28,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
             prepare.setBoolean(7, false);
             prepare.setString(8, user.getRoleId());
             prepare.execute();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -42,17 +43,17 @@ public class UserDAOImpl implements UserDAO {
     public User getUser(String username) throws SQLException {
         User userDto = new User();
         String query = "select * from user where username = ?";
-        Connection connection =  databaseSource.getDatasource();
+        Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
             prepare.setString(1, username);
             ResultSet rs = prepare.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 userDto.setUsername(rs.getString("username"));
                 userDto.setPassword(rs.getString("password"));
                 userDto.setId(rs.getString("id"));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return userDto;

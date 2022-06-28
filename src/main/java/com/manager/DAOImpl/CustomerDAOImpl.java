@@ -4,7 +4,10 @@ import com.manager.DAO.CustomerDAO;
 import com.manager.config.DatabaseSource;
 import com.manager.entity.Customer;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -13,9 +16,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public void create(Customer customer) throws SQLException {
         String query = "INSERT INTO `managerhotel`.`customer` (`id`, `created_user`, `name`, `birth_day`, `address`, `email`, `phone_number`, `type`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection connection =  databaseSource.getDatasource();
+        Connection connection = databaseSource.getDatasource();
         CallableStatement prepare = connection.prepareCall(query);
-        try{
+        try {
             prepare.setString(1, customer.getId());
             prepare.setString(2, "SYSTEM");
             prepare.setString(3, customer.getName());
@@ -26,7 +29,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             prepare.setString(8, customer.getType());
             prepare.setBoolean(9, false);
             prepare.execute();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
