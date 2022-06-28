@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet({ "/user/add-to-cart",  })
+@WebServlet({ "/user/add-to-cart" })
 public class UserCtrl extends HttpServlet {
 
     public UserCtrl() {
