@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet({"/rooms", "/room_detail"})
+@WebServlet({"/rooms", "/room_detail", ""})
 public class RoomCtrl extends HttpServlet {
 
     private static final String PATH = "/authen/";
@@ -26,10 +26,15 @@ public class RoomCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getServletPath();
+        RoomServiceImpl roomService = new RoomServiceImpl();
+        HttpSession session = req.getSession();
         try {
+            if(  uri.isEmpty()){
+                req.setAttribute("rooms", roomService.findAllRoom(new SearchRoomRequest()));
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
+            }
             if (uri.equalsIgnoreCase("/rooms")) {
-                RoomServiceImpl roomService = new RoomServiceImpl();
-                HttpSession session = req.getSession();
+
                 SearchRoomRequest rq = new SearchRoomRequest();
                 if (session.getAttribute("roomRequest") != null) {
                     rq = (SearchRoomRequest) session.getAttribute("roomRequest");

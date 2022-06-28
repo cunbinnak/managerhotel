@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DatabaseSource {
     private static String DB_URL = "jdbc:mysql://localhost:3306/managerhotel";
     private static String USER_NAME = "root";
-    private static String PASSWORD = "Thanhcong1";
+    private static String PASSWORD = "1234";
 
     @SneakyThrows
     public static Connection getConnection() throws SQLException {
