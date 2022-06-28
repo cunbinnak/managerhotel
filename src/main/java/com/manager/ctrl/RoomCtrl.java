@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet({"/rooms"})
+@WebServlet({"/rooms", "/room_detail"})
 public class RoomCtrl extends HttpServlet {
 
     private static final String PATH = "/authen/";
@@ -36,6 +36,9 @@ public class RoomCtrl extends HttpServlet {
                 }
                 req.setAttribute("rooms", roomService.findAllRoom(rq));
                 req.getRequestDispatcher(PATH_JSP + "room_list.jsp").forward(req, resp);
+            }
+            if(uri.equalsIgnoreCase("/room_detail")){
+                req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
 
         } catch (SQLException e) {
@@ -67,7 +70,7 @@ public class RoomCtrl extends HttpServlet {
                 rq.setStatus(String.valueOf(req.getParameter("searchRoomByStatus")));
             }
             session.setAttribute("roomRequest", rq);
-            resp.sendRedirect("/managerhotel_war/rooms");
+            resp.sendRedirect("/managerhotel/rooms");
         }
 
     }

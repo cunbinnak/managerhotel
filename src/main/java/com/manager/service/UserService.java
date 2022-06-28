@@ -25,4 +25,6 @@ public interface UserService {
     List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException;
 
     Customer findCustomerById(String id) throws SQLException;
+
+    List<User> getListUser() throws SQLException;
 }

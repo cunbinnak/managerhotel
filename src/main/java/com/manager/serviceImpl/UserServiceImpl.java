@@ -115,5 +115,11 @@ public class UserServiceImpl implements UserService {
         return customerDAO.findById(id);
     }
 
+    @Override
+    public List<User> getListUser() throws SQLException {
+        UserDAOImpl userDAO = new UserDAOImpl();
+
+        return userDAO.getListUser();
+    }
 
 }
