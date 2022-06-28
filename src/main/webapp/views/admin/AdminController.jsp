@@ -164,49 +164,52 @@
                         <button>See All <span class="las la-arrow-right"></span></button>
                     </div>
                     <div class="card-body">
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
+                        <c:forEach items="${listUser}" var="u">
+                            <div class="customer">
+                                <div class="infor" >
+                                    <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
+                                    <div class="infor-name">
+                                        <h4>${u.username}</h4>
+                                        <small>hihi</small>
+                                    </div>
+                                </div>
+                                <div class="contact">
+                                    <span class="las la-user-circle"></span>
+                                    <span class="las la-comment"></span>
+                                    <span class="las la-phone"></span>
                                 </div>
                             </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
-                                </div>
-                            </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
-                                </div>
-                            </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                    </div>
+                        </c:forEach>
+
+<%--                        <div class="customer">--%>
+<%--                            <div class="infor">--%>
+<%--                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">--%>
+<%--                                <div class="infor-name">--%>
+<%--                                    <h4>John Wick</h4>--%>
+<%--                                    <small>Client</small>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="contact">--%>
+<%--                                <span class="las la-user-circle"></span>--%>
+<%--                                <span class="las la-comment"></span>--%>
+<%--                                <span class="las la-phone"></span>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="customer">--%>
+<%--                            <div class="infor">--%>
+<%--                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">--%>
+<%--                                <div class="infor-name">--%>
+<%--                                    <h4>John Wick</h4>--%>
+<%--                                    <small>Client</small>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="contact">--%>
+<%--                                <span class="las la-user-circle"></span>--%>
+<%--                                <span class="las la-comment"></span>--%>
+<%--                                <span class="las la-phone"></span>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
                 </div>
             </div>

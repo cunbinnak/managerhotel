@@ -13,4 +13,5 @@ public interface UserDAO {
      User getUser(String username) throws SQLException;
      User updateUser(User user);
      User deleteUser(List<String> ids);
+    public  List<User> getListUser() throws SQLException;
 }
