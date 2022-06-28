@@ -1,12 +1,15 @@
 package com.manager.serviceImpl;
 
 import com.manager.DAOImpl.*;
+import com.manager.dto.SearchUserDto;
 import com.manager.entity.*;
 import com.manager.service.UserService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
 
@@ -15,13 +18,12 @@ public class UserServiceImpl implements UserService {
 
     private List<Role> roles = new ArrayList<>();
 
+
     @Override
     public User findByUserName(String username) throws SQLException {
         UserDAOImpl userDAO = new UserDAOImpl();
         return userDAO.getUser(username);
     }
-
-
 
     @Override
     public Role findRoleUser(String userId) {
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> findAllRole() throws SQLException {
         long currentTime = System.currentTimeMillis();
-        if(currentTime - LAST_CACHE_TIME > CACHE_DURATION) {
+        if (currentTime - LAST_CACHE_TIME > CACHE_DURATION) {
             RoleDAOImpl roleDAO = new RoleDAOImpl();
             roles.addAll(roleDAO.getAllRole());
         }
@@ -49,6 +51,21 @@ public class UserServiceImpl implements UserService {
     public void createCustomer(Customer customer) throws SQLException {
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         customerDAO.create(customer);
+    }
+
+    @Override
+    public List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException {
+        Map<String, String> spec = new HashMap<>();
+        if (searchUserDto != null) {
+            if (searchUserDto.getUsername() != null && !searchUserDto.getUsername().isEmpty()) {
+                spec.put("username", "'" + searchUserDto.getUsername() + "'");
+            }
+            if (searchUserDto.getRoleCode() != null && !searchUserDto.getRoleCode().isEmpty()) {
+                spec.put("role_code", "'" + searchUserDto.getRoleCode() + "'");
+            }
+        }
+        UserDAOImpl userDAO = new UserDAOImpl();
+        return userDAO.getAllUser(spec);
     }
 
 

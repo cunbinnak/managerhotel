@@ -4,12 +4,13 @@ import com.manager.entity.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserDAO {
 
-    public void createUser(User user) throws SQLException;
-    public User getAllUser();
-    public User getUser(String username) throws SQLException;
-    public User updateUser(User user);
-    public User deleteUser(List<String> ids);
+     void createUser(User user) throws SQLException;
+     List<User> getAllUser(Map<String, String> spec) throws SQLException;
+     User getUser(String username) throws SQLException;
+     User updateUser(User user);
+     User deleteUser(List<String> ids);
 }
