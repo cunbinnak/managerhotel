@@ -21,7 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet({"/admin/search/user", "/admin/create/user", "/admin/update/user" })
+
+@WebServlet({"/admin/search/user", "/admin/create/user" ,"/admin"})
+
 public class AdminCtrl extends HttpServlet {
     private static final String PATH_JSP = "/views/admin/";
     private static final String PATH = "/admin/";
@@ -43,6 +45,10 @@ public class AdminCtrl extends HttpServlet {
             }
             if (url.equalsIgnoreCase(PATH + "create/user")) {
                 req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);
+            }if(url.equalsIgnoreCase("/admin")){
+                List<User> listUser = userService.getListUser();
+                req.setAttribute("listUser", listUser);
+                req.getRequestDispatcher("/views"+PATH + "AdminController.jsp").forward(req,resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
                 req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);

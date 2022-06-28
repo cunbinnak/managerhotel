@@ -100,4 +100,29 @@ public class UserDAOImpl implements UserDAO {
     public User deleteUser(List<String> ids) {
         return null;
     }
+
+    @Override
+    public List<User> getListUser() throws SQLException {
+
+        List<User> listUser = new ArrayList<>();
+        String query = "select * from user ";
+        Connection connection =  databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()){
+                User userDto = new User();
+                userDto.setUsername(rs.getString("username"));
+                userDto.setPassword(rs.getString("password"));
+                userDto.setRoleCode(rs.getString("role_code"));
+                userDto.setRoleId(rs.getString("role_id"));
+                userDto.setCustomerId(rs.getString("customer_id"));
+                userDto.setId(rs.getString("id"));
+                listUser.add(userDto);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listUser;
+    }
 }

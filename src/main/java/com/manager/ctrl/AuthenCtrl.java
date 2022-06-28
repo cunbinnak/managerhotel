@@ -27,7 +27,7 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("pathTomcat", "/managerhotel_war");
+        session.setAttribute("pathTomcat", "/managerhotel");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             req.getRequestDispatcher(PATH_JSP + "login.jsp").forward(req, resp);
@@ -41,7 +41,7 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("pathTomcat", "/managerhotel_war");
+        session.setAttribute("pathTomcat", "/managerhotel");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             login(req, resp, session);
