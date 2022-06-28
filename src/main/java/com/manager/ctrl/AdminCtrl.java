@@ -38,23 +38,18 @@ public class AdminCtrl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getServletPath();
         HttpSession session = req.getSession();
+        String userName = session.getAttribute("username").toString();
+        req.setAttribute("userName",userName);
         UserServiceImpl userService = new UserServiceImpl();
         try {
             if (url.equalsIgnoreCase(PATH + "search/user")) {
-                String userName = session.getAttribute("username").toString();
-                req.setAttribute("userName",userName);
                 searchUserGet(req, resp, userService, session);
             }
             if (url.equalsIgnoreCase(PATH + "create/user")) {
-                String userName = session.getAttribute("username").toString();
-                req.setAttribute("userName",userName);
                 req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);
             }if(url.equalsIgnoreCase("/admin")){
-
-                String userName = session.getAttribute("username").toString();;
                 List<User> listUser = userService.getListUser();
                 req.setAttribute("listUser", listUser);
-                req.setAttribute("userName",userName);
                 req.getRequestDispatcher("/views"+PATH + "AdminController.jsp").forward(req,resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
@@ -139,7 +134,6 @@ public class AdminCtrl extends HttpServlet {
                 request.setAttribute("message", "Tài khoản đã tồn tại");
                 request.getRequestDispatcher("/views/authen/register.jsp").forward(request, response);
             }
-
             //create customer
             customer.setName(name);
             customer.setBirthDay(birthDay);
@@ -177,17 +171,15 @@ public class AdminCtrl extends HttpServlet {
 
     private void updateUserPost(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
         List<Role> roles = new ArrayList<>();
-        User user = null;
-        Customer customer = new Customer();
+        User user;
+        Customer customer;
         try {
-            roles.addAll(userService.findAllRole());
-            //user
-            String userId = String.valueOf(UUID.randomUUID());
-            String username = request.getParameter("username");
-            String password = "123";
+            user = userService.findByUserName(request.getParameter("username"));
+            customer = userService.findCustomerById(user.getCustomerId());
+
             // customer
-            String customerId = String.valueOf(UUID.randomUUID());
             String name = request.getParameter("name");
+
             Date birthDay = null;
             if(request.getParameter("birthDay") != null && !request.getParameter("birthDay").isEmpty()){
                 birthDay = new SimpleDateFormat("dd-mm-yyyy").parse(request.getParameter("birthDay"));
@@ -195,10 +187,11 @@ public class AdminCtrl extends HttpServlet {
             String address = request.getParameter("address");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
-            String type = "1";
             // user customer
-            // user role
-            String roleCode = request.getParameter("roleCode");
+            String roleCode ="";
+            if(request.getParameter("roleCode") != null && !request.getParameter("roleCode").isEmpty()){
+                roleCode = request.getParameter("roleCode");
+            }
             String roleId = "";
             for (Role role : roles) {
                 if (role.getRoleCode().equalsIgnoreCase(roleCode)) {
@@ -206,35 +199,26 @@ public class AdminCtrl extends HttpServlet {
                 }
             }
             // check user có tồn tại hay không
-            user = userService.findByUserName(username);
-            if (user != null && user.getUsername() != null) {
-                request.setAttribute("message", "Tài khoản đã tồn tại");
-                request.getRequestDispatcher("/views/authen/register.jsp").forward(request, response);
-            }
-
             //create customer
             customer.setName(name);
             customer.setBirthDay(birthDay);
             customer.setAddress(address);
             customer.setEmail(email);
-            customer.setId(customerId);
+            customer.setId(customer.getId());
             customer.setPhone(phone);
-            customer.setType(type);
-            userService.createCustomer(customer);
+            customer.setType(customer.getType());
+            userService.updateCustomer(customer);
             //create user
             User user1 = new User();
-            user1.setId(userId);
-            user1.setUsername(username);
-            user1.setPassword(password);
-            user1.setCustomerId(customerId);
-            user1.setRoleCode(roleCode);
+            user1.setUsername(user.getUsername());
+            user1.setPassword(user.getPassword());
+            user1.setCustomerId(user.getCustomerId());
             user1.setRoleId(roleId);
             user1.setIsDeleted(false);
-            userService.create(user1);
+            userService.updateUser(user1);
+
             response.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } catch (ServletException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();

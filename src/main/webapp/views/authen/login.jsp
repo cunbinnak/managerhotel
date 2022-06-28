@@ -145,7 +145,6 @@
     <h1>Wellcome to DEV Hotel</h1>
 </header>
 <main>
-
     <form id="login_form" class="form_class" name="loginform" action="" method="post">
         <h3> ${ message } <h3>
         <div class="form_div">

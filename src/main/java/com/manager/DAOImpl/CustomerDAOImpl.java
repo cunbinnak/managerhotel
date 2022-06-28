@@ -3,8 +3,12 @@ package com.manager.DAOImpl;
 import com.manager.DAO.CustomerDAO;
 import com.manager.config.DatabaseSource;
 import com.manager.entity.Customer;
+import com.manager.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -25,6 +29,54 @@ public class CustomerDAOImpl implements CustomerDAO {
             prepare.setString(7, customer.getPhone());
             prepare.setString(8, customer.getType());
             prepare.setBoolean(9, false);
+            prepare.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Customer findById(String id) throws SQLException {
+        Customer customer = new Customer();
+        String query = "select * from customer where id = ?";
+        Connection connection =  databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            prepare.setString(1, id);
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()){
+                customer.setId(rs.getString("id"));
+                customer.setType(rs.getString("type"));
+                customer.setAddress(rs.getString("address"));
+                customer.setEmail(rs.getString("email"));
+                customer.setBirthDay(rs.getDate("birth_day"));
+                customer.setPhone(rs.getString("phone_number"));
+                customer.setCreatedUser(rs.getString("create_user"));
+                customer.setIsDeleted(rs.getBoolean("is_deleted"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+    @Override
+    public void updateById(Map<String, String> spec, String id) throws SQLException {
+        String query = "UPDATE `managerhotel`.`customer`";
+        List<String> predicates =  new ArrayList<>();
+        if(!spec.isEmpty()){
+            query = query + "SET";
+            for(Map.Entry<String, String> entry : spec.entrySet()){
+                predicates.add(" " + entry.getKey() + "=" + entry.getValue());
+            }
+            String predicate = String.join(" AND ", predicates);
+            query = query + predicate + "where id = " + id;
+        } else {
+            return;
+        }
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
             prepare.execute();
         }catch (SQLException e) {
             e.printStackTrace();

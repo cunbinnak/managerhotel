@@ -48,9 +48,50 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUser(User user) throws SQLException {
+        Map<String, String> spec = new HashMap<>();
+        if (user != null) {
+            if (user.getRoleCode() != null && !user.getRoleCode().isEmpty()) {
+                spec.put("role_code", "'" + user.getRoleCode() + "'");
+            }
+            if (user.getRoleId() != null && !user.getRoleId().isEmpty()) {
+                spec.put("role_id", "'" + user.getRoleId() + "'");
+            }
+        }
+        UserDAOImpl userDAO = new UserDAOImpl();
+        userDAO.updateUser(spec, user.getId());
+    }
+
+    @Override
     public void createCustomer(Customer customer) throws SQLException {
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         customerDAO.create(customer);
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) throws SQLException {
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (customer != null) {
+            if (customer.getBirthDay() != null) {
+                spec.put("birth_day", "'" + customer.getBirthDay() + "'");
+            }
+            if (customer.getName() != null && !customer.getName().isEmpty()) {
+                spec.put("name", "'" + customer.getName() + "'");
+            }
+            if (customer.getAddress() != null && !customer.getAddress().isEmpty()) {
+                spec.put("id", "'" + customer.getAddress() + "'");
+            }
+            if (customer.getPhone() != null && !customer.getPhone().isEmpty()) {
+                spec.put("phone_number", "'" + customer.getPhone() + "'");
+            }
+            if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
+                spec.put("email", "'" + customer.getEmail() + "'");
+            }
+        } else {
+            return;
+        }
+        customerDAO.updateById(spec, customer.getId());
     }
 
     @Override
@@ -58,14 +99,20 @@ public class UserServiceImpl implements UserService {
         Map<String, String> spec = new HashMap<>();
         if (searchUserDto != null) {
             if (searchUserDto.getUsername() != null && !searchUserDto.getUsername().isEmpty()) {
-                spec.put("username", "'" + searchUserDto.getUsername() + "'");
+                spec.put("username", "'%" + searchUserDto.getUsername() + "%'");
             }
             if (searchUserDto.getRoleCode() != null && !searchUserDto.getRoleCode().isEmpty()) {
-                spec.put("role_code", "'" + searchUserDto.getRoleCode() + "'");
+                spec.put("role_code", "'%" + searchUserDto.getRoleCode() + "%'");
             }
         }
         UserDAOImpl userDAO = new UserDAOImpl();
         return userDAO.getAllUser(spec);
+    }
+
+    @Override
+    public Customer findCustomerById(String id) throws SQLException {
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        return customerDAO.findById(id);
     }
 
     @Override
@@ -74,6 +121,5 @@ public class UserServiceImpl implements UserService {
 
         return userDAO.getListUser();
     }
-
 
 }

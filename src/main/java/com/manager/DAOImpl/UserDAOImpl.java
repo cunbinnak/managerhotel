@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
         if(!spec.isEmpty()){
              query = query + "where";
              for(Map.Entry<String, String> entry : spec.entrySet()){
-                 predicates.add(" " + entry.getKey() + "=" + entry.getValue());
+                 predicates.add(" UPPER(" + entry.getKey() + ") Like " + entry.getValue());
              }
              String predicate = String.join(" AND ", predicates);
              query = query + predicate;
@@ -92,13 +92,31 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public void updateUser(Map<String, String> spec, String id) throws SQLException {
+
+        String query = "UPDATE `managerhotel`.`user`";
+        List<String> predicates =  new ArrayList<>();
+        if(!spec.isEmpty()){
+            query = query + "SET";
+            for(Map.Entry<String, String> entry : spec.entrySet()){
+                predicates.add(" " + entry.getKey() + "=" + entry.getValue());
+            }
+            String predicate = String.join(" AND ", predicates);
+            query = query + predicate + "where id = " + id;
+        } else {
+            return;
+        }
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            prepare.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public User deleteUser(List<String> ids) {
-        return null;
+    public void deleteUser(List<String> ids) {
     }
 
     @Override

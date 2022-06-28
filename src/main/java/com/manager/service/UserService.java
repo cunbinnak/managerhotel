@@ -13,13 +13,18 @@ public interface UserService {
 
     void create(User user) throws SQLException;
 
+    void updateUser(User user) throws SQLException;
+
     Role findRoleUser(String userId);
 
     List<Role> findAllRole() throws SQLException;
 
     void createCustomer(Customer customer) throws SQLException;
+    void updateCustomer(Customer customer) throws SQLException;
 
     List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException;
+
+    Customer findCustomerById(String id) throws SQLException;
 
     List<User> getListUser() throws SQLException;
 }
