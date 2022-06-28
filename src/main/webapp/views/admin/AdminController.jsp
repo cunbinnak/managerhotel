@@ -65,8 +65,7 @@
         <div class="wrapuser">
             <img src="../../../assets/images/person_1.jpg" width="30px" height="30px" alt="">
             <div>
-                <h4>{{username}}</h4>
-                <small>{{roles}}</small>
+                <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
                 <p (click)="signout();">Sign Out</p>
@@ -161,53 +160,24 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>New Customer</h3>
-                        <button>See All <span class="las la-arrow-right"></span></button>
+                        <a class="las la-arrow-right" href="<c:url value='/admin/search/user'/>"><button>See All </button></a>
                     </div>
                     <div class="card-body">
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
+                        <c:forEach items="${listUser}" var="u">
+                            <div class="customer">
+                                <div class="infor" >
+                                    <div class="infor-name">
+                                        <h4>${u.username}</h4>
+<%--                                        <small>hihi</small>--%>
+                                    </div>
+                                </div>
+                                <div class="contact">
+                                    <span class="las la-user-circle"></span>
+                                    <span class="las la-comment"></span>
+                                    <span class="las la-phone"></span>
                                 </div>
                             </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
-                                </div>
-                            </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                        <div class="customer">
-                            <div class="infor">
-                                <img width="40px" height="40px" src="../../../assets/images/person_2.jpg" alt="">
-                                <div class="infor-name">
-                                    <h4>John Wick</h4>
-                                    <small>Client</small>
-                                </div>
-                            </div>
-                            <div class="contact">
-                                <span class="las la-user-circle"></span>
-                                <span class="las la-comment"></span>
-                                <span class="las la-phone"></span>
-                            </div>
-                        </div>
-                    </div>
-
+                        </c:forEach>
                 </div>
             </div>
         </div>
