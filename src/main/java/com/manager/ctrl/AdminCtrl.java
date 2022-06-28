@@ -21,7 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
 @WebServlet({"/admin/search/user", "/admin/create/user" ,"/admin"})
+
 public class AdminCtrl extends HttpServlet {
     private static final String PATH_JSP = "/views/admin/";
     private static final String PATH = "/admin/";
@@ -48,6 +50,9 @@ public class AdminCtrl extends HttpServlet {
                 req.setAttribute("listUser", listUser);
                 req.getRequestDispatcher("/views"+PATH + "AdminController.jsp").forward(req,resp);
             }
+            if (url.equalsIgnoreCase(PATH + "update/user")) {
+                req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,12 +61,13 @@ public class AdminCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         String url = req.getServletPath();
+        UserServiceImpl userService = new UserServiceImpl();
         try {
             if (url.equalsIgnoreCase(PATH + "search/user")) {
                 searchUserPost(req, resp, session);
             }
             if (url.equalsIgnoreCase(PATH + "create/user")) {
-                createUserAdminPos(req, resp, session);
+                createUserAdminPos(req, resp, session, userService);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,8 +95,79 @@ public class AdminCtrl extends HttpServlet {
         resp.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
     }
 
-    private void createUserAdminPos(HttpServletRequest request, HttpServletResponse response , HttpSession session){
-        UserServiceImpl userService = new UserServiceImpl();
+    private void createUserAdminPos(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
+        List<Role> roles = new ArrayList<>();
+        User user = null;
+        Customer customer = new Customer();
+        try {
+            roles.addAll(userService.findAllRole());
+            //user
+            String userId = String.valueOf(UUID.randomUUID());
+            String username = request.getParameter("username");
+            String password = "123";
+            // customer
+            String customerId = String.valueOf(UUID.randomUUID());
+            String name = request.getParameter("name");
+            Date birthDay = null;
+            if(request.getParameter("birthDay") != null && !request.getParameter("birthDay").isEmpty()){
+                birthDay = new SimpleDateFormat("dd-mm-yyyy").parse(request.getParameter("birthDay"));
+            }
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String type = "1";
+            // user customer
+            // user role
+            String roleCode = request.getParameter("roleCode");
+            String roleId = "";
+            for (Role role : roles) {
+                if (role.getRoleCode().equalsIgnoreCase(roleCode)) {
+                    roleId = role.getId();
+                }
+            }
+            // check user có tồn tại hay không
+            user = userService.findByUserName(username);
+            if (user != null && user.getUsername() != null) {
+                request.setAttribute("message", "Tài khoản đã tồn tại");
+                request.getRequestDispatcher("/views/authen/register.jsp").forward(request, response);
+            }
+
+            //create customer
+            customer.setName(name);
+            customer.setBirthDay(birthDay);
+            customer.setAddress(address);
+            customer.setEmail(email);
+            customer.setId(customerId);
+            customer.setPhone(phone);
+            customer.setType(type);
+            userService.createCustomer(customer);
+            //create user
+            User user1 = new User();
+            user1.setId(userId);
+            user1.setUsername(username);
+            user1.setPassword(password);
+            user1.setCustomerId(customerId);
+            user1.setRoleCode(roleCode);
+            user1.setRoleId(roleId);
+            user1.setIsDeleted(false);
+            userService.create(user1);
+            response.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void detailUserGet(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService) throws SQLException, ServletException, IOException {
+        String username = request.getParameter("username");
+        request.setAttribute("user", userService.findByUserName(username));
+        request.getRequestDispatcher(PATH_JSP + "updateUser.jsp").forward(request, response);
+    }
+
+    private void updateUserPost(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
         List<Role> roles = new ArrayList<>();
         User user = null;
         Customer customer = new Customer();

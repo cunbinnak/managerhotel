@@ -11,7 +11,7 @@
 <body bgcolor="#ffffff">
 <fieldset>
     <legend>Tìm kiếm</legend>
-    <form method="post" action="/${ pathTomcat }/admin/create/user">
+    <form method="GET" action="${ pathTomcat }/admin/create/user">
         <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="Đăng ký"></td>
