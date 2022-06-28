@@ -150,6 +150,7 @@
                         <tr>
                             <td><label for="roleCodeSearchUser">Chức Vụ:</label></td>
                             <td><select name="roleCodeSearchUser" id="roleCodeSearchUser" class="form-control">
+                                <option value=""></option>
                                 <option value="ADMIN">Quản lý</option>
                                 <option value="STAFF">Nhân viên</option>
                                 <option value="USER">Khách hàng</option>
@@ -177,7 +178,7 @@
                             <td>${ user.username }</td>
                             <c:choose>
                                 <c:when test="${role=='ADMIN'}"><td>Quản lý</td></c:when>
-                                <c:when test="${role=='ADMIN'}"><td>Nhân viên</td></c:when>
+                                <c:when test="${role=='STAFF'}"><td>Nhân viên</td></c:when>
                                 <c:otherwise> <td>Khách hàng</td></c:otherwise>
                             </c:choose>
                         </tr>
