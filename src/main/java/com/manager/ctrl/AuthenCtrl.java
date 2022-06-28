@@ -16,7 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@WebServlet({"/authen/login", "/authen/register" })
+@WebServlet({"/authen/login", "/authen/register","/logout" })
 public class AuthenCtrl extends HttpServlet {
     private static final String PATH = "/authen/";
     private static final String PATH_JSP = "/views/authen/";
@@ -49,6 +49,7 @@ public class AuthenCtrl extends HttpServlet {
         if(uri.equalsIgnoreCase(PATH + "register")){
             register(req, resp, session);
         }
+
 
     }
 
