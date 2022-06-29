@@ -24,7 +24,7 @@ public class StaffCtrl extends HttpServlet {
         HttpSession session = req.getSession();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
-        session.setAttribute("pathTomcat", "/managerhotel_war");
+
         super.doPost(req, resp);
     }
 }

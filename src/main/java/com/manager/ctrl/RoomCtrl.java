@@ -75,7 +75,7 @@ public class RoomCtrl extends HttpServlet {
                 rq.setStatus(String.valueOf(req.getParameter("searchRoomByStatus")));
             }
             session.setAttribute("roomRequest", rq);
-            resp.sendRedirect("/managerhotel/rooms");
+            resp.sendRedirect("/rooms");
         }
 
     }
