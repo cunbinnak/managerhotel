@@ -99,7 +99,13 @@
       </div>
   </div>
 
-
+    <c:if test="${msg}">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <hr>
+            <p class="mb-0">${msg}</p>
+        </div>
+    </c:if>
   <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='/template/images/hero_1.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
     <div class="container">
       <div class="row align-items-center justify-content-center">
@@ -138,7 +144,11 @@
                   </div>
                   <p class="about">phòng này chỉ dành cho dân chơi, không dành cho các dân chơi nữa mùa</p>
 
-                  <div class="cart mt-4 align-items-center"> <a href="/user/add-to-cart" class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</a> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                  <div class="cart mt-4 align-items-center">  <
+                          <a href="<c:url value='/user/add-to-cart?idroom=${roomdetail.id}'/> " class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</a>
+                      <i class="fa fa-heart text-muted"></i>
+                      <i class="fa fa-share-alt text-muted"></i>
+                  </div>
                 </div>
               </div>
             </div>
