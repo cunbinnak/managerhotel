@@ -83,6 +83,8 @@ public class UserDAOImpl implements UserDAO {
             while (rs.next()){
                 userDto.setUsername(rs.getString("username"));
                 userDto.setPassword(rs.getString("password"));
+                userDto.setCustomerId(rs.getString("customer_id"));
+                userDto.setRoleCode(rs.getString("role_code"));
                 userDto.setId(rs.getString("id"));
             }
         }catch (SQLException e) {
@@ -101,8 +103,8 @@ public class UserDAOImpl implements UserDAO {
             for(Map.Entry<String, String> entry : spec.entrySet()){
                 predicates.add(" " + entry.getKey() + "=" + entry.getValue());
             }
-            String predicate = String.join(" AND ", predicates);
-            query = query + predicate + "where id = " + id;
+            String predicate = String.join(" , ", predicates);
+            query = query + predicate + "where id = " + "'" +  id + "'";
         } else {
             return;
         }

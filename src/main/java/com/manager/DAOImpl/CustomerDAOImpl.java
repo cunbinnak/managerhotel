@@ -46,12 +46,13 @@ public class CustomerDAOImpl implements CustomerDAO {
             ResultSet rs = prepare.executeQuery();
             while (rs.next()){
                 customer.setId(rs.getString("id"));
+                customer.setName(rs.getString("name"));
                 customer.setType(rs.getString("type"));
                 customer.setAddress(rs.getString("address"));
                 customer.setEmail(rs.getString("email"));
                 customer.setBirthDay(rs.getDate("birth_day"));
                 customer.setPhone(rs.getString("phone_number"));
-                customer.setCreatedUser(rs.getString("create_user"));
+                customer.setCreatedUser(rs.getString("created_user"));
                 customer.setIsDeleted(rs.getBoolean("is_deleted"));
             }
         }catch (SQLException e) {
@@ -69,8 +70,8 @@ public class CustomerDAOImpl implements CustomerDAO {
             for(Map.Entry<String, String> entry : spec.entrySet()){
                 predicates.add(" " + entry.getKey() + "=" + entry.getValue());
             }
-            String predicate = String.join(" AND ", predicates);
-            query = query + predicate + "where id = " + id;
+            String predicate = String.join(" , ", predicates);
+            query = query + predicate + " where id = " + "'" +  id + "'";
         } else {
             return;
         }

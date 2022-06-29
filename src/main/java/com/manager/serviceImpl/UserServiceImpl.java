@@ -6,10 +6,9 @@ import com.manager.entity.*;
 import com.manager.service.UserService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class UserServiceImpl implements UserService {
 
@@ -69,18 +68,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateCustomer(Customer customer) throws SQLException {
+    public void updateCustomer(Customer customer) throws SQLException, ParseException {
         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         Map<String, String> spec = new HashMap<>();
         if (customer != null) {
             if (customer.getBirthDay() != null) {
-                spec.put("birth_day", "'" + customer.getBirthDay() + "'");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String date=sdf.format(customer.getBirthDay() );
+                spec.put("birth_day", "'" +  date + "'");
             }
             if (customer.getName() != null && !customer.getName().isEmpty()) {
                 spec.put("name", "'" + customer.getName() + "'");
             }
             if (customer.getAddress() != null && !customer.getAddress().isEmpty()) {
-                spec.put("id", "'" + customer.getAddress() + "'");
+                spec.put("address", "'" + customer.getAddress() + "'");
             }
             if (customer.getPhone() != null && !customer.getPhone().isEmpty()) {
                 spec.put("phone_number", "'" + customer.getPhone() + "'");
