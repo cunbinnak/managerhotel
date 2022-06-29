@@ -176,9 +176,9 @@
         <h3> ${ message } </h3>
             <div class="form_div">
                 <label>Tên tài khoản:</label>
-                <input class="field_class" name="username" type="text" placeholder="nhập tên tài khoản" autofocus>
+                <input class="field_class" name="username" required type="text" placeholder="nhập tên tài khoản" autofocus >
                 <label>Mật khẩu:</label>
-                <input id="pass" class="field_class" name="password" type="password" placeholder="nhập mật khẩu">
+                <input id="pass" class="field_class" name="password" required type="password" placeholder="nhập mật khẩu" >
                 <label>Họ tên:</label>
                 <input id="hoten" class="field_class" name="name" type="text" placeholder="" required>
                 <label>Ngày sinh:</label>
