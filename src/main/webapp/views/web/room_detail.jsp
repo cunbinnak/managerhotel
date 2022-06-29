@@ -49,52 +49,54 @@
 
   <div class="site-navbar-wrap js-site-navbar bg-white">
 
-    <div class="container">
-      <div class="site-navbar bg-light">
-        <div class="py-1">
-          <div class="row align-items-center">
-            <div class="col-2">
-              <h2 class="mb-0 site-logo"><a href="index.html">Suites</a></h2>
-            </div>
-            <div class="col-10">
-              <nav class="site-navigation text-right" role="navigation">
-                <div class="container">
+      <div class="container">
+          <div class="site-navbar bg-light">
+              <div class="py-1">
+                  <div class="row align-items-center">
+                      <div class="col-2">
+                          <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
+                      </div>
+                      <div class="col-10">
+                          <nav class="site-navigation text-right" role="navigation">
+                              <div class="container">
 
-                  <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
-                    <li>
-                      <a href="index.html">Home</a>
-                    </li>
-                    <li class="has-children active">
-                      <a href="rooms.html">Rooms</a>
-                      <ul class="dropdown arrow-top">
-                        <li><a href="rooms.html">Standard Room</a></li>
-                        <li><a href="rooms.html">Family Room</a></li>
-                        <li><a href="rooms.html">Single Room</a></li>
-                        <li class="has-children">
-                          <a href="rooms.html">Rooms</a>
-                          <ul class="dropdown">
-                            <li><a href="rooms.html">America</a></li>
-                            <li><a href="rooms.html">Europe</a></li>
-                            <li><a href="rooms.html">Asia</a></li>
-                            <li><a href="rooms.html">Africa</a></li>
+                                  <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
+                                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                      <li class="active">
+                                          <a href="<c:url value='/home'/>">Trang chủ</a>
+                                      </li>
+                                      <li class="has-children">
+                                          <a href="<c:url value='/user'/>">Phòng</a>
+                                          <ul class="dropdown arrow-top">
+                                              <li><a href="rooms.html">Hiện có</a></li>
+                                              <li><a href="rooms.html">Phòng đơn</a></li>
+                                              <li><a href="rooms.html">Phòng đôi</a></li>
+                                              <li><a href="rooms.html">Phòng gia đình</a></li>
+                                              <li class="has-children">
+                                                  <a href="rooms.html">Dịch vụ</a>
+                                                  <ul class="dropdown">
+                                                      <li><a href="rooms.html">Phòng cao cấp</a></li>
+                                                      <li><a href="rooms.html">Tắm hơi</a></li>
+                                                      <li><a href="rooms.html">Ăn uống</a></li>
 
-                          </ul>
-                        </li>
+                                                  </ul>
+                                              </li>
 
-                      </ul>
-                    </li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                  </ul>
-                </div>
-              </nav>
-            </div>
+                                          </ul>
+                                      </li>
+                                      <%--                                        <li><a href="events.html">Sự kiện</a></li>--%>
+                                      <%--                                        <li><a href="about.html">Thông tin</a></li>--%>
+                                      <li><a href="contact.html">Liên hệ</a></li>
+                                      <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+
+                                  </ul>
+                              </div>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </div>
 
 
@@ -123,20 +125,20 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="images p-3">
-                  <a href="#" class="d-block mb-0 thumbnail"><img src="images/img_1.jpg" alt="Image" class="img-fluid"></a>
+                  <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="product p-4">
                   <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Phòng vip</span>
-                    <h5 class="text-uppercase">Phòng tổng thống</h5>
+                    <h5 class="text-uppercase">${roomdetail.description}</h5>
                     <div class="price d-flex flex-row align-items-center"> <span class="act-price">$20</span>
-                      <div class="ml-2"> <small class="dis-price">$59</small> <span>40% OFF</span> </div>
+                      <div class="ml-2"> <small class="dis-price">${roomdetail.price}</small> <span>40% OFF</span> </div>
                     </div>
                   </div>
                   <p class="about">phòng này chỉ dành cho dân chơi, không dành cho các dân chơi nữa mùa</p>
 
-                  <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                  <div class="cart mt-4 align-items-center"> <a href="/user/add-to-cart" class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</a> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
                 </div>
               </div>
             </div>
@@ -145,27 +147,23 @@
 
       </div>
 
-      <div class="row mt-5">
-        <div class="col-md-12 text-center">
-          <div class="site-block-27">
-            <ul>
-              <li><a href="#">&lt;</a></li>
-              <li class="active"><span>1</span></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&gt;</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<%--      <div class="row mt-5">--%>
+<%--        <div class="col-md-12 text-center">--%>
+<%--          <div class="site-block-27">--%>
+<%--            <ul>--%>
+<%--              <li><a href="#">&lt;</a></li>--%>
+<%--              <li class="active"><span>1</span></li>--%>
+<%--              <li><a href="#">2</a></li>--%>
+<%--              <li><a href="#">3</a></li>--%>
+<%--              <li><a href="#">4</a></li>--%>
+<%--              <li><a href="#">5</a></li>--%>
+<%--              <li><a href="#">&gt;</a></li>--%>
+<%--            </ul>--%>
+<%--          </div>--%>
+<%--        </div>--%>
+<%--      </div>--%>
     </div>
   </div>
-
-
-
-
   <footer class="site-footer">
     <div class="container">
 
@@ -229,5 +227,43 @@
     </div>
   </footer>
 </div>
+
+<script src="<c:url value='/template/js/jquery-3.3.1.min.js'/> "></script>
+<script src="<c:url value='/template/js/jquery-migrate-3.0.1.min.js'/>"></script>
+<script src="<c:url value='/template/js/jquery-ui.js'/>"></script>
+<script src="<c:url value='/template/js/popper.min.js'/>"></script>
+<script src="<c:url value='/template/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/template/js/owl.carousel.min.js'/>"></script>
+<script src="<c:url value='/template/js/jquery.stellar.min.js'/>"></script>
+<script src="<c:url value='/template/js/jquery.countdown.min.js'/>"></script>
+<script src="<c:url value='/template/js/jquery.magnific-popup.min.js'/>"></script>
+<script src="<c:url value='/template/js/bootstrap-datepicker.min.js'/>"></script>
+<script src="<c:url value='/template/js/aos.js'/>"></script>
+
+
+<script src="<c:url value='/template/js/mediaelement-and-player.min.js'/>"></script>
+
+<script src="<c:url value='/template/js/main.js'/>"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
+
+        for (var i = 0; i < total; i++) {
+            new MediaElementPlayer(mediaElements[i], {
+                pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
+                shimScriptAccess: 'always',
+                success: function () {
+                    var target = document.body.querySelectorAll('.player'), targetTotal = target.length;
+                    for (var j = 0; j < targetTotal; j++) {
+                        target[j].style.visibility = 'visible';
+                    }
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

@@ -156,61 +156,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng thường</a></h3>
-                            <strong class="price">350.000đ / một đêm</strong>
+                <c:forEach items="${rooms}" var="r">
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="hotel-room text-center">
+                            <a href="/room_detail?idroom=${r.id}" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
+                            <div class="hotel-room-body">
+                                <h3 class="heading mb-0"><a href="#">${r.name}</a></h3>
+                                <strong class="price">${r.price} / một đêm</strong>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_2.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng gia đình</a></h3>
-                            <strong class="price">500.000đ / một đêm</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_3.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng đơn</a></h3>
-                            <strong class="price">250.000đ / một đêm</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_2.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng đôi</a></h3>
-                            <strong class="price">300.000đ / một đêm</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_3.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng cao cấp</a></h3>
-                            <strong class="price">800.000đ / một đêm</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="hotel-room text-center">
-                        <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
-                        <div class="hotel-room-body">
-                            <h3 class="heading mb-0"><a href="#">Phòng đơn</a></h3>
-                            <strong class="price">100.000đ / một đêm</strong>
-                        </div>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -222,15 +178,15 @@
                 <div class="col-md-6 mb-5 mb-md-0">
 
                     <div class="img-border">
-                        <a href="https://vimeo.com/28959265" class="popup-vimeo image-play">
+                        <a href="<c:url value='https://vimeo.com/28959265'/>" class="popup-vimeo image-play">
                   <span class="icon-wrap">
                     <span class="icon icon-play"></span>
                   </span>
-                            <img src="images/img_2.jpg" alt="" class="img-fluid">
+                            <img src="<c:url value='/template/images/img_2.jpg'/>" alt="" class="img-fluid">
                         </a>
                     </div>
 
-                    <img src="images/img_1.jpg" alt="Image" class="img-fluid image-absolute">
+                    <img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid image-absolute">
 
                 </div>
                 <div class="col-md-5 ml-auto">
@@ -250,7 +206,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-                    <h2 class="mb-5">TÍNH NĂNG HIỆN CÓ</h2>
+                    <h2 class="mb-5">Dịch Vụ</h2>
                 </div>
             </div>
             <div class="row">
@@ -304,13 +260,6 @@
                         <h2 class="h5">Thuê ô tô</h2>
                     </div>
                 </div>
-
-
-
-
-
-
-
             </div>
         </div>
     </div>
@@ -340,155 +289,34 @@
             </div>
             <div class="row no-gutters">
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_1.jpg" class="image-popup img-opacity"><img src="images/img_1.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_1.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_2.jpg" class="image-popup img-opacity"><img src="images/img_2.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_2.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_2.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_3.jpg" class="image-popup img-opacity"><img src="images/img_3.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_3.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_3.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="images/img_4.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_4.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="images/img_4.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_4.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_5.jpg" class="image-popup img-opacity"><img src="images/img_5.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_5.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_5.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_6.jpg" class="image-popup img-opacity"><img src="images/img_6.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_6.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_6.jpg'/>" alt="Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <a href="images/img_7.jpg" class="image-popup img-opacity"><img src="images/img_7.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="images/img_7.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_7.jpg'/> " alt="Image" class="img-fluid"></a>
                 </div>
 
             </div>
         </div>
     </div>
-
-
-
-    <div class="site-section block-15">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-                    <h2>Thông tin phòng</h2>
-                </div>
-            </div>
-
-
-            <div class="nonloop-block-15 owl-carousel">
-
-
-                <div class="media-with-text p-md-5">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_1.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_2.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_3.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_1.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_2.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_3.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_1.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_2.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-                <div class="media-with-text p-md-4">
-                    <div class="img-border-sm mb-4">
-                        <a href="#" class="popup-vimeo image-play">
-                            <img src="images/img_3.jpg" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <h2 class="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                    <span class="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a href="#">Admin</a></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                </div>
-
-
-
-            </div>
-
-        </div>
-    </div>
-
 
     <div class="site-section block-14 bg-light">
 
