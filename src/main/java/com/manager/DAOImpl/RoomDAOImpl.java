@@ -103,7 +103,7 @@ public class RoomDAOImpl implements RoomDAO {
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
-            prepare.setBoolean(1, false);
+            prepare.setString(1, id);
             ResultSet rs = prepare.executeQuery();
 
             while (rs.next()) {

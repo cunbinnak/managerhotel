@@ -1,6 +1,7 @@
 package com.manager.ctrl;
 
 import com.manager.dto.SearchRoomRequest;
+import com.manager.entity.Room;
 import com.manager.serviceImpl.RoomServiceImpl;
 import lombok.SneakyThrows;
 
@@ -43,6 +44,8 @@ public class RoomCtrl extends HttpServlet {
                 req.getRequestDispatcher(PATH_JSP + "room_list.jsp").forward(req, resp);
             }
             if(uri.equalsIgnoreCase("/room_detail")){
+                String idr = req.getParameter("idroom");
+                req.setAttribute("roomdetail", roomService.getRoomDetail(req.getParameter("idroom")));
                 req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
 
@@ -79,5 +82,6 @@ public class RoomCtrl extends HttpServlet {
         }
 
     }
+
 
 }

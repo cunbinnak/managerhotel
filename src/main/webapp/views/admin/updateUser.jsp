@@ -30,16 +30,16 @@
     <div class="sidebar-menu">
         <ul>
             <li>
-                <a routerLink="/admin/home" class="active"><span class="las la-igloo"></span>
+                <a routerLink="/admin/home" ><span class="las la-igloo"></span>
                     <span>Dashboard</span></a>
             </li>
             <li>
-                <a routerLink="/admin/user"><span class="las la-users"></span>
+                <a routerLink="/admin/user" class="active"  ><span class="las la-users"></span>
                     <span>User</span></a>
             </li>
             <li>
                 <a routerLink="/admin/categories"><span class="las la-table"></span>
-                    <span>Categories</span></a>
+                    <span>Room</span></a>
             </li>
             <li>
                 <a routerLink="/admin/product"><span class="las la-table"></span>
@@ -51,7 +51,7 @@
             </li>
             <li>
                 <a routerLink="/home"><span class="la la-opencart"></span>
-                    <span>Shopping Page</span></a>
+                    <span>Home Page</span></a>
             </li>
         </ul>
     </div>
