@@ -5,6 +5,7 @@ import com.manager.entity.*;
 
 import java.awt.print.Pageable;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface UserService {
@@ -20,7 +21,7 @@ public interface UserService {
     List<Role> findAllRole() throws SQLException;
 
     void createCustomer(Customer customer) throws SQLException;
-    void updateCustomer(Customer customer) throws SQLException;
+    void updateCustomer(Customer customer) throws SQLException, ParseException;
 
     List<User> findAllUser(SearchUserDto searchUserDto) throws SQLException;
 

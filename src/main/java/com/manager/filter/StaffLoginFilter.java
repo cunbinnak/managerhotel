@@ -26,7 +26,7 @@ public class StaffLoginFilter implements Filter {
                 || !String.valueOf(session.getAttribute("role")).equalsIgnoreCase("STAFF"))) {
             session.removeAttribute("username");
             session.removeAttribute("role");
-            res.sendRedirect("authen/login");
+            res.sendRedirect("/authen/login");
         } else {
             chain.doFilter(request, response);
         }

@@ -1,6 +1,8 @@
 package com.manager.ctrl;
 
+import com.manager.config.StringUtil;
 import com.manager.dto.SearchUserDto;
+import com.manager.dto.UserCustomer;
 import com.manager.entity.Customer;
 import com.manager.entity.Role;
 import com.manager.entity.User;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@WebServlet({"/admin/search/user", "/admin/create/user" ,"/admin","/admin/create/logout"})
+@WebServlet({"/admin/search/user", "/admin/create/user" ,"/admin","/admin/create/logout", "/admin/update/user"})
 
 public class AdminCtrl extends HttpServlet {
     private static final String PATH_JSP = "/views/admin/";
@@ -50,10 +52,11 @@ public class AdminCtrl extends HttpServlet {
             }if(url.equalsIgnoreCase("/admin")){
                 List<User> listUser = userService.getListUser();
                 req.setAttribute("listUser", listUser);
-                req.getRequestDispatcher("/views"+PATH + "AdminController.jsp").forward(req,resp);
+                req.getRequestDispatcher("/views"+ PATH + "AdminController.jsp").forward(req,resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
-                req.getRequestDispatcher(PATH_JSP + "createUser.jsp").forward(req, resp);
+                req.setAttribute("username", "manhpd");
+                detailUserGet(req, resp, session, userService);
             }
 
         } catch (SQLException e) {
@@ -71,6 +74,9 @@ public class AdminCtrl extends HttpServlet {
             }
             if (url.equalsIgnoreCase(PATH + "create/user")) {
                 createUserAdminPos(req, resp, session, userService);
+            }
+            if (url.equalsIgnoreCase(PATH + "update/user")) {
+                updateUserPost(req, resp, session, userService);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,9 +170,26 @@ public class AdminCtrl extends HttpServlet {
     }
 
     private void detailUserGet(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService) throws SQLException, ServletException, IOException {
-        String username = request.getParameter("username");
-        request.setAttribute("user", userService.findByUserName(username));
-        request.getRequestDispatcher(PATH_JSP + "updateUser.jsp").forward(request, response);
+        String username = request.getAttribute("username").toString();
+        UserCustomer userCustomer = new UserCustomer();
+        Customer customer = new Customer();
+        User user =  userService.findByUserName(username);
+        if(user != null) {
+            if (user.getCustomerId() != null) {
+                customer = userService.findCustomerById(user.getCustomerId());
+            }
+            userCustomer.setUserId(StringUtil.checkValidString(user.getId()));
+            userCustomer.setName(StringUtil.checkValidString(customer.getName()));
+            userCustomer.setUsername(StringUtil.checkValidString(user.getUsername()));
+            userCustomer.setRoleCode(StringUtil.checkValidString(user.getId()));
+            userCustomer.setAddress(StringUtil.checkValidString(customer.getAddress()));
+            userCustomer.setEmail(StringUtil.checkValidString(customer.getEmail()));
+            userCustomer.setBirthDay(customer.getBirthDay());
+            userCustomer.setRoleCode(StringUtil.checkValidString(user.getRoleCode()));
+            userCustomer.setPhone(StringUtil.checkValidString(customer.getPhone()));
+            request.setAttribute("userDetail", userCustomer);
+            request.getRequestDispatcher(PATH_JSP + "updateUser.jsp").forward(request, response);
+        }
     }
 
     private void updateUserPost(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
@@ -200,6 +223,7 @@ public class AdminCtrl extends HttpServlet {
             }
             // check user có tồn tại hay không
             //create customer
+            customer.setId(user.getCustomerId());
             customer.setName(name);
             customer.setBirthDay(birthDay);
             customer.setAddress(address);
@@ -212,12 +236,13 @@ public class AdminCtrl extends HttpServlet {
             User user1 = new User();
             user1.setUsername(user.getUsername());
             user1.setPassword(user.getPassword());
-            user1.setCustomerId(user.getCustomerId());
             user1.setRoleId(roleId);
+            user1.setRoleCode(roleCode);
             user1.setIsDeleted(false);
+            user1.setId(user.getId());
             userService.updateUser(user1);
 
-            response.sendRedirect("/admin/search/user");
+            response.sendRedirect("/admin");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
