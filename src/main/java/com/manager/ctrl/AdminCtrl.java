@@ -95,7 +95,7 @@ public class AdminCtrl extends HttpServlet {
     private void searchUserPost(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
         session.setAttribute("usernameSearchUser", req.getParameter("usernameSearchUser"));
         session.setAttribute("roleCodeSearchUser", req.getParameter("roleCodeSearchUser"));
-        resp.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
+        resp.sendRedirect("/admin/search/user");
     }
 
     private void createUserAdminPos(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
@@ -153,7 +153,7 @@ public class AdminCtrl extends HttpServlet {
             user1.setRoleId(roleId);
             user1.setIsDeleted(false);
             userService.create(user1);
-            response.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
+            response.sendRedirect("/admin/search/user");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ServletException e) {
@@ -217,7 +217,7 @@ public class AdminCtrl extends HttpServlet {
             user1.setIsDeleted(false);
             userService.updateUser(user1);
 
-            response.sendRedirect(session.getAttribute("pathTomcat") +"/admin/search/user");
+            response.sendRedirect("/admin/search/user");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {

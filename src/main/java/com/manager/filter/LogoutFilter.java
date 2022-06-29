@@ -23,7 +23,7 @@ public class LogoutFilter implements Filter {
         if(req.getRequestURI().endsWith("/authen/logout")){
             session.removeAttribute("username");
             session.removeAttribute("role");
-            res.sendRedirect("/managerhotel_war/authen/login");
+            res.sendRedirect("/authen/login");
         } else {
             chain.doFilter(request, response);
         }

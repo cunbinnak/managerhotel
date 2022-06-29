@@ -20,7 +20,6 @@ public class UserCtrl extends HttpServlet {
         HttpSession session = req.getSession();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
-        session.setAttribute("pathTomcat", "/managerhotel");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 
@@ -29,7 +28,6 @@ public class UserCtrl extends HttpServlet {
         HttpSession session = req.getSession();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
-        session.setAttribute("pathTomcat", "/managerhotel_war");
         super.doPost(req, resp);
     }
 }

@@ -27,7 +27,6 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("pathTomcat", "/managerhotel");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             req.getRequestDispatcher(PATH_JSP + "login.jsp").forward(req, resp);
@@ -41,7 +40,6 @@ public class AuthenCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("pathTomcat", "/managerhotel");
         String uri = req.getServletPath();
         if(uri.equalsIgnoreCase(PATH + "login")){
             login(req, resp, session);
@@ -69,13 +67,13 @@ public class AuthenCtrl extends HttpServlet {
             session.setAttribute("username", username);
 
             if(role.getRoleCode().equalsIgnoreCase("admin")){
-                resp.sendRedirect(session.getAttribute("pathTomcat") +"/admin");
+                resp.sendRedirect("/admin");
             }
             if(role.getRoleCode().equalsIgnoreCase("staff")){
-                resp.sendRedirect(session.getAttribute("pathTomcat") +"/staff");
+                resp.sendRedirect("/staff");
             }
             if(role.getRoleCode().equalsIgnoreCase("user")){
-                resp.sendRedirect(session.getAttribute("pathTomcat") +"/user");
+                resp.sendRedirect("/user");
             }
         } else {
             req.setAttribute("message", "Tài khoản mật khẩu không chính xác");
@@ -141,7 +139,7 @@ public class AuthenCtrl extends HttpServlet {
             user1.setIsDeleted(false);
             userService.create(user1);
             request.setAttribute("message", "Đăng ký thành công, vui lòng đăng nhập lại");
-            response.sendRedirect(session.getAttribute("pathTomcat") +"/authen/login");
+            response.sendRedirect("/authen/login");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } catch (ServletException e) {
