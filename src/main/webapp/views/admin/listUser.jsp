@@ -171,6 +171,7 @@
                         <tr>
                             <td>Username</td>
                             <td>Chức vụ</td>
+                            <td>Hành động</td>
                         </tr>
                         <c:forEach var="user" items="${users}">
                         <c:set var = "role" scope = "request" value = "${user.roleCode}"/>
@@ -181,6 +182,9 @@
                                 <c:when test="${role=='STAFF'}"><td>Nhân viên</td></c:when>
                                 <c:otherwise> <td>Khách hàng</td></c:otherwise>
                             </c:choose>
+                            <td>
+                                <a href="/admin/update/user?username=${user.username}">Cập nhật thông tin</a>
+                            </td>
                         </tr>
                         </c:forEach>
                     </table>

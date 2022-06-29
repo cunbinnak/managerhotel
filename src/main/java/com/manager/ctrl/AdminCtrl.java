@@ -55,7 +55,8 @@ public class AdminCtrl extends HttpServlet {
                 req.getRequestDispatcher("/views"+ PATH + "AdminController.jsp").forward(req,resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
-                req.setAttribute("username", "manhpd");
+                String _userName = req.getParameter("username");
+                req.setAttribute("username", _userName);
                 detailUserGet(req, resp, session, userService);
             }
 
