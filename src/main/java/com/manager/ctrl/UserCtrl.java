@@ -15,7 +15,7 @@ import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail","/insert_room"})
+@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room","/update_room"})
 public class UserCtrl extends HttpServlet {
 
     public UserCtrl() {
@@ -48,13 +48,12 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/insert_room")) {
                 req.getRequestDispatcher("/views/staff/createRoom.jsp").forward(req, resp);
             }
-            if (uri.equalsIgnoreCase("update_room")) {
+            if (uri.equalsIgnoreCase("/update_room")) {
                 detailRoomGet(req, resp);
             }
-            if(uri.equalsIgnoreCase("/user/add-to-cart")){
+            if (uri.equalsIgnoreCase("/user/add-to-cart")) {
                 String msg = "Đặt phòng thành công";
                 req.setAttribute("msg", msg);
-//            resp.sendRedirect("");
 
                 req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
@@ -67,6 +66,7 @@ public class UserCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        RoomServiceImpl roomService = new RoomServiceImpl();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName", userName);
         String uri = req.getServletPath();
@@ -77,12 +77,15 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/insert_room")) {
                 insertRoom(req, resp);
             }
-            if(uri.equalsIgnoreCase("/user/add-to-cart")){
+            if (uri.equalsIgnoreCase("/user/add-to-cart")) {
                 String idroom = req.getParameter("idroom");
                 String msg = "Đặt phòng thành công";
                 req.setAttribute("msg", msg);
                 resp.sendRedirect("");
                 return;
+            }
+            if (uri.equalsIgnoreCase("/update_room")) {
+                updateRoom(req,resp);
             }
         } catch (ExportException | SQLException e) {
             throw new RuntimeException(e);
@@ -141,11 +144,22 @@ public class UserCtrl extends HttpServlet {
         resp.sendRedirect("/rooms");
     }
 
-    private void detailRoomGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+    private void detailRoomGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
+        Room room = new Room();
+        RoomServiceImpl roomService = new RoomServiceImpl();
+//        String id = req.getParameter("roomId");
+        //FIX value
+        String id = "1";
+        room = roomService.getRoomDetail(id);
+        req.setAttribute("roomDetail", room);
+        req.getRequestDispatcher("views/staff/updateRoom.jsp").forward(req,resp);
+    }
+
+    private void updateRoom(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
         RoomServiceImpl roomService = new RoomServiceImpl();
         Room room = new Room();
-        if (req.getParameter("roomName") != null) {
-            room.setName(String.valueOf(req.getParameter("roomName")));
+        if (req.getParameter("name") != null) {
+            room.setName(String.valueOf(req.getParameter("name")));
         }
         if (req.getParameter("price") != null) {
             room.setPrice(String.valueOf(req.getParameter("price")));
@@ -165,9 +179,9 @@ public class UserCtrl extends HttpServlet {
         if (req.getParameter("status") != null) {
             room.setStatus(String.valueOf(req.getParameter("status")));
         }
-        room.setId(UUID.randomUUID().toString());
-        room.setIsDeleted(Boolean.FALSE);
-        roomService.create(room);
+        String roomId = req.getParameter("roomId");
+        room.setId(roomId);
+        roomService.updateRoom(room);
         resp.sendRedirect("/rooms");
     }
 }
