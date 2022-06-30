@@ -113,6 +113,8 @@
                 </table>
             </form>
 
+            <button type="button" class="btn btn-danger"><a href="/staff_create_room">Thêm mới</a> </button>
+            <br>
             <h3>Danh sách phòng</h3>
                 <table class="table .table-bordered">
                     <tr>
@@ -137,7 +139,7 @@
                         <td>${ room.description }</td>
                         <td>${ room.status }</td>
                         <td>
-                            <a href="/update_room" style="margin: 10px">Chi tiết</a>
+                            <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
                             <a href="">Đặt phòng</a>
                             <a href="" style="margin: 10px">Thêm dịch vụ</a>
                             <a href="">Hủy Phòng</a>

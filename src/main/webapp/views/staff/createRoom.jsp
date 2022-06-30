@@ -129,9 +129,8 @@
     <main>
 
 
-
-            <legend>Thêm mới thông tin phòng</legend>
-            <form method="post" action="">
+            <h3>Thêm mới thông tin phòng</h3>
+            <form action="" enctype="multipart/form-data" method="post" >
                 <table class="table table-striped">
                     <tr>
                         <td>Tên phòng</td>
@@ -177,8 +176,16 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Hình ảnh</td>
+                        <td>
+                            <div class="mb-3">
+                                <input class="form-control" name="fileimage" type="file" >
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" value="Tạo phòng" class="btn btn-danger"></td>
+                        <td><input type="submit" value="add_room" class="btn btn-danger">Tạo Phòng</td>
                         <br> ${ message } <br>
                     </tr>
                 </table>

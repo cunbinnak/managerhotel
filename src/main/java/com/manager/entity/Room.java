@@ -39,6 +39,8 @@ public class Room
     private String discountPrice;
     @Column(name = "status")
     private String status;
+    @Column(name = "image")
+    private  String image;
 
 
 }
