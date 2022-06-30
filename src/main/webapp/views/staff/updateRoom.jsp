@@ -79,7 +79,7 @@
         <form method="post" action="">
             <table  class="table table-striped">
                 <tr>
-                    <td><input type="text" name="id" value="${ roomDetail.id }" hidden class="form-control"></td>
+                    <td><input type="text" name="roomId" value="${ roomDetail.id }" hidden class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Tên phòng</td>
@@ -91,24 +91,24 @@
                 </tr>
                 <tr>
                     <td>Số giường</td>
-                    <td><input type="date" name="birthDay" value="${ roomDetail.bedNumber }" class="form-control"></td>
+                    <td><input type="text" name="bedNumber" value="${ roomDetail.bedNumber }" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Số người</td>
-                    <td><input type="text" name="address" value="${ roomDetail.peopleNumber }" class="form-control"></td>
+                    <td><input type="text" name="peopleNumber" value="${ roomDetail.peopleNumber }" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Giá</td>
-                    <td><input type="email" name="email" value="${ roomDetail.price }" class="form-control"></td>
+                    <td><input type="text" name="price" value="${ roomDetail.price }" class="form-control"></td>
                 </tr>
 
                 <tr>
                     <td>Giảm giá</td>
-                    <td><input type="number" name="phone" value="${ roomDetail.discountPrice }" class="form-control"></td>
+                    <td><input type="text" name="discountPrice" value="${ roomDetail.discountPrice }" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Thông tin thêm</td>
-                    <td><input type="number" name="phone" value="${ roomDetail.description }" class="form-control"></td>
+                    <td><input type="text" name="description" value="${ roomDetail.description }" class="form-control"></td>
                 </tr>
                 <tr>
                     <td><label for="status">Trạng thái</label></td>

@@ -132,6 +132,7 @@
                         <td>${ room.description }</td>
                         <td>${ room.status }</td>
                         <td>
+                            <a href="/update_room">Chi tiết</a>
                             <a href="">Đặt phòng</a>
                             <a href="" style="margin: 10px">Thêm dịch vụ</a>
                             <a href="">Hủy Phòng</a>
