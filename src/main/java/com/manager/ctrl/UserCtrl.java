@@ -25,7 +25,10 @@ public class UserCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String userName = session.getAttribute("username").toString();
+        String userName = "";
+        if(session.getAttribute("username") != null) {
+            userName = session.getAttribute("username").toString();
+        }
         req.setAttribute("userName", userName);
         String uri = req.getServletPath();
         RoomServiceImpl roomService = new RoomServiceImpl();
