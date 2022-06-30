@@ -73,7 +73,7 @@ public class AuthenCtrl extends HttpServlet {
                 resp.sendRedirect("/staff");
             }
             if(role.getRoleCode().equalsIgnoreCase("user")){
-                resp.sendRedirect("/user");
+                resp.sendRedirect("/");
             }
         } else {
             req.setAttribute("message", "Tài khoản mật khẩu không chính xác");
