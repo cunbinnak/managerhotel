@@ -90,7 +90,7 @@
                     </tr>
                     <tr>
                         <td>Số giường</td>
-                        <td><input type="text" attribute="searchRoomByBed" class="form-control"></td>
+                        <td><input type="text" name="searchRoomByBed" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Số người</td>

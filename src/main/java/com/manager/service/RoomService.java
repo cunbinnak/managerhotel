@@ -13,4 +13,6 @@ public interface RoomService {
     List<Room> findAllRoom(SearchRoomRequest rq) throws SQLException;
 
     Room getRoomDetail(String id) throws SQLException;
+
+    void updateRoom(Room room) throws SQLException;
 }

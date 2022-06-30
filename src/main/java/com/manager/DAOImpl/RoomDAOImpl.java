@@ -17,7 +17,7 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public void createRoom(Room room) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`room` (`id`, `created_user`, `name`, `description`, `square`, `bed_number`, `people_number`, `price`, `discount_price`, `status`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO `managerhotel`.`room` (`id`, `created_user`, `name`, `description`, `square`, `bed_number`, `people_number`, `price`, `discount_price`, `status`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
@@ -79,8 +79,26 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Room updateRoom(Room room) {
-        return null;
+    public void updateRoomById(Map<String, String> spec, String id) throws SQLException {
+        String query = "UPDATE `managerhotel`.`room`";
+        List<String> predicates =  new ArrayList<>();
+        if(!spec.isEmpty()){
+            query = query + "SET";
+            for(Map.Entry<String, String> entry : spec.entrySet()){
+                predicates.add(" " + entry.getKey() + "=" + entry.getValue());
+            }
+            String predicate = String.join(" , ", predicates);
+            query = query + predicate + " where id = " + "'" +  id + "'";
+        } else {
+            return;
+        }
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            prepare.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
