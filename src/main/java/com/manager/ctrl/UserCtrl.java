@@ -55,6 +55,7 @@ public class UserCtrl extends HttpServlet {
 				}
 				req.setAttribute("rooms", roomService.findAllRoom(rq));
 				req.getRequestDispatcher("/views/staff/room_list.jsp").forward(req, resp);
+				session.removeAttribute("rooms");
 			}
 			if (uri.equalsIgnoreCase("/room_detail")) {
 				req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
@@ -64,6 +65,7 @@ public class UserCtrl extends HttpServlet {
 			}
 			if (uri.equalsIgnoreCase("/update_room")) {
 				detailRoomGet(req, resp);
+				session.removeAttribute("roomDetail");
 			}
 			if (uri.equalsIgnoreCase("/user/add-to-cart")) {
 				String msg = "Đặt phòng thành công";
@@ -126,6 +128,7 @@ public class UserCtrl extends HttpServlet {
 		}
 		session.setAttribute("roomRequest", rq);
 		resp.sendRedirect("/rooms");
+		session.removeAttribute("roomRequest");
 	}
 
 	private void insertRoom(HttpServletRequest req, HttpServletResponse resp)
