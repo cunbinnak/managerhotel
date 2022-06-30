@@ -150,9 +150,9 @@ public class UserCtrl extends HttpServlet {
     private void detailRoomGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
         Room room = new Room();
         RoomServiceImpl roomService = new RoomServiceImpl();
-//        String id = req.getParameter("roomId");
+        String id = req.getParameter("idroom");
         //FIX value
-        String id = "1";
+//        String id = "1";
         room = roomService.getRoomDetail(id);
         req.setAttribute("roomDetail", room);
         req.getRequestDispatcher("views/staff/updateRoom.jsp").forward(req,resp);
@@ -166,6 +166,9 @@ public class UserCtrl extends HttpServlet {
         }
         if (req.getParameter("price") != null) {
             room.setPrice(String.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("discountPrice") != null) {
+            room.setDiscountPrice(String.valueOf(req.getParameter("discountPrice")));
         }
         if (req.getParameter("square") != null) {
             room.setSquare(String.valueOf(req.getParameter("square")));

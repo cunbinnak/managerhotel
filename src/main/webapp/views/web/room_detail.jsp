@@ -144,7 +144,7 @@
                   </div>
                   <p class="about">phòng này chỉ dành cho dân chơi, không dành cho các dân chơi nữa mùa</p>
 
-                  <div class="cart mt-4 align-items-center">  <
+                  <div class="cart mt-4 align-items-center">
                           <a href="<c:url value='/user/add-to-cart?idroom=${roomdetail.id}'/> " class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</a>
                       <i class="fa fa-heart text-muted"></i>
                       <i class="fa fa-share-alt text-muted"></i>
