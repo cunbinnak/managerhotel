@@ -49,7 +49,14 @@ public class UserCtrl extends HttpServlet {
                 req.getRequestDispatcher("/views/staff/createRoom.jsp").forward(req, resp);
             }
             if (uri.equalsIgnoreCase("update_room")) {
-                detailRoomGet(req, resp, session);
+                detailRoomGet(req, resp);
+            }
+            if(uri.equalsIgnoreCase("/user/add-to-cart")){
+                String msg = "Đặt phòng thành công";
+                req.setAttribute("msg", msg);
+//            resp.sendRedirect("");
+
+                req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -69,6 +76,13 @@ public class UserCtrl extends HttpServlet {
             }
             if (uri.equalsIgnoreCase("/insert_room")) {
                 insertRoom(req, resp);
+            }
+            if(uri.equalsIgnoreCase("/user/add-to-cart")){
+                String idroom = req.getParameter("idroom");
+                String msg = "Đặt phòng thành công";
+                req.setAttribute("msg", msg);
+                resp.sendRedirect("");
+                return;
             }
         } catch (ExportException | SQLException e) {
             throw new RuntimeException(e);
