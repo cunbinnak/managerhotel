@@ -97,7 +97,15 @@
 <%--                                        <li><a href="events.html">Sự kiện</a></li>--%>
 <%--                                        <li><a href="about.html">Thông tin</a></li>--%>
                                         <li><a href="contact.html">Liên hệ</a></li>
-                                        <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+                                        <c:choose>
+                                            <c:when test="${username !=null}">
+                                                <li><a href="/authen/logout">Xin Chào: ${username}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+
 
                                     </ul>
                                 </div>

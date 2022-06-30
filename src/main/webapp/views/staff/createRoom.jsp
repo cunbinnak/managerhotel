@@ -80,29 +80,30 @@
     </div>
     <div class="sidebar-menu">
         <ul>
+            <c:if test="${role=='ADMIN'}">
+                <li>
+                    <a href="<c:url value='/admin'/>" ><span class="las la-igloo"></span>
+                        <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="<c:url value='/admin/search/user'/>" ><span class="las la-users"></span>
+                        <span>User</span></a>
+                </li>
+            </c:if>
+            <c:if test="${role=='STAFF'}">
+                <li>
+                    <a href="<c:url value='/rooms'/>"><span class="las la-table" class="active"></span>
+                        <span>Room</span></a>
+                </li>
+                <li>
+                    <a href="/admin/order"><span class="la la-opencart"></span>
+                        <span>Order</span></a>
+                </li>
+            </c:if>
+
             <li>
-                <a routerLink="/admin/home" ><span class="las la-igloo"></span>
-                    <span>Dashboard</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/user" class="active"><span class="las la-users"></span>
-                    <span>User</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/categories"><span class="las la-table"></span>
-                    <span>Categories</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/product"><span class="las la-table"></span>
-                    <span>Product</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/order"><span class="la la-opencart"></span>
-                    <span>Order</span></a>
-            </li>
-            <li>
-                <a routerLink="/home"><span class="la la-opencart"></span>
-                    <span>Shopping Page</span></a>
+                <a href=""><span class="la la-opencart"></span>
+                    <span>Home Page</span></a>
             </li>
         </ul>
     </div>

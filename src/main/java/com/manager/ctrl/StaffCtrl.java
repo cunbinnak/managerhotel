@@ -1,5 +1,9 @@
 package com.manager.ctrl;
 
+import com.manager.dto.SearchRoomRequest;
+import com.manager.serviceImpl.RoomServiceImpl;
+import lombok.SneakyThrows;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,12 +15,15 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/staff")
 public class StaffCtrl extends HttpServlet {
 
+    @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        RoomServiceImpl roomService = new RoomServiceImpl();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
-        req.getRequestDispatcher("/views/admin/AdminController.jsp").forward(req, resp);
+        req.setAttribute("rooms", roomService.findAllRoom(new SearchRoomRequest()));
+        req.getRequestDispatcher("/views/staff/room_list.jsp").forward(req, resp);
     }
 
     @Override
