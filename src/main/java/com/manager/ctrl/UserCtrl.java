@@ -1,6 +1,7 @@
 package com.manager.ctrl;
 
 import com.manager.dto.SearchRoomRequest;
+import com.manager.entity.Room;
 import com.manager.serviceImpl.RoomServiceImpl;
 
 import javax.servlet.ServletException;
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.rmi.server.ExportException;
 import java.sql.SQLException;
+import java.util.UUID;
 
-@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail"})
+@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail","/insert_room"})
 public class UserCtrl extends HttpServlet {
 
     public UserCtrl() {
@@ -32,7 +35,6 @@ public class UserCtrl extends HttpServlet {
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
             if (uri.equalsIgnoreCase("/rooms")) {
-
                 SearchRoomRequest rq = new SearchRoomRequest();
                 if (session.getAttribute("roomRequest") != null) {
                     rq = (SearchRoomRequest) session.getAttribute("roomRequest");
@@ -43,7 +45,12 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/room_detail")) {
                 req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
-
+            if (uri.equalsIgnoreCase("/insert_room")) {
+                req.getRequestDispatcher("/views/staff/createRoom.jsp").forward(req, resp);
+            }
+            if (uri.equalsIgnoreCase("update_room")) {
+                detailRoomGet(req, resp, session);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -56,9 +63,15 @@ public class UserCtrl extends HttpServlet {
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName", userName);
         String uri = req.getServletPath();
-
-        if (uri.equalsIgnoreCase("/rooms")) {
-            searchRoom(req,resp,session);
+        try {
+            if (uri.equalsIgnoreCase("/rooms")) {
+                searchRoom(req, resp, session);
+            }
+            if (uri.equalsIgnoreCase("/insert_room")) {
+                insertRoom(req, resp);
+            }
+        } catch (ExportException | SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -81,6 +94,66 @@ public class UserCtrl extends HttpServlet {
             rq.setStatus(String.valueOf(req.getParameter("searchRoomByStatus")));
         }
         session.setAttribute("roomRequest", rq);
+        resp.sendRedirect("/rooms");
+    }
+
+    private void insertRoom(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+        RoomServiceImpl roomService = new RoomServiceImpl();
+        Room room = new Room();
+        if (req.getParameter("roomName") != null) {
+            room.setName(String.valueOf(req.getParameter("roomName")));
+        }
+        if (req.getParameter("price") != null) {
+            room.setPrice(String.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("square") != null) {
+            room.setSquare(String.valueOf(req.getParameter("square")));
+        }
+        if (req.getParameter("bedNumber") != null) {
+            room.setBedNumber(String.valueOf(req.getParameter("bedNumber")));
+        }
+        if (req.getParameter("peopleNumber") != null) {
+            room.setPeopleNumber(String.valueOf(req.getParameter("peopleNumber")));
+        }
+        if (req.getParameter("description") != null) {
+            room.setDescription(String.valueOf(req.getParameter("description")));
+        }
+        if (req.getParameter("status") != null) {
+            room.setStatus(String.valueOf(req.getParameter("status")));
+        }
+        room.setId(UUID.randomUUID().toString());
+        room.setIsDeleted(Boolean.FALSE);
+        roomService.create(room);
+        resp.sendRedirect("/rooms");
+    }
+
+    private void detailRoomGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+        RoomServiceImpl roomService = new RoomServiceImpl();
+        Room room = new Room();
+        if (req.getParameter("roomName") != null) {
+            room.setName(String.valueOf(req.getParameter("roomName")));
+        }
+        if (req.getParameter("price") != null) {
+            room.setPrice(String.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("square") != null) {
+            room.setSquare(String.valueOf(req.getParameter("square")));
+        }
+        if (req.getParameter("bedNumber") != null) {
+            room.setBedNumber(String.valueOf(req.getParameter("bedNumber")));
+        }
+        if (req.getParameter("peopleNumber") != null) {
+            room.setPeopleNumber(String.valueOf(req.getParameter("peopleNumber")));
+        }
+        if (req.getParameter("description") != null) {
+            room.setDescription(String.valueOf(req.getParameter("description")));
+        }
+        if (req.getParameter("status") != null) {
+            room.setStatus(String.valueOf(req.getParameter("status")));
+        }
+        room.setId(UUID.randomUUID().toString());
+        room.setIsDeleted(Boolean.FALSE);
+        roomService.create(room);
         resp.sendRedirect("/rooms");
     }
 }

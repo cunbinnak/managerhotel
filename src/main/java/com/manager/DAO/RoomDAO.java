@@ -12,7 +12,7 @@ public interface RoomDAO {
 
     public List<Room> getAllRoom(Map<String, String> spec) throws SQLException;
 
-    public Room updateRoom(Room room);
+    public void updateRoomById(Map<String, String> spec, String id) throws SQLException;
 
     public void deleteRoom(List<String> ids) throws SQLException;
 

@@ -1,17 +1,63 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: manhk
-  Date: 6/26/2022
-  Time: 6:06 PM
+  Date: 6/28/2022
+  Time: 3:30 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<body bgcolor="#ffffff">
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<html>--%>
+<%--<body bgcolor="#ffffff">--%>
+<%--<fieldset>--%>
+<%--    <legend>Tạo tài khoản quản trị</legend>--%>
+<%--    <form method="post" action="">--%>
+<%--        <table cellpadding="2" cellspacing="2">--%>
+<%--            <tr>--%>
+<%--                <td>Username</td>--%>
+<%--                <td><input type="text" name="username"></td>--%>
+<%--            </tr>--%>
 
-</body>
-</html>
+<%--            <tr>--%>
+<%--                <td>Họ tên</td>--%>
+<%--                <td><input type="text" name="name"></td>--%>
+<%--            </tr>--%>
+
+<%--            <tr>--%>
+<%--                <td>Ngày sinh</td>--%>
+<%--                <td><input type="date" name="birthDay"></td>--%>
+<%--            </tr>--%>
+
+<%--            <tr>--%>
+<%--                <td>Địa chỉ</td>--%>
+<%--                <td><input type="text" name="address"></td>--%>
+<%--            </tr>--%>
+
+<%--            <tr>--%>
+<%--                <td>Email</td>--%>
+<%--                <td><input type="email" name="email"></td>--%>
+<%--            </tr>--%>
+
+<%--            <tr>--%>
+<%--                <td>Số điện thoại</td>--%>
+<%--                <td><input type="number" name="phone"></td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <label for="roleCode">Chức Vụ:</label>--%>
+<%--                <select name="roleCode" id="roleCode">--%>
+<%--                    <option value="ADMIN">Quản lý</option>--%>
+<%--                    <option value="STAFF">Nhân viên</option>--%>
+<%--                </select>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td>&nbsp;</td>--%>
+<%--                <td><input type="submit" value="Đăng ký"></td>--%>
+<%--                <br> ${ message } <br>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
+<%--    </form>--%>
+<%--</fieldset>--%>
+<%--</body>--%>
+<%--</html>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -39,12 +85,12 @@
                     <span>Dashboard</span></a>
             </li>
             <li>
-                <a routerLink="/admin/user" ><span class="las la-users"></span>
+                <a routerLink="/admin/user" class="active"><span class="las la-users"></span>
                     <span>User</span></a>
             </li>
             <li>
-                <a routerLink="/admin/categories" class="active"><span class="las la-table"></span>
-                    <span>Rooms</span></a>
+                <a routerLink="/admin/categories"><span class="las la-table"></span>
+                    <span>Categories</span></a>
             </li>
             <li>
                 <a routerLink="/admin/product"><span class="las la-table"></span>
@@ -81,68 +127,62 @@
     </header>
     <main>
 
-            <legend>Tìm kiếm</legend>
+
+
+            <legend>Thêm mới thông tin phòng</legend>
             <form method="post" action="">
-                <table class="table">
+                <table class="table table-striped">
                     <tr>
                         <td>Tên phòng</td>
-                        <td><input type="text" name="searchRoomByName" class="form-control"></td>
+                        <td><input type="text" name="roomName" class="form-control"></td>
                     </tr>
+
                     <tr>
-                        <td>Giá</td>
-                        <td><input type="text" name="searchRoomByPrice" class="form-control"></td>
+                        <td>Diện tích</td>
+                        <td><input type="text" name="square" class="form-control"></td>
                     </tr>
+
                     <tr>
                         <td>Số giường</td>
-                        <td><input type="text" name="searchRoomByBed" class="form-control"></td>
+                        <td><input type="text" name="bedNumber" class="form-control"></td>
                     </tr>
+
                     <tr>
                         <td>Số người</td>
-                        <td><input type="text" name="searchRoomByPeople" class="form-control"></td>
+                        <td><input type="text" name="peopleNumber" class="form-control"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Giá</td>
+                        <td><input type="text" name="price" class="form-control"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Giảm giá</td>
+                        <td><input type="text" name="discountPrice" class="form-control"></td>
                     </tr>
                     <tr>
-                        <td>Trạng thái</td>
-                        <td><input type="text" name="searchRoomByStatus" class="form-control"></td>
+                        <td>Thông tin thêm</td>
+                        <td><input type="text" name="description" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="status">Trạng thái</label></td>
+                        <td>
+                            <select name="status" id="status" class="form-control">
+                            <option value="0">Đã đặt</option>
+                            <option value="1">Còn phòng</option>
+                            <option value="2">Đang tu sửa</option>
+                        </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
+                        <td><input type="submit" value="Tạo phòng" class="btn btn-danger"></td>
                         <br> ${ message } <br>
                     </tr>
                 </table>
             </form>
 
-            <h3>Danh sách phòng</h3>
-                <table class="table .table-bordered">
-                    <tr>
-                        <td>Tên phòng</td>
-                        <td>Diện tích</td>
-                        <td>Số giường</td>
-                        <td>Số người</td>
-                        <td>Giá</td>
-                        <td>Giảm giá</td>
-                        <td>Thông tin thêm</td>
-                        <td>Trạng thái</td>
-                        <td>Hành động</td>
-                    </tr>
-                    <c:forEach var="room" items="${rooms}">
-                    <tr>
-                        <td>${ room.name }</td>
-                        <td>${ room.square }</td>
-                        <td>${ room.bedNumber }</td>
-                        <td>${ room.peopleNumber }</td>
-                        <td>${ room.price }</td>
-                        <td>${ room.discountPrice }</td>
-                        <td>${ room.description }</td>
-                        <td>${ room.status }</td>
-                        <td>
-                            <a href="">Đặt phòng</a>
-                            <a href="">Thêm dịch vụ</a>
-                            <a href="">Hủy Phòng</a>
-                        </td>
-                    </tr>
-                    </c:forEach>
-                </table>
     </main>
 </div>
 
