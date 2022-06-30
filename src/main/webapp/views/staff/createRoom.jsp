@@ -127,10 +127,8 @@
     </header>
     <main>
 
-
-
             <legend>Thêm mới thông tin phòng</legend>
-            <form method="post" action="">
+            <form method="post" action="" enctype="multipart/form-data">
                 <table class="table table-striped">
                     <tr>
                         <td>Tên phòng</td>
@@ -164,6 +162,10 @@
                     <tr>
                         <td>Thông tin thêm</td>
                         <td><input type="text" name="description" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh</td>
+                        <td><input type="file" name="image" class="form-control"></td>
                     </tr>
                     <tr>
                         <td><label for="status">Trạng thái</label></td>
