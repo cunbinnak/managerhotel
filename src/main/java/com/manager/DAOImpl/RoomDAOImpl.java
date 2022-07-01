@@ -17,7 +17,7 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public void createRoom(Room room) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`room` (`id`, `created_user`, `name`, `description`, `square`, `bed_number`, `people_number`, `price`, `discount_price`, `status`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO `managerhotel`.`room` (`id`, `created_user`, `name`, `description`, `square`, `bed_number`, `people_number`, `price`, `discount_price`, `status`, `is_deleted`, `image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
@@ -32,7 +32,7 @@ public class RoomDAOImpl implements RoomDAO {
             prepare.setString(9, room.getDiscountPrice());
             prepare.setString(10, room.getStatus());
             prepare.setBoolean(11, false);
-
+            prepare.setString(12, room.getImage());
             prepare.execute();
         } catch (SQLException e) {
             e.printStackTrace();

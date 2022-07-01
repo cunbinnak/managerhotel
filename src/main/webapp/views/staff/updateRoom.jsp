@@ -111,6 +111,10 @@
                     <td>Thông tin thêm</td>
                     <td><input type="text" name="description" value="${ roomDetail.description }" class="form-control"></td>
                 </tr>
+                 <tr>
+                    <td>Ảnh</td>
+                    <td><input type="file" name="image" class="form-control"></td>
+                </tr>
                 <tr>
                     <td><label for="status">Trạng thái</label></td>
                     <td><select name="status" id="status" value="${ roomDetail.status }" class="form-control">
