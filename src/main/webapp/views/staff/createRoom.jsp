@@ -92,7 +92,7 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>"><span class="las la-table" class="active"></span>
+                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -100,11 +100,6 @@
                         <span>Order</span></a>
                 </li>
             </c:if>
-
-            <li>
-                <a href=""><span class="la la-opencart"></span>
-                    <span>Home Page</span></a>
-            </li>
         </ul>
     </div>
 </div>
@@ -158,8 +153,8 @@
                     </tr>
 
                     <tr>
-                        <td>Giảm giá</td>
-                        <td><input type="text" name="discountPrice" class="form-control"></td>
+                        <td>Giảm giá (%)</td>
+                        <td><input type="text" pattern="^[0-9]{1,2}$" name="discountPrice" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Thông tin thêm</td>

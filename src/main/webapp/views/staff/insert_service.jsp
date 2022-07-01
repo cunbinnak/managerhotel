@@ -1,17 +1,15 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: manhk
-  Date: 6/28/2022
-  Time: 3:30 PM
+  User: Admin
+  Date: 7/1/2022
+  Time: 11:39 PM
   To change this template use File | Settings | File Templates.
 --%>
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Admin Controller</title>
+    <title>Admin</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -66,65 +64,70 @@
                 <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
-                <p (click)="signout();">Sign Out</p>
+                <p ><a href="<c:url value='logout'/>"> Đăng xuất</a></p>
             </div>
         </div>
     </header>
     <main>
-        <h3>Cập nhập thông tin phòng</h3>
-        <br>
-        <p>Thông tin phòng</p>
-        <img src="images/${roomDetail.image}" alt="" width="300px">
-        <form method="post" action="" enctype="multipart/form-data">
-            <table  class="table table-striped">
-                <tr style="display: none">
-                    <td><input type="hidden" name="roomId" value="${ roomDetail.id }" hidden class="form-control"></td>
-                </tr>
+
+
+        <h3>Thêm mới thông tin phòng</h3>
+        <form action="" enctype="multipart/form-data" method="post" >
+            <table class="table table-striped">
                 <tr>
                     <td>Tên phòng</td>
-                    <td><input type="text" name="name" value="${ roomDetail.name }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Diện tích</td>
-                    <td><input type="text" name="square"  value="${ roomDetail.square }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số giường</td>
-                    <td><input type="text" name="bedNumber" value="${ roomDetail.bedNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số người</td>
-                    <td><input type="text" name="peopleNumber" value="${ roomDetail.peopleNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Giá</td>
-                    <td><input type="text" name="price" value="${ roomDetail.price }" class="form-control"></td>
+                    <td><input type="text" name="roomName" class="form-control"></td>
                 </tr>
 
                 <tr>
-                    <td>Giảm giá</td>
-                    <td><input type="text" pattern="^[0-9]{1,2}" name="discountPrice" value="${ roomDetail.discountPrice }" class="form-control"></td>
+                    <td>Diện tích</td>
+                    <td><input type="text" name="square" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Số giường</td>
+                    <td><input type="text" name="bedNumber" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Số người</td>
+                    <td><input type="text" name="peopleNumber" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Giá</td>
+                    <td><input type="text" name="price" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Giảm giá (%)</td>
+                    <td><input type="text" pattern="^[0-9]{1,2}$" name="discountPrice" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Thông tin thêm</td>
-                    <td><input type="text" name="description" value="${ roomDetail.description }" class="form-control"></td>
-                </tr>
-                 <tr>
-                    <td>Ảnh</td>
-                    <td><input type="file" name="fileimage" class="form-control"></td>
+                    <td><input type="text" name="description" class="form-control"></td>
                 </tr>
                 <tr>
                     <td><label for="status">Trạng thái</label></td>
-                    <td><select name="status" id="status" value="${ roomDetail.status }" class="form-control">
-                        <option value="0">Đã đặt</option>
-                        <option value="1">Còn phòng</option>
-                        <option value="2">Đang tu sửa</option>
-                    </select>
+                    <td>
+                        <select name="status" id="status" class="form-control">
+                            <option value="0">Đã đặt</option>
+                            <option value="1">Còn phòng</option>
+                            <option value="2">Đang tu sửa</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hình ảnh</td>
+                    <td>
+                        <div class="mb-3">
+                            <input class="form-control" name="fileimage" type="file" >
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Cập nhật thông tin" class="btn btn-primary"></td>
+                    <td><input type="submit" value="add_room" class="btn btn-danger">Tạo Phòng</td>
                     <br> ${ message } <br>
                 </tr>
             </table>

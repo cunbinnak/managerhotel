@@ -1,17 +1,21 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: manhk
-  Date: 6/28/2022
-  Time: 3:30 PM
+  User: Admin
+  Date: 7/1/2022
+  Time: 11:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<body bgcolor="#ffffff">
+
+</body>
+</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 <head>
-    <title>Admin Controller</title>
+    <title>Admin</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -41,8 +45,12 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
+                </li>
+                <li>
+                    <a href="/search_service" class="active"><span class="la la-opencart"></span>
+                        <span>Service</span></a>
                 </li>
                 <li>
                     <a href="/admin/order"><span class="la la-opencart"></span>
@@ -66,70 +74,57 @@
                 <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
-                <p (click)="signout();">Sign Out</p>
+                <a href="/authen/logout">Đăng xuất</a>
             </div>
         </div>
     </header>
     <main>
-        <h3>Cập nhập thông tin phòng</h3>
-        <br>
-        <p>Thông tin phòng</p>
-        <img src="images/${roomDetail.image}" alt="" width="300px">
-        <form method="post" action="" enctype="multipart/form-data">
-            <table  class="table table-striped">
-                <tr style="display: none">
-                    <td><input type="hidden" name="roomId" value="${ roomDetail.id }" hidden class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Tên phòng</td>
-                    <td><input type="text" name="name" value="${ roomDetail.name }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Diện tích</td>
-                    <td><input type="text" name="square"  value="${ roomDetail.square }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số giường</td>
-                    <td><input type="text" name="bedNumber" value="${ roomDetail.bedNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số người</td>
-                    <td><input type="text" name="peopleNumber" value="${ roomDetail.peopleNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Giá</td>
-                    <td><input type="text" name="price" value="${ roomDetail.price }" class="form-control"></td>
-                </tr>
 
+        <legend>Tìm kiếm</legend>
+        <form method="post" action="">
+            <table class="table">
                 <tr>
-                    <td>Giảm giá</td>
-                    <td><input type="text" pattern="^[0-9]{1,2}" name="discountPrice" value="${ roomDetail.discountPrice }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Thông tin thêm</td>
-                    <td><input type="text" name="description" value="${ roomDetail.description }" class="form-control"></td>
-                </tr>
-                 <tr>
-                    <td>Ảnh</td>
-                    <td><input type="file" name="fileimage" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td><label for="status">Trạng thái</label></td>
-                    <td><select name="status" id="status" value="${ roomDetail.status }" class="form-control">
-                        <option value="0">Đã đặt</option>
-                        <option value="1">Còn phòng</option>
-                        <option value="2">Đang tu sửa</option>
-                    </select>
-                    </td>
+                    <td>Tên dich vụ</td>
+                    <td><input type="text" name="nameService" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Cập nhật thông tin" class="btn btn-primary"></td>
+                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>
         </form>
 
+        <button type="button" class="btn btn-danger"><a href="/insert_service">Thêm mới</a> </button>
+        <br>
+        <h3>Danh dịch vụ</h3>
+        <table class="table .table-bordered">
+            <tr>
+                <td>Tên dịch vụ</td>
+                <td>Mô tả dịch vụ</td>
+                <td>Giá</td>
+                <td>Số lượng</td>
+                <td>Đơn vị tiền</td>
+                <td>Hình ảnh</td>
+                <td>Hành động</td>
+            </tr>
+            <c:forEach var="sv" items="${serviceList}">
+                <tr>
+                    <td>${ sv.name }</td>
+                    <td>${ sv.description }</td>
+                    <td>${ sv.price }</td>
+                    <td>${ sv.amount }</td>
+                    <td>${ sv.unit }</td>
+                    <td><img src="images/${sv.image}" alt="" style="width: 100px"></td>
+                    <td>
+                        <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
+                        <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
+                        <a href="" style="margin: 10px">Thêm dịch vụ</a>
+                        <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </main>
 </div>
 
