@@ -167,9 +167,9 @@
                 <c:forEach items="${rooms}" var="r">
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="hotel-room text-center">
-                            <a href="/room_detail?idroom=${r.id}" class="d-block mb-0 thumbnail"><img src="<c:url value='template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
+                            <a href="/room_detail?idroom=${r.id}" class="d-block mb-0 thumbnail"><img src="images/${r.image}" alt="Image" class="img-fluid"></a>
                             <div class="hotel-room-body">
-                                <h3 class="heading mb-0"><a href="#">${r.name}</a></h3>
+                                <h3 class="heading mb-0"><a href="/room_detail?idroom=${r.id}">${r.name}</a></h3>
                                 <strong class="price">${r.price} / một đêm</strong>
                             </div>
                         </div>
@@ -287,44 +287,6 @@
 
         </div>
     </div>
-
-<%--    <div class="site-section">--%>
-<%--        <div class="container">--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-md-6 mx-auto text-center mb-5 section-heading">--%>
-<%--                    <h2 class="mb-5">Phòng còn trống</h2>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="row no-gutters">--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_1.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_2.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_2.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_3.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_3.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_4.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_4.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_4.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_5.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_5.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_6.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_6.jpg'/>" alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-<%--                <div class="col-md-6 col-lg-3">--%>
-<%--                    <a href="images/img_7.jpg" class="image-popup img-opacity"><img src="<c:url value='/template/images/img_7.jpg'/> " alt="Image" class="img-fluid"></a>--%>
-<%--                </div>--%>
-
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <div class="site-section block-14 bg-light">
 

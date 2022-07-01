@@ -50,7 +50,7 @@
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service"><span class="la la-opencart"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
                         <span>Service</span></a>
                 </li>
                 <li>

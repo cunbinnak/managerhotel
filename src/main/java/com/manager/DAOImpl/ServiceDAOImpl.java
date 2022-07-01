@@ -64,7 +64,7 @@ public class ServiceDAOImpl implements ServiceDAO {
                 service.setDescription(rs.getString("description"));
                 service.setPrice(rs.getDouble("price"));
                 service.setUnit(rs.getString("unit"));
-
+                service.setImage(rs.getString("image"));
                 services.add(service);
             }
         } catch (SQLException e) {
@@ -116,7 +116,7 @@ public class ServiceDAOImpl implements ServiceDAO {
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
-            prepare.setBoolean(1, false);
+            prepare.setString(1, id);
             ResultSet rs = prepare.executeQuery();
 
             while (rs.next()) {

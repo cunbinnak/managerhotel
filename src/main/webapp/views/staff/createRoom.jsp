@@ -94,7 +94,10 @@
                 <li>
                     <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
                         <span>Room</span></a>
-                </li>
+                </li><li>
+                <a href="<c:url value='/search_service'/>"><span class="las la-table" ></span>
+                    <span>Service</span></a>
+            </li>
                 <li>
                     <a href="/admin/order"><span class="la la-opencart"></span>
                         <span>Order</span></a>
