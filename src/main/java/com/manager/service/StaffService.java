@@ -1,6 +1,7 @@
 package com.manager.service;
 
 import com.manager.dto.SearchServiceRequest;
+import com.manager.entity.Room;
 import com.manager.entity.Service;
 
 import java.sql.SQLException;
@@ -12,4 +13,6 @@ public interface StaffService {
     List<Service> findAllService(SearchServiceRequest rq) throws SQLException;
 
     Service getServiceDetail(String id) throws SQLException;
+
+    void updateService(Service service) throws SQLException;
 }

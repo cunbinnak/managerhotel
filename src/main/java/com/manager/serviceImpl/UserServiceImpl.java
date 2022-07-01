@@ -1,6 +1,7 @@
 package com.manager.serviceImpl;
 
 import com.manager.DAOImpl.*;
+import com.manager.dto.SearchCustomerRequest;
 import com.manager.dto.SearchUserDto;
 import com.manager.entity.*;
 import com.manager.service.UserService;
@@ -108,6 +109,24 @@ public class UserServiceImpl implements UserService {
         }
         UserDAOImpl userDAO = new UserDAOImpl();
         return userDAO.getAllUser(spec);
+    }
+
+    @Override
+    public List<Customer> findAllCustomers(SearchCustomerRequest searchCustomerRequest) throws SQLException {
+        Map<String, String> spec = new HashMap<>();
+        if (searchCustomerRequest != null) {
+            if (searchCustomerRequest.getEmail() != null && !searchCustomerRequest.getEmail().isEmpty()) {
+                spec.put("email", "'" + searchCustomerRequest.getEmail() + "'");
+            }
+            if (searchCustomerRequest.getName() != null && !searchCustomerRequest.getName().isEmpty()) {
+                spec.put("name", "'%" + searchCustomerRequest.getName() + "%'");
+            }
+            if (searchCustomerRequest.getPhone() != null && !searchCustomerRequest.getPhone().isEmpty()) {
+                spec.put("phone_number", "'" + searchCustomerRequest.getPhone() + "'");
+            }
+        }
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        return customerDAO.findAllCustomer(spec);
     }
 
     @Override

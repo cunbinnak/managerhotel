@@ -84,4 +84,40 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
 
+    @Override
+    public List<Customer> findAllCustomer(Map<String, String> spec) throws SQLException {
+        List<Customer> customers = new ArrayList<>();
+        String query = "select * from customer ";
+        List<String> predicates =  new ArrayList<>();
+        if(!spec.isEmpty()){
+            query = query + "where";
+            for(Map.Entry<String, String> entry : spec.entrySet()){
+                if( entry.getKey().equalsIgnoreCase("name")) {
+                    predicates.add(" UPPER(" + entry.getKey() + ") Like " + entry.getValue());
+                    continue;
+                }
+                predicates.add(" UPPER(" + entry.getKey() + ") = " + entry.getValue());
+            }
+            String predicate = String.join(" AND ", predicates);
+            query = query + predicate + "and type = ";
+        }
+        Connection connection =  databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()){
+                Customer customer = new Customer();
+                customer.setName(rs.getString("name"));
+                customer.setPhone(rs.getString("phone_number"));
+                customer.setEmail(rs.getString("email"));
+                customer.setAddress(rs.getString("address"));
+                customer.setId(rs.getString("id"));
+                customers.add(customer);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
 }

@@ -31,7 +31,7 @@ public class Service
     @Column(name = "name")
     private String name;
     @Column(name = "unit")
-    private File image;
+    private String image;
     @Column(name = "amount")
     private String amount;
 
