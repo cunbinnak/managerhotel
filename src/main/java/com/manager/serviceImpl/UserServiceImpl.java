@@ -1,5 +1,6 @@
 package com.manager.serviceImpl;
 
+import com.manager.DAO.OrderDetailDao;
 import com.manager.DAOImpl.*;
 import com.manager.dto.SearchCustomerRequest;
 import com.manager.dto.SearchUserDto;
@@ -181,5 +182,45 @@ public class UserServiceImpl implements UserService {
         OrderDaoImpl orderDao = new OrderDaoImpl();
         return orderDao.getOrder(id);
     }
+
+    @Override
+    public List<OrderDetails> getOrderDetailByOrderId(String orderId) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+        return orderDetailDao.getOrderDetailByOrderId(orderId);
+    }
+
+    @Override
+    public OrderDetails getOrderDetailById(String id) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+        return orderDetailDao.getOrderDetailById(id);
+    }
+
+    @Override
+    public void deleteOrderDetailById(String id) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+        orderDetailDao.deleteOrderDetailById(id);
+    }
+
+    @Override
+    public void createOrderDetail(List<OrderDetails> orderDetails) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+        orderDetailDao.newOrderDetail(orderDetails);
+    }
+
+    @Override
+    public void updateOrderDetail(OrderDetails orderDetails) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+
+        Map<String, String> spec = new HashMap<>();
+        if (orderDetails != null) {
+            if (orderDetails.getAmount() != null && !orderDetails.getAmount().isEmpty()) {
+                spec.put("amount", "'" + orderDetails.getAmount() + "'");
+            }
+        } else {
+            return;
+        }
+        orderDetailDao.updateOrderDetail(spec, orderDetails.getId());
+    }
+
 
 }
