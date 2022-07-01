@@ -45,6 +45,10 @@
                         <span>Room</span></a>
                 </li>
                 <li>
+                    <a href="/search_service" class="active"><span class="las la-table" ></span>
+                        <span>Service</span></a>
+                </li>
+                <li>
                     <a href="/admin/order"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>

@@ -39,9 +39,12 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table" ></span>
                         <span>Room</span></a>
-                </li>
+                </li><li>
+                <a href="<c:url value='/search_service'/>" class="active"><span class="las la-table" ></span>
+                    <span>Service</span></a>
+            </li>
                 <li>
                     <a href="/admin/order"><span class="la la-opencart"></span>
                         <span>Order</span></a>
@@ -71,52 +74,42 @@
     <main>
 
 
-        <h3>Thêm mới thông tin phòng</h3>
-        <form action="" enctype="multipart/form-data" method="post" >
+        <h3>Thêm mới dịch vụ</h3>
+        <form action="insert_service" enctype="multipart/form-data" method="post" >
             <table class="table table-striped">
                 <tr>
-                    <td>Tên phòng</td>
-                    <td><input type="text" name="roomName" class="form-control"></td>
+                    <td>Tên dịch vụ</td>
+                    <td><input type="text" name="serviceName" class="form-control"></td>
                 </tr>
 
                 <tr>
-                    <td>Diện tích</td>
-                    <td><input type="text" name="square" class="form-control"></td>
-                </tr>
-
-                <tr>
-                    <td>Số giường</td>
-                    <td><input type="text" name="bedNumber" class="form-control"></td>
-                </tr>
-
-                <tr>
-                    <td>Số người</td>
-                    <td><input type="text" name="peopleNumber" class="form-control"></td>
+                    <td>Mô tả dịch vụ</td>
+                    <td><input type="text" name="description" class="form-control"></td>
                 </tr>
 
                 <tr>
                     <td>Giá</td>
                     <td><input type="text" name="price" class="form-control"></td>
                 </tr>
-
                 <tr>
-                    <td>Giảm giá (%)</td>
-                    <td><input type="text" pattern="^[0-9]{1,2}$" name="discountPrice" class="form-control"></td>
+                    <td><label for="unit">Đơn vị tiền</label></td>
+                    <td>
+                        <select name="unit" id="unit" class="form-control">
+                            <option value="1">Nghìn đồng</option>
+                            <option value="2">Triệu đồng</option>
+                            <option value="3">Tỷ đòng</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Giá</td>
+                    <td><input type="text" name="price" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Thông tin thêm</td>
                     <td><input type="text" name="description" class="form-control"></td>
                 </tr>
-                <tr>
-                    <td><label for="status">Trạng thái</label></td>
-                    <td>
-                        <select name="status" id="status" class="form-control">
-                            <option value="0">Đã đặt</option>
-                            <option value="1">Còn phòng</option>
-                            <option value="2">Đang tu sửa</option>
-                        </select>
-                    </td>
-                </tr>
+
                 <tr>
                     <td>Hình ảnh</td>
                     <td>
@@ -127,7 +120,7 @@
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="add_room" class="btn btn-danger">Tạo Phòng</td>
+                    <td><input type="submit" value="insert_service" class="btn btn-danger">Thêm dịch vụ</td>
                     <br> ${ message } <br>
                 </tr>
             </table>
