@@ -26,10 +26,13 @@ public class ServiceCtrl extends HttpServlet {
         try {
             if (url.endsWith("search_service")) {
                 SearchServiceRequest request = new SearchServiceRequest();
-                request.setName(StringUtil.checkValidString(session.getAttribute("nameService").toString()));
+                if (session.getAttribute("nameService")!=null){
+                    request.setName(StringUtil.checkValidString(session.getAttribute("nameService").toString()));
+                }
+
                 StaffServiceImpl staffService = new StaffServiceImpl();
                 req.setAttribute("serviceList", staffService.findAllService(request));
-                req.getRequestDispatcher("/views/user/service_list.jsp").forward(req, response);
+                req.getRequestDispatcher("/views/staff/list_service.jsp").forward(req, response);
                 session.removeAttribute("nameService");
             }
             if (url.endsWith("detail_service")) {
@@ -50,7 +53,7 @@ public class ServiceCtrl extends HttpServlet {
         try {
             if (url.endsWith("search_service")) {
                 session.setAttribute("nameService", StringUtil.checkValidString(req.getParameter("nameService")));
-                response.sendRedirect("search/service");
+                response.sendRedirect("search_service");
             }
             if (url.endsWith("update_service")) {
                 updateService(req, response);

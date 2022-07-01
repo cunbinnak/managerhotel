@@ -30,7 +30,7 @@ public class Service
     private String unit;
     @Column(name = "name")
     private String name;
-    @Column(name = "unit")
+    @Column(name = "image")
     private String image;
     @Column(name = "amount")
     private String amount;
