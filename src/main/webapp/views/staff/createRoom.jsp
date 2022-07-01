@@ -80,29 +80,30 @@
     </div>
     <div class="sidebar-menu">
         <ul>
+            <c:if test="${role=='ADMIN'}">
+                <li>
+                    <a href="<c:url value='/admin'/>" ><span class="las la-igloo"></span>
+                        <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="<c:url value='/admin/search/user'/>" ><span class="las la-users"></span>
+                        <span>User</span></a>
+                </li>
+            </c:if>
+            <c:if test="${role=='STAFF'}">
+                <li>
+                    <a href="<c:url value='/rooms'/>"><span class="las la-table" class="active"></span>
+                        <span>Room</span></a>
+                </li>
+                <li>
+                    <a href="/admin/order"><span class="la la-opencart"></span>
+                        <span>Order</span></a>
+                </li>
+            </c:if>
+
             <li>
-                <a routerLink="/admin/home" ><span class="las la-igloo"></span>
-                    <span>Dashboard</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/user" class="active"><span class="las la-users"></span>
-                    <span>User</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/categories"><span class="las la-table"></span>
-                    <span>Categories</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/product"><span class="las la-table"></span>
-                    <span>Product</span></a>
-            </li>
-            <li>
-                <a routerLink="/admin/order"><span class="la la-opencart"></span>
-                    <span>Order</span></a>
-            </li>
-            <li>
-                <a routerLink="/home"><span class="la la-opencart"></span>
-                    <span>Shopping Page</span></a>
+                <a href=""><span class="la la-opencart"></span>
+                    <span>Home Page</span></a>
             </li>
         </ul>
     </div>
@@ -127,8 +128,9 @@
     </header>
     <main>
 
-            <legend>Thêm mới thông tin phòng</legend>
-            <form method="post" action="" enctype="multipart/form-data">
+
+            <h3>Thêm mới thông tin phòng</h3>
+            <form action="" enctype="multipart/form-data" method="post" >
                 <table class="table table-striped">
                     <tr>
                         <td>Tên phòng</td>
@@ -164,10 +166,6 @@
                         <td><input type="text" name="description" class="form-control"></td>
                     </tr>
                     <tr>
-                        <td>Ảnh</td>
-                        <td><input type="file" name="image" class="form-control"></td>
-                    </tr>
-                    <tr>
                         <td><label for="status">Trạng thái</label></td>
                         <td>
                             <select name="status" id="status" class="form-control">
@@ -178,8 +176,16 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Hình ảnh</td>
+                        <td>
+                            <div class="mb-3">
+                                <input class="form-control" name="fileimage" type="file" >
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" value="Tạo phòng" class="btn btn-danger"></td>
+                        <td><input type="submit" value="add_room" class="btn btn-danger">Tạo Phòng</td>
                         <br> ${ message } <br>
                     </tr>
                 </table>

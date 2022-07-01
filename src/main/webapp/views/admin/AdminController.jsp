@@ -27,22 +27,27 @@
     </div>
     <div class="sidebar-menu">
         <ul>
+            <c:if test="${role=='ADMIN'}">
             <li>
-                <a href="<c:url value='/admin'/>" class="active"><span class="las la-igloo"></span>
-                    <span>Dashboard</span></a>
+                 <a href="<c:url value='/admin'/>" class="active"><span class="las la-igloo"></span>
+                        <span>Dashboard</span></a>
             </li>
             <li>
                 <a href="<c:url value='/admin/search/user'/>"><span class="las la-users"></span>
                     <span>User</span></a>
             </li>
+            </c:if>
+            <c:if test="${role=='STAFF' || role =='ADMIN'}">
             <li>
                 <a href="<c:url value='/rooms'/>"><span class="las la-table"></span>
                     <span>Room</span></a>
             </li>
-            <li>
-                <a href="/admin/order"><span class="la la-opencart"></span>
-                    <span>Order</span></a>
-            </li>
+             <li>
+                 <a href="/admin/order"><span class="la la-opencart"></span>
+                     <span>Order</span></a>
+             </li>
+            </c:if>
+
             <li>
                 <a href=""><span class="la la-opencart"></span>
                     <span>Home Page</span></a>

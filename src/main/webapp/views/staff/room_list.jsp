@@ -34,22 +34,27 @@
     </div>
     <div class="sidebar-menu">
         <ul>
-            <li>
-                <a href="<c:url value='/admin'/>" class="active"><span class="las la-igloo"></span>
-                    <span>Dashboard</span></a>
-            </li>
-            <li>
-                <a href="<c:url value='/admin/search/user'/>"><span class="las la-users"></span>
-                    <span>User</span></a>
-            </li>
-            <li>
-                <a href="<c:url value='/rooms'/>"><span class="las la-table"></span>
-                    <span>Room</span></a>
-            </li>
-            <li>
-                <a href="/admin/order"><span class="la la-opencart"></span>
-                    <span>Order</span></a>
-            </li>
+            <c:if test="${role=='ADMIN'}">
+                <li>
+                    <a href="<c:url value='/admin'/>" ><span class="las la-igloo"></span>
+                        <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="<c:url value='/admin/search/user'/>" ><span class="las la-users"></span>
+                        <span>User</span></a>
+                </li>
+            </c:if>
+            <c:if test="${role=='STAFF'}">
+                <li>
+                    <a href="<c:url value='/rooms'/>"><span class="las la-table" class="active"></span>
+                        <span>Room</span></a>
+                </li>
+                <li>
+                    <a href="/admin/order"><span class="la la-opencart"></span>
+                        <span>Order</span></a>
+                </li>
+            </c:if>
+
             <li>
                 <a href=""><span class="la la-opencart"></span>
                     <span>Home Page</span></a>
@@ -108,6 +113,8 @@
                 </table>
             </form>
 
+            <button type="button" class="btn btn-danger"><a href="/staff_create_room">Thêm mới</a> </button>
+            <br>
             <h3>Danh sách phòng</h3>
                 <table class="table .table-bordered">
                     <tr>
@@ -132,7 +139,7 @@
                         <td>${ room.description }</td>
                         <td>${ room.status }</td>
                         <td>
-                            <a href="/update_room">Chi tiết</a>
+                            <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
                             <a href="">Đặt phòng</a>
                             <a href="" style="margin: 10px">Thêm dịch vụ</a>
                             <a href="">Hủy Phòng</a>

@@ -40,6 +40,7 @@ public class Room
     @Column(name = "status")
     private String status;
     @Column(name = "image")
-    private String image;
+    private  String image;
+
 
 }
