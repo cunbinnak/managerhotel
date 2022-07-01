@@ -37,7 +37,7 @@
                     <span>User</span></a>
             </li>
             </c:if>
-            <c:if test="${role=='STAFF' || role =='ADMIN'}">
+            <c:if test="${role=='STAFF'}">
             <li>
                 <a href="<c:url value='/rooms'/>"><span class="las la-table"></span>
                     <span>Room</span></a>
@@ -47,11 +47,6 @@
                      <span>Order</span></a>
              </li>
             </c:if>
-
-            <li>
-                <a href=""><span class="la la-opencart"></span>
-                    <span>Home Page</span></a>
-            </li>
         </ul>
     </div>
 </div>

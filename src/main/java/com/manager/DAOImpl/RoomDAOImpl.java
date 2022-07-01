@@ -69,7 +69,7 @@ public class RoomDAOImpl implements RoomDAO {
                 room.setPrice(rs.getString("price"));
                 room.setDiscountPrice(rs.getString("discount_price"));
                 room.setStatus(rs.getString("status"));
-
+                room.setImage(rs.getString("image"));
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -134,6 +134,7 @@ public class RoomDAOImpl implements RoomDAO {
                 room.setPrice(rs.getString("price"));
                 room.setDiscountPrice(rs.getString("discount_price"));
                 room.setStatus(rs.getString("status"));
+                room.setImage(rs.getString("image"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

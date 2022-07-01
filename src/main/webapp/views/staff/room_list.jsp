@@ -46,19 +46,18 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>"><span class="las la-table" class="active"></span>
+                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
                         <span>Room</span></a>
+                </li>
+                <li>
+                    <a href="/search_service"><span class="la la-opencart"></span>
+                        <span>Service</span></a>
                 </li>
                 <li>
                     <a href="/admin/order"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
-
-            <li>
-                <a href=""><span class="la la-opencart"></span>
-                    <span>Home Page</span></a>
-            </li>
         </ul>
     </div>
 </div>
@@ -113,7 +112,7 @@
                 </table>
             </form>
 
-            <button type="button" class="btn btn-danger"><a href="/staff_create_room">Thêm mới</a> </button>
+            <button type="button" class="btn btn-danger"><a href="/insert_room">Thêm mới</a> </button>
             <br>
             <h3>Danh sách phòng</h3>
                 <table class="table .table-bordered">
@@ -125,6 +124,7 @@
                         <td>Giá</td>
                         <td>Giảm giá</td>
                         <td>Thông tin thêm</td>
+                        <td>Hình ảnh</td>
                         <td>Trạng thái</td>
                         <td>Hành động</td>
                     </tr>
@@ -137,12 +137,22 @@
                         <td>${ room.price }</td>
                         <td>${ room.discountPrice }</td>
                         <td>${ room.description }</td>
-                        <td>${ room.status }</td>
+                        <td><img src="images/${room.image}" alt="" style="width: 100px"> </td>
+                        <c:choose>
+                            <c:when test="${ room.status ==0}">
+                                <td>Đã đặt</td>
+                            </c:when>
+                            <c:when test="${ room.status ==1}"><td>Còn Phòng</td></c:when>
+                            <c:otherwise>
+                                <td>Hủy phòng</td>
+                            </c:otherwise>
+                        </c:choose>
+
                         <td>
                             <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
-                            <a href="">Đặt phòng</a>
+                            <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
                             <a href="" style="margin: 10px">Thêm dịch vụ</a>
-                            <a href="">Hủy Phòng</a>
+                            <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
                         </td>
                     </tr>
                     </c:forEach>

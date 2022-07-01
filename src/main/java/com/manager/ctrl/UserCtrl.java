@@ -1,13 +1,8 @@
 package com.manager.ctrl;
 
-import com.manager.dto.DetailOrder;
 import com.manager.dto.SearchRoomRequest;
-import com.manager.entity.Customer;
-import com.manager.entity.Order;
 import com.manager.entity.Room;
-import com.manager.entity.User;
 import com.manager.serviceImpl.RoomServiceImpl;
-import com.manager.serviceImpl.UserServiceImpl;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -16,8 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.server.ExportException;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -151,6 +150,9 @@ public class UserCtrl extends HttpServlet {
         if (req.getParameter("price") != null) {
             room.setPrice(String.valueOf(req.getParameter("price")));
         }
+        if (req.getParameter("discountPrice") != null) {
+            room.setDiscountPrice(String.valueOf(req.getParameter("discountPrice")));
+        }
         if (req.getParameter("square") != null) {
             room.setSquare(String.valueOf(req.getParameter("square")));
         }
@@ -183,9 +185,9 @@ public class UserCtrl extends HttpServlet {
             throws IOException, SQLException, ServletException {
         Room room = new Room();
         RoomServiceImpl roomService = new RoomServiceImpl();
-//        String id = req.getParameter("roomId");
+        String id = req.getParameter("idroom");
         // FIX value
-        String id = "1";
+//        String id = "1";
         room = roomService.getRoomDetail(id);
         req.setAttribute("roomDetail", room);
         req.getRequestDispatcher("views/staff/updateRoom.jsp").forward(req, resp);
@@ -200,6 +202,9 @@ public class UserCtrl extends HttpServlet {
         }
         if (req.getParameter("price") != null) {
             room.setPrice(String.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("discountPrice") != null) {
+            room.setDiscountPrice(String.valueOf(req.getParameter("discountPrice")));
         }
         if (req.getParameter("square") != null) {
             room.setSquare(String.valueOf(req.getParameter("square")));
@@ -228,13 +233,28 @@ public class UserCtrl extends HttpServlet {
 
     private String uploadFile(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        Part part = request.getPart("image");
+        Part part = request.getPart("fileimage");
         String fileName = extractFileName(part);
-        // refines the fileName in case it is an absolute path
-        fileName = new File(fileName).getName();
-        part.write(this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName);
+        if (part !=null && part.getSubmittedFileName() != null &&  !part.getSubmittedFileName().isEmpty() ){
 
-        return this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName;
+            // refines the fileName in case it is an absolute path
+            fileName = new File(fileName).getName();
+
+            String realPath = request.getServletContext().getRealPath("/images");
+//        String nameFile = part.getSubmittedFileName();
+            String nameFile = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            if(!Files.exists(Paths.get(realPath))){
+                Files.createDirectory(Paths.get(realPath));
+
+            }
+            part.write(realPath+"/"+nameFile);
+            return  nameFile;
+        }
+
+//        part.write(this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName);
+
+//        return this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName;
+        return null;
     }
 
     private String extractFileName(Part part) {

@@ -100,11 +100,6 @@
                         <span>Order</span></a>
                 </li>
             </c:if>
-
-            <li>
-                <a href=""><span class="la la-opencart"></span>
-                    <span>Home Page</span></a>
-            </li>
         </ul>
     </div>
 </div>
