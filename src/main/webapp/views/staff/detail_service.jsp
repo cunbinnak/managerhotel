@@ -1,21 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Admin
-  Date: 7/1/2022
-  Time: 11:31 PM
+  Date: 7/2/2022
+  Time: 12:52 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<body bgcolor="#ffffff">
-
-</body>
-</html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Admin</title>
+    <title>Admin Controller</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -45,11 +39,11 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table" ></span>
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" class="active"><span class="las la-table"></span>
+                    <a href="/search_service" class="active"><span class="las la-table" ></span>
                         <span>Service</span></a>
                 </li>
                 <li>
@@ -74,56 +68,54 @@
                 <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
-                <a href="/authen/logout">Đăng xuất</a>
+                <p (click)="signout();">Sign Out</p>
             </div>
         </div>
     </header>
     <main>
-
-        <legend>Tìm kiếm</legend>
-        <form method="post" action="">
-            <table class="table">
-                <tr>
-                    <td>Tên dich vụ</td>
-                    <td><input type="text" name="nameService" class="form-control"></td>
+        <h3>Chi Tiết Service</h3>
+        <br>
+        <p>Thông service</p>
+        <img src="images/${serviceDetail.image}" alt="" width="300px">
+        <form method="post" action="" enctype="multipart/form-data" >
+            <table  class="table table-striped">
+                <tr style="display: none">
+                    <td><input type="hidden" name="serviceid" value="${ serviceDetail.id }" hidden class="form-control"></td>
                 </tr>
                 <tr>
+                    <td>Tên dịch vụ</td>
+                    <td><input type="text" name="name" value="${ serviceDetail.name }" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Mô tả dịch vụ</td>
+                    <td><input type="text" name="square"  value="${ serviceDetail.description }" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Giá</td>
+                    <td><input type="text" name="price" value="${ serviceDetail.price }" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td><label for="unit">Đơn vị tiền</label></td>
+                    <td><select name="unit" id="unit" value="${ serviceDetail.unit }" class="form-control">
+                        <option value="1">Nghìn đồng</option>
+                        <option value="2">Triệu đồng</option>
+                        <option value="3">Tỷ đồng</option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ảnh</td>
+                    <td><input type="file" name="fileimage" class="form-control"></td>
+                </tr>
+
+                <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
+                    <td><input type="submit" value="Cập nhật thông tin" class="btn btn-primary"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>
         </form>
 
-        <button type="button" class="btn btn-danger"><a href="/insert_service">Thêm mới</a> </button>
-        <br>
-        <h3>Danh dịch vụ</h3>
-        <table class="table .table-bordered">
-            <tr>
-                <td>Tên dịch vụ</td>
-                <td>Mô tả dịch vụ</td>
-                <td>Giá</td>
-                <td>Số lượng</td>
-                <td>Đơn vị tiền</td>
-                <td>Hình ảnh</td>
-                <td>Hành động</td>
-            </tr>
-            <c:forEach var="sv" items="${serviceList}">
-                <tr>
-                    <td>${ sv.name }</td>
-                    <td>${ sv.description }</td>
-                    <td>${ sv.price }</td>
-                    <td>${ sv.amount }</td>
-                    <td>${ sv.unit }</td>
-                    <td><img src="images/${sv.image}" alt="" style="width: 100px"></td>
-                    <td>
-                        <a href="/detail_service?serviceId=${sv.id}" style="margin: 10px">Chi tiết</a>
-                        <a href="/detail_service?serviceId=${sv.id}">Đặt phòng</a>
-                        <a href="/detail_service?serviceId=${sv.id}">Hủy Phòng</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
     </main>
 </div>
 

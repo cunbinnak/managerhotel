@@ -225,26 +225,15 @@ public class UserCtrl extends HttpServlet {
     private String uploadFile(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Part part = request.getPart("fileimage");
-        String fileName = extractFileName(part);
         if (part !=null && part.getSubmittedFileName() != null &&  !part.getSubmittedFileName().isEmpty() ){
-
-            // refines the fileName in case it is an absolute path
-            fileName = new File(fileName).getName();
-
             String realPath = request.getServletContext().getRealPath("/images");
-//        String nameFile = part.getSubmittedFileName();
             String nameFile = Paths.get(part.getSubmittedFileName()).getFileName().toString();
             if(!Files.exists(Paths.get(realPath))){
                 Files.createDirectory(Paths.get(realPath));
-
             }
             part.write(realPath+"/"+nameFile);
             return  nameFile;
         }
-
-//        part.write(this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName);
-
-//        return this.getFolderUpload(request).getAbsolutePath() + File.separator + fileName;
         return null;
     }
 
