@@ -18,18 +18,20 @@ public class ServiceDAOImpl implements ServiceDAO {
 
     @Override
     public void createService(Service service) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`room` (`id`, `created_user`, `name`, `description`, `square`, `bed_number`, `people_number`, `price`, `discount_price`, `status`, `is_deleted`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO `managerhotel`.`service` (`id`, `created_user`, `description`, `price`, `unit`, `name`, `amount`, `is_deleted`, `image`)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
             prepare.setString(1, service.getId());
             prepare.setString(2, "SYSTEM");
-            prepare.setString(3, service.getName());
-            prepare.setString(4, service.getDescription());
-            prepare.setDouble(5, service.getPrice());
-            prepare.setString(6, service.getAmount());
-            prepare.setBoolean(11, false);
-
+            prepare.setString(3, service.getDescription());
+            prepare.setDouble(4, service.getPrice());
+            prepare.setString(5, service.getUnit());
+            prepare.setString(6, service.getName());
+            prepare.setString(7, service.getAmount());
+            prepare.setBoolean(8, false);
+            prepare.setString(9, service.getImage());
             prepare.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,7 +75,7 @@ public class ServiceDAOImpl implements ServiceDAO {
 
     @Override
     public void updateService(Map<String, String> spec, String id) {
-        String query = "UPDATE `managerhotel`.`user`";
+        String query = "UPDATE `managerhotel`.`service`";
         List<String> predicates = new ArrayList<>();
         try {
             if (!spec.isEmpty()) {
@@ -122,10 +124,9 @@ public class ServiceDAOImpl implements ServiceDAO {
                 service.setName(rs.getString("name"));
                 service.setDescription(rs.getString("description"));
                 service.setPrice(rs.getDouble("price"));
-//                service.set(rs.getDouble("price"));
-//                service.setPrice(rs.getDouble("price"));
-//                service.setPrice(rs.getDouble("price"));
-//                service.setPrice(rs.getDouble("price"));
+                service.setImage(rs.getString("image"));
+                service.setAmount(rs.getString("amount"));
+                service.setAmount(rs.getString("unit"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

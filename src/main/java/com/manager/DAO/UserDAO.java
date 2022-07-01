@@ -1,5 +1,6 @@
 package com.manager.DAO;
 
+import com.manager.dto.SearchUserDto;
 import com.manager.entity.User;
 
 import java.sql.SQLException;
@@ -14,4 +15,5 @@ public interface UserDAO {
      void updateUser(Map<String, String> spec, String id) throws SQLException;
      void deleteUser(List<String> ids);
      List<User> getListUser() throws SQLException;
+
 }

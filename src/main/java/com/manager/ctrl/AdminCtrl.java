@@ -25,7 +25,6 @@ import java.util.UUID;
 
 
 @WebServlet({"/admin/search/user", "/admin/create/user" ,"/admin","/admin/create/logout", "/admin/update/user"})
-
 public class AdminCtrl extends HttpServlet {
     private static final String PATH_JSP = "/views/admin/";
     private static final String PATH = "/admin/";
@@ -206,8 +205,9 @@ public class AdminCtrl extends HttpServlet {
 
             Date birthDay = null;
             if(request.getParameter("birthDay") != null && !request.getParameter("birthDay").isEmpty()){
-                birthDay = new SimpleDateFormat("dd-mm-yyyy").parse(request.getParameter("birthDay"));
+                birthDay = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("birthDay"));
             }
+
             String address = request.getParameter("address");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");

@@ -36,4 +36,30 @@ public class StaffServiceImpl implements StaffService {
         return serviceDAO.getServiceDetail(id);
     }
 
+    @Override
+    public void updateService(Service service) throws SQLException {
+        ServiceDAOImpl serviceDAO = new ServiceDAOImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (service != null) {
+            if (service.getName() != null && !service.getName().isEmpty()) {
+                spec.put("name", "'" + service.getName() + "'");
+            }
+            if (service.getDescription() != null && !service.getDescription().isEmpty()) {
+                spec.put("description", "'" + service.getDescription() + "'");
+            }
+            if (service.getPrice() != null) {
+                spec.put("price", "'" + service.getPrice() + "'");
+            }
+            if (service.getImage() != null) {
+                spec.put("image", "'" + service.getImage() + "'");
+            }
+            if (service.getUnit() != null) {
+                spec.put("unit", "'" + service.getUnit() + "'");
+            } else {
+                return;
+            }
+            serviceDAO.updateService(spec, service.getId());
+        }
+    }
+
 }

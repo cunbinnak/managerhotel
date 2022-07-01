@@ -19,7 +19,7 @@ import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet( {"/staff","/staff_create_room","/add_room"})
+@WebServlet( {"/staff"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
@@ -39,9 +39,6 @@ public class StaffCtrl extends HttpServlet {
             req.setAttribute("rooms", roomService.findAllRoom(new SearchRoomRequest()));
             req.getRequestDispatcher("/views/staff/room_list.jsp").forward(req, resp);
         }
-        if (url.equalsIgnoreCase("/staff_create_room")){
-            req.getRequestDispatcher("/views/staff/createRoom.jsp").forward(req,resp);
-        }
     }
 
     @Override
@@ -50,54 +47,6 @@ public class StaffCtrl extends HttpServlet {
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
         String uri = req.getServletPath();
-        if (uri.equalsIgnoreCase("/add_room")) {
-            try {
-                insertRoom(req, resp);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    private void insertRoom(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
-        RoomServiceImpl roomService = new RoomServiceImpl();
-        Room room = new Room();
-        if (req.getParameter("roomName") != null) {
-            room.setName(String.valueOf(req.getParameter("roomName")));
-        }
-        if (req.getParameter("price") != null) {
-            room.setPrice(String.valueOf(req.getParameter("price")));
-        }
-        if (req.getParameter("square") != null) {
-            room.setSquare(String.valueOf(req.getParameter("square")));
-        }
-        if (req.getParameter("bedNumber") != null) {
-            room.setBedNumber(String.valueOf(req.getParameter("bedNumber")));
-        }
-        if (req.getParameter("peopleNumber") != null) {
-            room.setPeopleNumber(String.valueOf(req.getParameter("peopleNumber")));
-        }
-        if (req.getParameter("description") != null) {
-            room.setDescription(String.valueOf(req.getParameter("description")));
-        }
-        if (req.getParameter("status") != null) {
-            room.setStatus(String.valueOf(req.getParameter("status")));
-        }
-
-//        Part filePart = req.getPart("fileimage");
-//        ServletContext context = getServletContext();
-//        URL resourceUrl  = context.getResource("/image");
-//        String path = resourceUrl.toString();
-////                req.getServletContext().getRealPath("/image");
-//        String  fileName = filePart.getSubmittedFileName();
-//        room.setImage(fileName);
-//        for (Part part : req.getParts()) {
-//            part.write(path + fileName);
-//        }
-
-        room.setId(UUID.randomUUID().toString());
-        room.setIsDeleted(Boolean.FALSE);
-        roomService.create(room);
-        resp.sendRedirect("/rooms");
     }
 }

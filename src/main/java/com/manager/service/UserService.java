@@ -1,5 +1,6 @@
 package com.manager.service;
 
+import com.manager.dto.SearchCustomerRequest;
 import com.manager.dto.SearchUserDto;
 import com.manager.entity.*;
 
@@ -28,4 +29,6 @@ public interface UserService {
     Customer findCustomerById(String id) throws SQLException;
 
     List<User> getListUser() throws SQLException;
+
+    List<Customer> findAllCustomers (SearchCustomerRequest searchCustomerRequest) throws SQLException;
 }
