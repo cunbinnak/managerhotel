@@ -29,7 +29,7 @@ public class OrderDetails extends EntityBase{
     @Column(name = "price_ref")
     private Double priceRef;
     @Column(name = "name_ref")
-    private Double nameRef;
+    private String nameRef;
     @Column(name = "unit")
     private String unit;
     @Column(name = "amount")

@@ -1,8 +1,13 @@
 package com.manager.ctrl;
 
+import com.manager.dto.DetailOrder;
 import com.manager.dto.SearchRoomRequest;
+import com.manager.entity.Customer;
+import com.manager.entity.Order;
 import com.manager.entity.Room;
+import com.manager.entity.User;
 import com.manager.serviceImpl.RoomServiceImpl;
+import com.manager.serviceImpl.UserServiceImpl;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -13,9 +18,11 @@ import java.io.File;
 import java.io.IOException;
 import java.rmi.server.ExportException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room"})
+@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room", "/create_order"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -33,8 +40,10 @@ public class UserCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String userName = session.getAttribute("username").toString();
-        req.setAttribute("userName", userName);
+        if (session.getAttribute("username") != null) {
+            String userName = session.getAttribute("username").toString();
+            req.setAttribute("userName", userName);
+        }
         String uri = req.getServletPath();
         RoomServiceImpl roomService = new RoomServiceImpl();
         try {
@@ -67,6 +76,9 @@ public class UserCtrl extends HttpServlet {
 
                 req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
+            if (uri.endsWith("/create_order")) {
+                getListOrder(req, resp, session);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -97,6 +109,10 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/update_room")) {
                 updateRoom(req, resp);
             }
+            if (uri.equalsIgnoreCase("/create_order")) {
+                createOrder(req, resp, session);
+            }
+
         } catch (ExportException | SQLException e) {
             throw new RuntimeException(e);
         }
@@ -241,5 +257,99 @@ public class UserCtrl extends HttpServlet {
         }
         System.out.println(imagePath);
         return folderUpload;
+    }
+
+    private void createOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, ServletException, IOException {
+        String customerId = "";
+        UserServiceImpl userService = new UserServiceImpl();
+        if (request.getParameter("customerId") != null) {
+            customerId = request.getParameter("customerId");
+        }
+        if (session.getAttribute("role") != null && session.getAttribute("role").toString().equalsIgnoreCase("USER")) {
+            User user = userService.findByUserName(session.getAttribute("username").toString());
+            if (user.getCustomerId() != null && !user.getCustomerId().isEmpty()) {
+                Customer customer = userService.findCustomerById(user.getCustomerId());
+                customerId = customer.getId();
+            } else {
+                request.setAttribute("message", "Tài khoản mật khẩu không chính xác");
+                request.getRequestDispatcher(request.getServletPath()).forward(request, response);
+            }
+        }
+        Order order = new Order();
+        order.setCustomerId(customerId);
+
+        order.setCustomerId(customerId);
+        order.setStatus("pending");
+
+        if (request.getParameter("roomId") != null) {
+            order.setOrderType("0");
+        } else {
+            order.setOrderType("1");
+        }
+        userService.createOrder(order);
+    }
+
+    private List<DetailOrder> getListOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+        List<DetailOrder> detailOrders = new ArrayList<>();
+        UserServiceImpl userService = new UserServiceImpl();
+        String status = request.getParameter("statusOrder");
+        String orderType = request.getParameter("orderType");
+        Order order = new Order();
+        List<Order> orders = new ArrayList<>();
+        order.setOrderType(orderType);
+        order.setStatus(status);
+        if (request.getParameter("orderId") != null) {
+            order.setId(request.getParameter("orderId"));
+            order = userService.getOrderById(order.getId());
+            orders.add(order);
+        } else {
+            orders = userService.getAllOrder(order);
+        }
+        for (Order order1 : orders) {
+            DetailOrder detailOrder = new DetailOrder();
+            if (order1.getOrderType().equalsIgnoreCase("0")) {
+                detailOrder.setOrderName("Đặt phòng");
+            } else {
+                detailOrder.setOrderName("Dịch vụ");
+            }
+            detailOrder.setOrderType(order1.getOrderType());
+            detailOrders.add(detailOrder);
+        }
+        return detailOrders;
+    }
+
+    private void updateOrder(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, SQLException, ServletException {
+        RoomServiceImpl roomService = new RoomServiceImpl();
+        Room room = new Room();
+        if (req.getParameter("name") != null) {
+            room.setName(String.valueOf(req.getParameter("name")));
+        }
+        if (req.getParameter("price") != null) {
+            room.setPrice(String.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("square") != null) {
+            room.setSquare(String.valueOf(req.getParameter("square")));
+        }
+        if (req.getParameter("bedNumber") != null) {
+            room.setBedNumber(String.valueOf(req.getParameter("bedNumber")));
+        }
+        if (req.getParameter("peopleNumber") != null) {
+            room.setPeopleNumber(String.valueOf(req.getParameter("peopleNumber")));
+        }
+        String imagePath = uploadFile(req, resp);
+        if (imagePath != null && !imagePath.isEmpty()) {
+            room.setImage(imagePath);
+        }
+        if (req.getParameter("description") != null) {
+            room.setDescription(String.valueOf(req.getParameter("description")));
+        }
+        if (req.getParameter("status") != null) {
+            room.setStatus(String.valueOf(req.getParameter("status")));
+        }
+        String roomId = req.getParameter("roomId");
+        room.setId(roomId);
+        roomService.updateRoom(room);
+        resp.sendRedirect("/rooms");
     }
 }

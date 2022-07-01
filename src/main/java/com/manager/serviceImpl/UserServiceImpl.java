@@ -138,8 +138,48 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getListUser() throws SQLException {
         UserDAOImpl userDAO = new UserDAOImpl();
-
         return userDAO.getListUser();
+    }
+
+    @Override
+    public void createOrder(Order order) throws SQLException {
+        OrderDaoImpl orderDao = new OrderDaoImpl();
+        orderDao.newOrder(order);
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        OrderDaoImpl orderDao = new OrderDaoImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (order != null) {
+            if (order.getStatus() != null && !order.getStatus().isEmpty()) {
+                spec.put("status", "'" + order.getStatus() + "'");
+            }
+        } else {
+            return;
+        }
+        orderDao.updateOrder(spec, order.getId());
+    }
+
+    @Override
+    public List<Order> getAllOrder(Order order) throws SQLException {
+        OrderDaoImpl orderDao = new OrderDaoImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (order != null) {
+            if (order.getOrderType() != null && !order.getOrderType().isEmpty()) {
+                spec.put("order_type", "'" + order.getOrderType() + "'");
+            }
+            if (order.getStatus() != null && !order.getStatus().isEmpty()) {
+                spec.put("status", "'" + order.getStatus() + "'");
+            }
+        }
+        return orderDao.findAllOrder(spec) ;
+    }
+
+    @Override
+    public Order getOrderById(String id) throws SQLException {
+        OrderDaoImpl orderDao = new OrderDaoImpl();
+        return orderDao.getOrder(id);
     }
 
 }
