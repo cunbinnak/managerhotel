@@ -125,8 +125,6 @@
         </div>
     </header>
     <main>
-
-
             <h3>Thêm mới thông tin phòng</h3>
             <form action="" enctype="multipart/form-data" method="post" >
                 <table class="table table-striped">
@@ -183,7 +181,7 @@
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" value="add_room" class="btn btn-danger">Tạo Phòng</td>
+                        <td><input type="submit" value="Tạo Phòng" class="btn btn-danger"></td>
                         <br> ${ message } <br>
                     </tr>
                 </table>
