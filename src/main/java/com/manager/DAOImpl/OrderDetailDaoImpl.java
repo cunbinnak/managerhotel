@@ -19,8 +19,9 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
     @Override
     public void newOrderDetail(List<OrderDetails> orderDetails) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`orderdetails` (`id`, `created_user`, `order_id`, `ref_id`, `ref_type`, `price_ref`, `name_ref`, `unit`, `amount`, `is_deleted`) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO `managerhotel`.`orderdetails` (`id`, `created_user`, `order_id`, `ref_id`," +
+                " `ref_type`, `price_ref`, `name_ref`, `unit`, `amount`, `is_deleted`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         for (OrderDetails details : orderDetails) {
@@ -28,11 +29,12 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
             prepare.setString(2, "SYSTEM");
             prepare.setString(3, details.getOrderId());
             prepare.setString(4, details.getRefId());
-            prepare.setDouble(5, details.getPriceRef());
-            prepare.setString(6, details.getNameRef());
-            prepare.setString(7, details.getUnit());
-            prepare.setString(8, details.getAmount());
-            prepare.setBoolean(9, false);
+            prepare.setString(5,details.getRefType());;
+            prepare.setDouble(6, details.getPriceRef());
+            prepare.setString(7, details.getNameRef());
+            prepare.setString(8, details.getUnit());
+            prepare.setString(9, details.getAmount());
+            prepare.setBoolean(10, false);
             prepare.addBatch();
         }
         try {

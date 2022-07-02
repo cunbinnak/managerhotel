@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> findAllOrder(Map<String, String> spec) throws SQLException {
         List<Order> orders = new ArrayList<>();
-        String query = "select * from order ";
+        String query = "SELECT * FROM managerhotel.order ";
         List<String> predicates = new ArrayList<>();
         if (!spec.isEmpty()) {
             query = query + "where ";

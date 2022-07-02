@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 @WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room",
-        "/create_order", "/update_order", "/order_list", "/insert_service"})
+        "/user/create_order","/staff/create_order", "/update_order","/update_order_detail", "/order_list", "/insert_service"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -63,7 +63,8 @@ public class UserCtrl extends HttpServlet {
                 session.removeAttribute("rooms");
             }
             if (uri.equalsIgnoreCase("/room_detail")) {
-                req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
+                detailRoomGet(req,resp);
+//                req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req, resp);
             }
             if (uri.equalsIgnoreCase("/insert_room")) {
                 req.getRequestDispatcher("/views/staff/createRoom.jsp").forward(req, resp);
@@ -97,8 +98,11 @@ public class UserCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         RoomServiceImpl roomService = new RoomServiceImpl();
-        String userName = session.getAttribute("username").toString();
-        req.setAttribute("userName", userName);
+        if(session.getAttribute("username")!=null){
+            String userName = session.getAttribute("username").toString();
+            req.setAttribute("userName", userName);
+        }
+
         String uri = req.getServletPath();
         try {
             if (uri.equalsIgnoreCase("/rooms")) {
@@ -117,7 +121,7 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/update_room")) {
                 updateRoom(req, resp);
             }
-            if (uri.equalsIgnoreCase("/create_order")) {
+            if (uri.endsWith("create_order")) {
                 createOrder(req, resp, session);
             }
             if (uri.equalsIgnoreCase("/update_order")) {
@@ -204,11 +208,18 @@ public class UserCtrl extends HttpServlet {
         Room room = new Room();
         RoomServiceImpl roomService = new RoomServiceImpl();
         String id = req.getParameter("idroom");
+        String url = req.getServletPath();
         // FIX value
 //        String id = "1";
         room = roomService.getRoomDetail(id);
         req.setAttribute("roomDetail", room);
-        req.getRequestDispatcher("views/staff/updateRoom.jsp").forward(req, resp);
+        if(url.equalsIgnoreCase("/room_detail")){
+            req.getRequestDispatcher("/views/web/room_detail.jsp").forward(req,resp);
+        }
+        if (url.equalsIgnoreCase("/update_room")){
+            req.getRequestDispatcher("views/staff/updateRoom.jsp").forward(req, resp);
+        }
+
     }
 
     private void updateRoom(HttpServletRequest req, HttpServletResponse resp)
@@ -288,6 +299,7 @@ public class UserCtrl extends HttpServlet {
 
     private void createOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, ServletException, IOException {
         String customerId = "";
+
         UserServiceImpl userService = new UserServiceImpl();
         if (request.getParameter("customerId") != null) {
             customerId = request.getParameter("customerId");
@@ -307,6 +319,7 @@ public class UserCtrl extends HttpServlet {
 
         order.setCustomerId(customerId);
         order.setStatus("pending");
+        order.setId(String.valueOf(UUID.randomUUID()));
 
         if (request.getParameter("roomId") != null) {
             order.setOrderType("0");
@@ -328,16 +341,17 @@ public class UserCtrl extends HttpServlet {
         details.setOrderId(order.getId());
         details.setPriceRef(Double.valueOf(request.getParameter("priceRef")));
         details.setNameRef(request.getParameter("nameRef"));
-        details.setAmount(request.getParameter("amount"));
         details.setId(String.valueOf(UUID.randomUUID()));
         orderDetails.add(details);
 
         userService.createOrderDetail(orderDetails);
+        response.sendRedirect("/");
     }
 
-    private List<DetailOrder> getListOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+    private void getListOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, ServletException, IOException {
         List<DetailOrder> detailOrders = new ArrayList<>();
         UserServiceImpl userService = new UserServiceImpl();
+        String url = request.getServletPath();
         String status = request.getParameter("statusOrder");
         String orderType = request.getParameter("orderType");
         Order order = new Order();
@@ -358,11 +372,18 @@ public class UserCtrl extends HttpServlet {
             } else {
                 detailOrder.setOrderName("Dịch vụ");
             }
+            detailOrder.setId(order1.getId());
             detailOrder.setOrderType(order1.getOrderType());
             detailOrder.setOrderDetails(userService.getOrderDetailByOrderId(order1.getId()));
             detailOrders.add(detailOrder);
         }
-        return detailOrders;
+        request.setAttribute("detailOrders",detailOrders);
+        if (request.getParameter("orderId") != null && url.equalsIgnoreCase("/update_order")){
+            request.getRequestDispatcher("/views/staff/update_order.jsp").forward(request,response);
+        }else {
+            request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request,response);
+        }
+
     }
 
     private void updateOrder(HttpServletRequest req, HttpServletResponse resp)
