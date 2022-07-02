@@ -120,6 +120,7 @@
                         <a href="/detail_service?serviceId=${sv.id}" style="margin: 10px">Chi tiết</a>
                         <a href="/detail_service?serviceId=${sv.id}">Đặt phòng</a>
                         <a href="/detail_service?serviceId=${sv.id}">Hủy Phòng</a>
+                        <a href="/detail_service?serviceId=${sv.id}">Xóa Phòng</a>
                     </td>
                 </tr>
             </c:forEach>

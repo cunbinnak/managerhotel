@@ -139,10 +139,10 @@
                         <td>${ room.description }</td>
                         <td><img src="images/${room.image}" alt="" style="width: 100px"> </td>
                         <c:choose>
-                            <c:when test="${ room.status ==0}">
+                            <c:when test="${ room.status =='0'}">
                                 <td>Đã đặt</td>
                             </c:when>
-                            <c:when test="${ room.status ==1}"><td>Còn Phòng</td></c:when>
+                            <c:when test="${ room.status =='1'}"><td>Còn Phòng</td></c:when>
                             <c:otherwise>
                                 <td>Hủy phòng</td>
                             </c:otherwise>

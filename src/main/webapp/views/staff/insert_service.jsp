@@ -72,10 +72,8 @@
         </div>
     </header>
     <main>
-
-
-        <h3>Thêm mới dịch vụ</h3>
-        <form action="insert_service" enctype="multipart/form-data" method="post" >
+        <h3>Thêm mới thông tin phòng</h3>
+        <form action="" enctype="multipart/form-data" method="post" >
             <table class="table table-striped">
                 <tr>
                     <td>Tên dịch vụ</td>
@@ -83,33 +81,30 @@
                 </tr>
 
                 <tr>
-                    <td>Mô tả dịch vụ</td>
-                    <td><input type="text" name="description" class="form-control"></td>
+                    <td>Giá</td>
+                    <td><input type="text" name="price" class="form-control"></td>
                 </tr>
 
                 <tr>
-                    <td>Giá</td>
-                    <td><input type="text" name="price" class="form-control"></td>
+                    <td>Số lượng</td>
+                    <td><input type="text" name="amount" class="form-control"></td>
                 </tr>
-                <tr>
-                    <td><label for="unit">Đơn vị tiền</label></td>
-                    <td>
-                        <select name="unit" id="unit" class="form-control">
-                            <option value="1">Nghìn đồng</option>
-                            <option value="2">Triệu đồng</option>
-                            <option value="3">Tỷ đòng</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Giá</td>
-                    <td><input type="text" name="price" class="form-control"></td>
-                </tr>
+
                 <tr>
                     <td>Thông tin thêm</td>
                     <td><input type="text" name="description" class="form-control"></td>
                 </tr>
 
+                <tr>
+                    <td><label for="unit">Đơn vị</label></td>
+                    <td>
+                        <select name="unit" id="unit" class="form-control">
+                            <option value="0">Chiếc</option>
+                            <option value="1">Gói</option>
+                            <option value="2">KHÁC</option>
+                        </select>
+                    </td>
+                </tr>
                 <tr>
                     <td>Hình ảnh</td>
                     <td>
@@ -120,7 +115,7 @@
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="insert_service" class="btn btn-danger">Thêm dịch vụ</td>
+                    <td><input type="submit" value="Tạo dịch vụ" class="btn btn-danger"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>
