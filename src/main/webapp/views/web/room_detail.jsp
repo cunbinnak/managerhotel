@@ -126,26 +126,37 @@
         </div>
       </div>
       <div class="row">
+          <form action="user/create_order" method="post">
         <div class="col-md">
           <div class="card">
             <div class="row">
               <div class="col-md-6">
                 <div class="images p-3">
-                  <a href="#" class="d-block mb-0 thumbnail"><img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid"></a>
+                      <img src="images/${roomDetail.image}" alt=""  class="img img-fluid">
+<%--                      <img src="images/${roomdetail.image}" alt="" class="img-fluid">--%>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="product p-4">
-                  <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Phòng vip</span>
-                    <h5 class="text-uppercase">${roomdetail.description}</h5>
-                    <div class="price d-flex flex-row align-items-center"> <span class="act-price">$20</span>
-                      <div class="ml-2"> <small class="dis-price">${roomdetail.price}</small> <span>40% OFF</span> </div>
+                  <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">${roomDetail.name}</span>
+<%--                    <h5 class="text-uppercase">${roomdetail.description}</h5>--%>
+                    <div class="price d-flex flex-row align-items-center"> <span class="act-price">${roomdetail.price}</span>
+                        <c:set var="priceDis" scope="session" value="${roomDetail.price/100 * roomdetail.discountPrice}"/>
+                      <div class="ml-2"> <small class="dis-price">${roomDetail.price - priceDis}</small> <span>${roomdetail.discountPrice} %OFF</span </div>
+                        <br>
+                        <p> số người : ${roomDetail.peopleNumber}</p>
+                        <br>
+                        <p> số giường : ${roomDetail.bedNumber}</p>
                     </div>
                   </div>
-                  <p class="about">phòng này chỉ dành cho dân chơi, không dành cho các dân chơi nữa mùa</p>
-
-                  <div class="cart mt-4 align-items-center">
-                          <a href="<c:url value='/user/add-to-cart?idroom=${roomdetail.id}'/> " class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</a>
+                  <p class="about">Mô tả: ${roomDetail.description}</p>
+                    <input type="number" name="amount" value="1">
+                    <input type="hidden" name="refType" value="0">
+                    <input type="hidden" name="refId" value="${roomDetail.id}">
+                    <input type="hidden" name="priceRef" value="${roomDetail.price}">
+                    <input type="hidden" name="nameRef" value="${roomDetail.name}">
+                    <div class="cart mt-4 align-items-center">
+                          <button type="submit" class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</button>
                       <i class="fa fa-heart text-muted"></i>
                       <i class="fa fa-share-alt text-muted"></i>
                   </div>
@@ -154,7 +165,7 @@
             </div>
           </div>
         </div>
-
+          </form>
       </div>
 
 <%--      <div class="row mt-5">--%>

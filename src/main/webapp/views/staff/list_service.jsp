@@ -53,7 +53,7 @@
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/admin/order"><span class="la la-opencart"></span>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>

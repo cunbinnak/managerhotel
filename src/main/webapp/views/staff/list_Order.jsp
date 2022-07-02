@@ -1,17 +1,21 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: manhk
-  Date: 6/28/2022
-  Time: 3:30 PM
+  User: Admin
+  Date: 7/2/2022
+  Time: 1:36 PM
   To change this template use File | Settings | File Templates.
 --%>
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<body bgcolor="#ffffff">
+
+</body>
+</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 <head>
-    <title>Admin Controller</title>
+    <title>Admin</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -41,15 +45,15 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" class="active"><span class="las la-table" ></span>
+                    <a href="/search_service" ><span class="las la-table"></span>
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/order_list"><span class="la la-opencart"></span>
+                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
@@ -70,70 +74,85 @@
                 <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
-                <p (click)="signout();">Sign Out</p>
+                <a href="/authen/logout">Đăng xuất</a>
             </div>
         </div>
     </header>
     <main>
-        <h3>Cập nhập thông tin phòng</h3>
-        <br>
-        <p>Thông tin phòng</p>
-        <img src="images/${roomDetail.image}" alt="" width="300px">
-        <form method="post" action="" enctype="multipart/form-data">
-            <table  class="table table-striped">
-                <tr style="display: none">
-                    <td><input type="hidden" name="roomId" value="${ roomDetail.id }" hidden class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Tên phòng</td>
-                    <td><input type="text" name="name" value="${ roomDetail.name }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Diện tích</td>
-                    <td><input type="text" name="square"  value="${ roomDetail.square }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số giường</td>
-                    <td><input type="text" name="bedNumber" value="${ roomDetail.bedNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Số người</td>
-                    <td><input type="text" name="peopleNumber" value="${ roomDetail.peopleNumber }" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Giá</td>
-                    <td><input type="text" name="price" value="${ roomDetail.price }" class="form-control"></td>
-                </tr>
 
+        <legend>Tìm kiếm</legend>
+        <form method="post" action="">
+            <table class="table">
                 <tr>
-                    <td>Giảm giá</td>
-                    <td><input type="text" pattern="^[0-9]{1,2}" name="discountPrice" value="${ roomDetail.discountPrice }" class="form-control"></td>
+                    <td>Tên đơn hàng</td>
+                    <td>
+                        <select name="statusOrder" class="form-control" >
+                            <option value="pending">Chờ đặt</option>
+                            <option value="confirm">Xác nhận</option>
+                            <option value="success">Hoàn thành</option>
+                            <option value="cancel">Hủy</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Thông tin thêm</td>
-                    <td><input type="text" name="description" value="${ roomDetail.description }" class="form-control"></td>
-                </tr>
-                 <tr>
-                    <td>Ảnh</td>
-                    <td><input type="file" name="fileimage" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td><label for="status">Trạng thái</label></td>
-                    <td><select name="status" id="status" value="${ roomDetail.status }" class="form-control">
-                        <option value="0">Đã đặt</option>
-                        <option value="1">Còn phòng</option>
-                        <option value="2">Đang tu sửa</option>
-                    </select>
+                    <td>Loại</td>
+                    <td>
+                        <select name="orderType" class="form-control">
+                            <option value="0">Phòng</option>
+                            <option value="1">Dịch vụ</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Cập nhật thông tin" class="btn btn-primary"></td>
+                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>
         </form>
 
+        <br>
+        <h3>Danh đơn hàng</h3>
+        <table class="table .table-bordered">
+            <tr>
+                <td>Tên đơn hàng</td>
+                <td>Tên khách hàng</td>
+                <td>Loại</td>
+                <td>Trạng thái</td>
+            </tr>
+            <c:forEach var="order" items="${detailOrders}">
+                <tr>
+                    <td>${ order.orderName }</td>
+                    <td>${ order.customerName }</td>
+                    <c:if test="${ order.orderType ==0}" >
+                            <td>Đặt phòng</td>
+                    </c:if>
+                    <c:if test="${ order.orderType ==1}" >
+                        <td>Đặt dịch vụ</td>
+                    </c:if>
+                    <c:set var="sts" value="${ order.status}"/>
+                    <c:choose>
+                        <c:when test="${ sts ==pending}">
+                            <td>Chờ</td>
+                        </c:when>
+                        <c:when test="${ sts ==confirm}">
+                            <td>Xác nhận</td>
+                        </c:when>
+                        <c:when test="${sts ==success}">
+                            <td>Thành công</td>
+                        </c:when>
+                        <c:otherwise >
+                            <td>Hủy</td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td>
+                        <a href="/update_order?orderId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>
+                        <a href="/update_order_detail?orderId=${order.id}" style="margin: 10px">Chi tiết</a>
+
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </main>
 </div>
 
