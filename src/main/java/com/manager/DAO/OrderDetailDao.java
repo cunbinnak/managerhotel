@@ -1,5 +1,7 @@
 package com.manager.DAO;
 
+import com.manager.dto.BusinessReport;
+import com.manager.dto.BusinessReportRequest;
 import com.manager.entity.OrderDetails;
 
 import java.sql.SQLException;
@@ -17,4 +19,6 @@ public interface OrderDetailDao {
     List<OrderDetails> getOrderDetailByOrderId(String orderId) throws SQLException;
 
     OrderDetails getOrderDetailById(String id) throws SQLException;
+
+    List<BusinessReport> getBusinessReport(BusinessReportRequest req) throws SQLException;
 }
