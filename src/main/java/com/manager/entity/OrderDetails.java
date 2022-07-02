@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -34,6 +35,12 @@ public class OrderDetails extends EntityBase{
     private String unit;
     @Column(name = "amount")
     private String amount;
+    @Column(name = "created_month")
+    private String createdMonth;
+    @Column(name = "created_year")
+    private String createdYear;
+    @Column(name = "created_date")
+    private Timestamp createdDate;
 
     @ManyToOne
     @JoinColumn(name = "id")

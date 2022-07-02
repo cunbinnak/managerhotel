@@ -2,8 +2,9 @@ package com.manager.DAOImpl;
 
 import com.manager.DAO.OrderDetailDao;
 import com.manager.config.DatabaseSource;
+import com.manager.dto.BusinessReport;
+import com.manager.dto.BusinessReportRequest;
 import com.manager.entity.OrderDetails;
-import com.manager.entity.Room;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
         }
         try {
             prepare.executeBatch();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -111,7 +112,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
     @Override
     public OrderDetails getOrderDetailById(String id) throws SQLException {
         String query = "select * from orderdetails where id = ?";
-      OrderDetails orderDetail = new OrderDetails();
+        OrderDetails orderDetail = new OrderDetails();
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
@@ -131,5 +132,70 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
             e.printStackTrace();
         }
         return orderDetail;
+    }
+
+    @Override
+    public List<BusinessReport> getBusinessReport(BusinessReportRequest req) throws SQLException {
+        List<BusinessReport> res = new ArrayList<>();
+        if (req.getYear() != null && req.getMonth() != null) {
+            String query = "SELECT sum(d.price_ref * d.amount) as total, b.checkout_month, b.checkout_year FROM billdetails d join bill b on d.bill_id = b.id  where b.checkout_month  = ? and b.checkout_year = ? group by checkout_month, checkout_year order by checkout_month desc, checkout_year desc";
+            Connection connection = databaseSource.getDatasource();
+            PreparedStatement prepare = connection.prepareStatement(query);
+            try {
+                prepare.setString(1, req.getMonth());
+                prepare.setString(2, req.getYear());
+                ResultSet rs = prepare.executeQuery();
+
+                while (rs.next()) {
+                    BusinessReport br = new BusinessReport();
+                    br.setTotal(rs.getLong("total"));
+                    br.setCreatedMonth(rs.getString("checkout_month"));
+                    br.setCreatedYear(rs.getString("checkout_year"));
+
+                    res.add(br);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (req.getYear() != null && !req.getYear().isEmpty() && req.getMonth() == null) {
+            String query = "SELECT sum(d.price_ref * d.amount) as total, b.checkout_month, b.checkout_year FROM billdetails d join bill b on d.bill_id = b.id  where b.checkout_year = ? group by checkout_month, checkout_year order by checkout_month desc, checkout_year desc";
+            Connection connection = databaseSource.getDatasource();
+            PreparedStatement prepare = connection.prepareStatement(query);
+            try {
+                prepare.setString(1, req.getYear());
+                ResultSet rs = prepare.executeQuery();
+
+                while (rs.next()) {
+                    BusinessReport br = new BusinessReport();
+                    br.setTotal(rs.getLong("total"));
+                    br.setCreatedMonth(rs.getString("checkout_month"));
+                    br.setCreatedYear(rs.getString("checkout_year"));
+
+                    res.add(br);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            String query = "SELECT sum(d.price_ref * d.amount) as total, b.checkout_month, b.checkout_year FROM billdetails d join bill b on d.bill_id = b.id group by checkout_month, checkout_year order by checkout_month desc, checkout_year desc";
+            Connection connection = databaseSource.getDatasource();
+            PreparedStatement prepare = connection.prepareStatement(query);
+            try {
+                ResultSet rs = prepare.executeQuery();
+
+                while (rs.next()) {
+                    BusinessReport br = new BusinessReport();
+                    br.setTotal(rs.getLong("total"));
+                    br.setCreatedMonth(rs.getString("checkout_month"));
+                    br.setCreatedYear(rs.getString("checkout_year"));
+
+                    res.add(br);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
     }
 }
