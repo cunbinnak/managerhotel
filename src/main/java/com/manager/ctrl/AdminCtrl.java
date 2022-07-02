@@ -78,7 +78,7 @@ public class AdminCtrl extends HttpServlet {
             if (url.equalsIgnoreCase(PATH + "update/user")) {
                 updateUserPost(req, resp, session, userService);
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -192,8 +192,8 @@ public class AdminCtrl extends HttpServlet {
         }
     }
 
-    private void updateUserPost(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService){
-        List<Role> roles = new ArrayList<>();
+    private void updateUserPost(HttpServletRequest request, HttpServletResponse response , HttpSession session, UserServiceImpl userService) throws SQLException {
+        List<Role> roles = userService.findAllRole();
         User user;
         Customer customer;
         try {
