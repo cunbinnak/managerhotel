@@ -4,6 +4,7 @@ import com.manager.dto.DetailOrder;
 import com.manager.dto.SearchRoomRequest;
 import com.manager.entity.*;
 import com.manager.serviceImpl.RoomServiceImpl;
+import com.manager.serviceImpl.StaffServiceImpl;
 import com.manager.serviceImpl.UserServiceImpl;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room", "/create_order", "/update_order", "/order_list"})
+@WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room",
+        "/create_order", "/update_order", "/order_list", "/insert_service"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -82,6 +84,9 @@ public class UserCtrl extends HttpServlet {
             if (uri.endsWith("/order_list")) {
                 getListOrder(req, resp, session);
             }
+            if (uri.equalsIgnoreCase("/insert_service")){
+                req.getRequestDispatcher("/views/staff/insert_service.jsp").forward(req,resp);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -122,7 +127,9 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/update_order_detail")) {
                 updateOrderDetail(req, resp);
             }
-
+            if (uri.equalsIgnoreCase("/insert_service")) {
+                insertService(req, resp);
+            }
         } catch (ExportException | SQLException e) {
             throw new RuntimeException(e);
         }
@@ -400,5 +407,101 @@ public class UserCtrl extends HttpServlet {
         orderDetails.setAmount(req.getParameter("amount"));
         userService.updateOrderDetail(orderDetails);
         resp.sendRedirect("/orders");
+    }
+
+
+    private void insertService(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, SQLException, ServletException {
+        StaffServiceImpl staffService = new StaffServiceImpl();
+        Service service = new Service();
+        if (req.getParameter("serviceName") != null) {
+            service.setName(String.valueOf(req.getParameter("serviceName")));
+        }
+        if (req.getParameter("price") != null) {
+            service.setPrice(Double.valueOf(req.getParameter("price")));
+        }
+        if (req.getParameter("amount") != null) {
+            service.setAmount(req.getParameter("amount"));
+        }
+        if (req.getParameter("description") != null) {
+            service.setDescription(req.getParameter("description"));
+        }
+        if (req.getParameter("unit") != null) {
+            service.setUnit(req.getParameter("unit"));
+        }
+        String imagePath = uploadFileService(req, resp);
+        if (imagePath != null && !imagePath.isEmpty()) {
+            service.setImage(imagePath);
+        }
+        service.setId(UUID.randomUUID().toString());
+        service.setIsDeleted(Boolean.FALSE);
+        staffService.create(service);
+        resp.sendRedirect("/search_service");
+    }
+
+    private void updateService(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, SQLException, ServletException {
+        StaffServiceImpl staffService = new StaffServiceImpl();
+        Service service = new Service();
+        if (req.getParameter("name") != null) {
+            service.setName(req.getParameter("name"));
+        }
+        if (req.getParameter("description") != null) {
+            service.setDescription(req.getParameter("description"));
+        }
+        if (req.getParameter("price") != null) {
+            service.setPrice(Double.valueOf(req.getParameter("price")));
+        }
+        String imagePath = uploadFileService(req, resp);
+        if (imagePath != null && !imagePath.isEmpty()) {
+            service.setImage(imagePath);
+        }
+        if (req.getParameter("amount") != null) {
+            service.setAmount(String.valueOf(req.getParameter("amount")));
+        }
+        if (req.getParameter("unit") != null) {
+            service.setUnit(String.valueOf(req.getParameter("unit")));
+        }
+        String serviceId = req.getParameter("serviceId");
+        service.setId(serviceId);
+        staffService.updateService(service);
+        resp.sendRedirect("/search_service");
+    }
+
+    private String uploadFileService(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        Part part = request.getPart("fileimage");
+        if (part !=null && part.getSubmittedFileName() != null &&  !part.getSubmittedFileName().isEmpty() ){
+            String realPath = request.getServletContext().getRealPath("/images");
+            String nameFile = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            if(!Files.exists(Paths.get(realPath))){
+                Files.createDirectory(Paths.get(realPath));
+            }
+            part.write(realPath+"/"+nameFile);
+            return  nameFile;
+        }
+        return null;
+    }
+
+    private String extractFileNameService(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+    }
+
+    public File getFolderUploadService(HttpServletRequest req) {
+        String path = "views/image/service";
+        String imagePath = req.getServletContext().getRealPath(path);
+        File folderUpload = new File(imagePath);
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        System.out.println(imagePath);
+        return folderUpload;
     }
 }

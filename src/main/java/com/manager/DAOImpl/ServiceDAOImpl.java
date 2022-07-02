@@ -18,7 +18,8 @@ public class ServiceDAOImpl implements ServiceDAO {
 
     @Override
     public void createService(Service service) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`service` (`id`, `created_user`, `description`, `price`, `unit`, `name`, `amount`, `is_deleted`, `image`)" +
+        String query = "INSERT INTO `managerhotel`.`service` (`id`, `created_user`, `description`, `price`, " +
+                "`unit`, `name`, `amount`, `is_deleted`, `image`)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
@@ -65,6 +66,7 @@ public class ServiceDAOImpl implements ServiceDAO {
                 service.setPrice(rs.getDouble("price"));
                 service.setUnit(rs.getString("unit"));
                 service.setImage(rs.getString("image"));
+                service.setAmount(rs.getString("amount"));
                 services.add(service);
             }
         } catch (SQLException e) {

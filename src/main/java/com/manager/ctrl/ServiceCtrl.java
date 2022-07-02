@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet({"/search_service", "/detail_service", "/update_service", "/insert_service"})
+@WebServlet({"/search_service", "/detail_service", "/update_service"})
 public class ServiceCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -41,9 +41,7 @@ public class ServiceCtrl extends HttpServlet {
                 detailServiceGet(req,response);
                 req.getRequestDispatcher("/views/staff/detail_service.jsp").forward(req,response);
             }
-            if (url.equalsIgnoreCase("/insert_service")){
-                req.getRequestDispatcher("/views/staff/insert_service.jsp").forward(req,response);
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,9 +62,9 @@ public class ServiceCtrl extends HttpServlet {
             if (url.equalsIgnoreCase("/update_service") || url.equalsIgnoreCase("/detail_service")) {
                 updateService(req, response);
             }
-            if (url.equalsIgnoreCase("/insert_service")) {
-                insertService(req, response);
-            }
+//            if (url.equalsIgnoreCase("/insert_service")) {
+//                insertService(req, response);
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -105,7 +103,7 @@ public class ServiceCtrl extends HttpServlet {
         if (req.getParameter("unit") != null) {
             service.setUnit(req.getParameter("unit"));
         }
-        String imagePath = uploadFile(req, resp);
+        String imagePath = uploadFileService(req, resp);
         if (imagePath != null && !imagePath.isEmpty()) {
             service.setImage(imagePath);
         }
@@ -128,7 +126,7 @@ public class ServiceCtrl extends HttpServlet {
         if (req.getParameter("price") != null) {
             service.setPrice(Double.valueOf(req.getParameter("price")));
         }
-        String imagePath = uploadFile(req, resp);
+        String imagePath = uploadFileService(req, resp);
         if (imagePath != null && !imagePath.isEmpty()) {
             service.setImage(imagePath);
         }
@@ -144,7 +142,7 @@ public class ServiceCtrl extends HttpServlet {
         resp.sendRedirect("/search_service");
     }
 
-    private String uploadFile(HttpServletRequest request, HttpServletResponse response)
+    private String uploadFileService(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Part part = request.getPart("fileimage");
         if (part !=null && part.getSubmittedFileName() != null &&  !part.getSubmittedFileName().isEmpty() ){
@@ -159,7 +157,7 @@ public class ServiceCtrl extends HttpServlet {
         return null;
     }
 
-    private String extractFileName(Part part) {
+    private String extractFileNameService(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
         for (String s : items) {
@@ -170,7 +168,7 @@ public class ServiceCtrl extends HttpServlet {
         return "";
     }
 
-    public File getFolderUpload(HttpServletRequest req) {
+    public File getFolderUploadService(HttpServletRequest req) {
         String path = "views/image/service";
         String imagePath = req.getServletContext().getRealPath(path);
         File folderUpload = new File(imagePath);
