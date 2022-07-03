@@ -40,16 +40,5 @@ public class BillDetails
     @Column(name = "amount")
     private String amount;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Bill bill;
-
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Room roomList;
-
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Service service;
 
 }

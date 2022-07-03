@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@WebServlet({"/search_bill", "/detail_bill", "/update_bill","create_bill"})
+@WebServlet({"/search_bill", "/detail_bill", "/update_bill","/create_bill"})
 public class BillCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {

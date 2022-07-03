@@ -411,8 +411,8 @@ public class UserCtrl extends HttpServlet {
             detailOrder.setId(order1.getId());
             detailOrder.setOrderType(order1.getOrderType());
             detailOrder.setOrderDetails(userService.getOrderDetailByOrderId(order1.getId()));
-            detailOrder.setStatus(order.getStatus());
-            Customer customer = userService.findCustomerById(order.getCustomerId());
+            detailOrder.setStatus(order1.getStatus());
+            Customer customer = userService.findCustomerById(order1.getCustomerId());
             detailOrder.setCustomerName(StringUtil.checkValidString(customer.getName()));
             detailOrder.setCustomerPhone(StringUtil.checkValidString(customer.getPhone()));
             detailOrders.add(detailOrder);
