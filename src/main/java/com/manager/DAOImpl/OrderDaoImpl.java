@@ -95,17 +95,18 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order getOrder(String id) throws SQLException {
         Order orderDto = new Order();
-        String query = "select * from order where id = ?";
+        String query = "select * from managerhotel.order where id = ?";
         Connection connection =  databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
+        prepare.setString(1, id);
         try {
-            prepare.setString(1, id);
             ResultSet rs = prepare.executeQuery();
             while (rs.next()){
                 orderDto.setId(rs.getString("id"));
                 orderDto.setOrderType(rs.getString("order_type"));
                 orderDto.setStatus(rs.getString("status"));
                 orderDto.setCustomerId(rs.getString("customer_id"));
+
             }
         }catch (SQLException e) {
             e.printStackTrace();

@@ -88,6 +88,11 @@ public class UserCtrl extends HttpServlet {
             if (uri.equalsIgnoreCase("/insert_service")){
                 req.getRequestDispatcher("/views/staff/insert_service.jsp").forward(req,resp);
             }
+            if (uri.equalsIgnoreCase("/update_order")){
+
+                 getListOrder(req,resp,session);
+//                req.getRequestDispatcher("/views/staff/update_order.jsp").forward(req,resp);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -378,9 +383,13 @@ public class UserCtrl extends HttpServlet {
             detailOrders.add(detailOrder);
         }
         request.setAttribute("detailOrders",detailOrders);
-        if (request.getParameter("orderId") != null && url.equalsIgnoreCase("/update_order")){
+
+        if (request.getParameter("orderId") != null && url.endsWith("/update_order")){
+            request.setAttribute("detailOrders", detailOrders);
             request.getRequestDispatcher("/views/staff/update_order.jsp").forward(request,response);
-        }else {
+        }
+        else {
+            request.setAttribute("detailOrders", detailOrders);
             request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request,response);
         }
 
@@ -391,7 +400,7 @@ public class UserCtrl extends HttpServlet {
         UserServiceImpl userService = new UserServiceImpl();
         if(req.getParameter("orderId") == null){
             req.setAttribute("message", "Chưa chọn order nào");
-            req.getRequestDispatcher("").forward(req, resp);
+            req.getRequestDispatcher("/views/staff/list_Order.jsp").forward(req, resp);
         }
         Order order = userService.getOrderById(req.getParameter("orderId"));
         if(order == null){
@@ -407,9 +416,9 @@ public class UserCtrl extends HttpServlet {
 
     private void updateOrderDetail(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         UserServiceImpl userService = new UserServiceImpl();
-        if(req.getParameter("orderId") == null){
+        if(req.getParameter("orderId") != null){
             req.setAttribute("message", "Chưa chọn order nào");
-            req.getRequestDispatcher("").forward(req, resp);
+            req.getRequestDispatcher("/views/staff/update_order.jsp").forward(req, resp);
         }
         Order order = userService.getOrderById(req.getParameter("orderId"));
         if(order == null && !order.getStatus().equalsIgnoreCase("pending")){
