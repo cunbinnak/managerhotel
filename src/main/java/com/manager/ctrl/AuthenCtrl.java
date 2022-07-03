@@ -102,7 +102,7 @@ public class AuthenCtrl extends HttpServlet {
             String address = request.getParameter("address");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
-            String type = "1";
+            String type = "0";
             // user customer
             // user role
             String roleCode = "USER";

@@ -90,7 +90,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         String query = "select * from customer ";
         List<String> predicates =  new ArrayList<>();
         if(!spec.isEmpty()){
-            query = query + "where";
+            query = query + " where ";
             for(Map.Entry<String, String> entry : spec.entrySet()){
                 if( entry.getKey().equalsIgnoreCase("name")) {
                     predicates.add(" UPPER(" + entry.getKey() + ") Like " + entry.getValue());
@@ -99,7 +99,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                 predicates.add(" UPPER(" + entry.getKey() + ") = " + entry.getValue());
             }
             String predicate = String.join(" AND ", predicates);
-            query = query + predicate + "and type = ";
+            query = query + predicate + "and type = 0 ";
         }
         Connection connection =  databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);

@@ -19,13 +19,21 @@ public class BillDetailDAOImpl implements BillDetailDAO {
 
     @Override
     public void newBillDetail(List<BillDetails> BillDetails) throws SQLException {
-        String query = "INSERT INTO `managerhotel`.`orderdetails` (`id`, `created_user`, `order_id`, `ref_id`," +
+        String query = "INSERT INTO `managerhotel`.`billdetails` (`id`, `created_user`, `bill_id`, `ref_id`," +
                 " `ref_type`, `price_ref`, `name_ref`, `unit`, `amount`, `is_deleted`) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
-        for (BillDetails details : BillDetails) {
-            prepare.setString(1, details.getId());
+        for (BillDetails detail : BillDetails) {
+            prepare.setString(1, detail.getId());
+            prepare.setString(2, detail.getCreatedUser());
+            prepare.setString(3, detail.getBillId());
+            prepare.setString(4, detail.getRefId());
+            prepare.setString(5, detail.getRefType());
+            prepare.setDouble(6, detail.getPriceRef());
+            prepare.setString(7, detail.getNameRef());
+            prepare.setString(8, detail.getUnit());
+            prepare.setString(8, detail.getAmount());
 
             prepare.addBatch();
         }
@@ -61,35 +69,35 @@ public class BillDetailDAOImpl implements BillDetailDAO {
 
     @Override
     public List<BillDetails> getBillByOrderId(String billId) throws SQLException {
-        String query = "select * from orderdetails where order_id = ?";
-        List<OrderDetails> orderDetails = new ArrayList<>();
+        String query = "select * from billdetails where bill_id = ?";
+        List<BillDetails> billDetails = new ArrayList<>();
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
-            prepare.setString(1, orderId);
+            prepare.setString(1, billId);
             ResultSet rs = prepare.executeQuery();
 
             while (rs.next()) {
-                OrderDetails orderDetail = new OrderDetails();
-                orderDetail.setId(rs.getString("id"));
-                orderDetail.setOrderId(rs.getString("order_id"));
-                orderDetail.setAmount(rs.getString("amount"));
-                orderDetail.setNameRef(rs.getString("name_ref"));
-                orderDetail.setPriceRef(rs.getDouble("price_ref"));
-                orderDetail.setRefType(rs.getString("ref_type"));
-                orderDetail.setUnit(rs.getString("unit"));
-                orderDetails.add(orderDetail);
+                BillDetails billDetail = new BillDetails();
+                billDetail.setId(rs.getString("id"));
+                billDetail.setBillId(rs.getString("bill_id"));
+                billDetail.setAmount(rs.getString("amount"));
+                billDetail.setNameRef(rs.getString("name_ref"));
+                billDetail.setPriceRef(rs.getDouble("price_ref"));
+                billDetail.setRefType(rs.getString("ref_type"));
+                billDetail.setUnit(rs.getString("unit"));
+                billDetails.add(billDetail);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return orderDetails;
+        return billDetails;
     }
 
     @Override
     public BillDetails getBillDetailById(String id) throws SQLException {
-        String query = "select * from orderdetails where id = ?";
-        OrderDetails orderDetail = new OrderDetails();
+        String query = "select * from billdetails where id = ?";
+        BillDetails billDetail = new BillDetails();
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         try {
@@ -97,17 +105,17 @@ public class BillDetailDAOImpl implements BillDetailDAO {
             ResultSet rs = prepare.executeQuery();
 
             while (rs.next()) {
-                orderDetail.setId(rs.getString("id"));
-                orderDetail.setOrderId(rs.getString("order_id"));
-                orderDetail.setAmount(rs.getString("amount"));
-                orderDetail.setNameRef(rs.getString("name_ref"));
-                orderDetail.setPriceRef(rs.getDouble("price_ref"));
-                orderDetail.setRefType(rs.getString("ref_type"));
-                orderDetail.setUnit(rs.getString("unit"));
+                billDetail.setId(rs.getString("id"));
+                billDetail.setBillId(rs.getString("bill_id"));
+                billDetail.setAmount(rs.getString("amount"));
+                billDetail.setNameRef(rs.getString("name_ref"));
+                billDetail.setPriceRef(rs.getDouble("price_ref"));
+                billDetail.setRefType(rs.getString("ref_type"));
+                billDetail.setUnit(rs.getString("unit"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return orderDetail;
+        return billDetail;
     }
 }

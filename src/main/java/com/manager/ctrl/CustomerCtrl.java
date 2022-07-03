@@ -27,17 +27,30 @@ public class CustomerCtrl extends HttpServlet {
             String url = request.getServletPath();
             if(url.endsWith("customers")){
                 SearchCustomerRequest req = new SearchCustomerRequest();
-                req.setName(StringUtil.checkValidString(session.getAttribute("name").toString()));
-                req.setPhone(StringUtil.checkValidString(session.getAttribute("phone").toString()));
-                req.setEmail(StringUtil.checkValidString(session.getAttribute("email").toString()));
-                request.setAttribute("serviceList", userService.findAllCustomers(req));
-                request.getRequestDispatcher("/views/user/service_list.jsp").forward(request, response);
-                session.removeAttribute("nameService");
+                if (session.getAttribute("nameCustomerSearch") !=null){
+                    req.setName(StringUtil.checkValidString(session.getAttribute("nameCustomerSearch").toString()));
+                }
+                if (session.getAttribute("phonNumberSearch") !=null){
+                    req.setPhone(StringUtil.checkValidString(session.getAttribute("phonNumberSearch").toString()));
+                }
+                if (session.getAttribute("emailSearch") !=null){
+                    req.setEmail(StringUtil.checkValidString(session.getAttribute("emailSearch").toString()));
+                }
+                request.setAttribute("listCustomer", userService.findAllCustomers(req));
+                session.removeAttribute("nameCustomerSearch");
+                session.removeAttribute("phonNumberSearch");
+                session.removeAttribute("emailSearch");
+
+                request.getRequestDispatcher("/views/staff/list_customer.jsp").forward(request, response);
+
             }
             if(url.endsWith("customer_detail")){
                 Customer customer = userService.findCustomerById(request.getParameter("customerId"));
                 request.setAttribute("customerDetail", customer);
                 request.getRequestDispatcher( "/views/user/detailCustomer.jsp").forward(request, response);
+            }
+            if(url.endsWith("/customer_insert")){
+                request.getRequestDispatcher("/views/staff/insert_customer.jsp").forward(request, response);
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -52,6 +65,7 @@ public class CustomerCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             UserServiceImpl userService = new UserServiceImpl();
+            HttpSession session = request.getSession();
             String url = request.getServletPath();
             Customer customer = new Customer();
             if(url.endsWith("customer_update")){
@@ -99,6 +113,15 @@ public class CustomerCtrl extends HttpServlet {
                 customer.setPhone(phone);
                 customer.setType(type);
                 userService.createCustomer(customer);
+            }
+            if (url.endsWith("/customers")){
+                session.setAttribute("nameCustomerSearch",request.getParameter("nameCustomerSearch"));
+                session.setAttribute("phonNumberSearch",request.getParameter("phonNumberSearch"));
+                session.setAttribute("addressSearch",request.getParameter("addressSearch"));
+                session.setAttribute("emailSearch",request.getParameter("emailSearch"));
+
+                response.sendRedirect("/customers");
+
             }
         } catch (ParseException e) {
             e.printStackTrace();
