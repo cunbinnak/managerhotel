@@ -44,10 +44,10 @@ public class CustomerCtrl extends HttpServlet {
                 request.getRequestDispatcher("/views/staff/list_customer.jsp").forward(request, response);
 
             }
-            if(url.endsWith("customer_detail")){
+            if(url.endsWith("customer_update")){
                 Customer customer = userService.findCustomerById(request.getParameter("customerId"));
                 request.setAttribute("customerDetail", customer);
-                request.getRequestDispatcher( "/views/user/detailCustomer.jsp").forward(request, response);
+                request.getRequestDispatcher( "/views/staff/update_customer.jsp").forward(request, response);
             }
             if(url.endsWith("/customer_insert")){
                 request.getRequestDispatcher("/views/staff/insert_customer.jsp").forward(request, response);
@@ -93,6 +93,7 @@ public class CustomerCtrl extends HttpServlet {
                 customer.setPhone(phone);
                 customer.setType(customer.getType());
                 userService.updateCustomer(customer);
+                response.sendRedirect("/customers");
             };
             if(url.endsWith("customer_insert")){
                 String customerId = String.valueOf(UUID.randomUUID());
@@ -104,7 +105,7 @@ public class CustomerCtrl extends HttpServlet {
                 String address = request.getParameter("address");
                 String email = request.getParameter("email");
                 String phone = request.getParameter("phone");
-                String type = "2";
+                String type = "0";
                 customer.setName(name);
                 customer.setBirthDay(birthDay);
                 customer.setAddress(address);
@@ -113,6 +114,7 @@ public class CustomerCtrl extends HttpServlet {
                 customer.setPhone(phone);
                 customer.setType(type);
                 userService.createCustomer(customer);
+                response.sendRedirect("/customers");
             }
             if (url.endsWith("/customers")){
                 session.setAttribute("nameCustomerSearch",request.getParameter("nameCustomerSearch"));
@@ -122,6 +124,10 @@ public class CustomerCtrl extends HttpServlet {
 
                 response.sendRedirect("/customers");
 
+            }
+            if (request.getParameter("customerId")!=null && url.endsWith("/customers")){
+                session.setAttribute("customerIdOrderRoom", request.getParameter("customerId"));
+                response.sendRedirect("/rooms");
             }
         } catch (ParseException e) {
             e.printStackTrace();

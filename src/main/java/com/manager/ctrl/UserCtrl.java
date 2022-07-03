@@ -63,6 +63,7 @@ public class UserCtrl extends HttpServlet {
                     rq = (SearchRoomRequest) session.getAttribute("roomRequest");
                 }
                 req.setAttribute("rooms", roomService.findAllRoom(rq));
+//                session.setAttribute("customerId", req.getParameter("customerId"));
                 req.getRequestDispatcher("/views/staff/room_list.jsp").forward(req, resp);
                 session.removeAttribute("rooms");
             }
@@ -314,10 +315,16 @@ public class UserCtrl extends HttpServlet {
 
     private void createOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, ServletException, IOException {
         String customerId = "";
-
+        Boolean checkStaff = false;
         UserServiceImpl userService = new UserServiceImpl();
-        if (request.getParameter("customerId") != null) {
-            customerId = request.getParameter("customerId");
+        if (session.getAttribute("customerIdOrderRoom") != null || session.getAttribute("customerIdOrderService")!=null) {
+            checkStaff = true;
+            if (session.getAttribute("customerIdOrderRoom") != null){
+                customerId = session.getAttribute("customerIdOrderRoom").toString();
+            }else {
+                customerId = session.getAttribute("customerIdOrderService").toString();
+            }
+
         }
         if (session.getAttribute("role") != null && session.getAttribute("role").toString().equalsIgnoreCase("USER")) {
             User user = userService.findByUserName(session.getAttribute("username").toString());
@@ -360,7 +367,14 @@ public class UserCtrl extends HttpServlet {
         orderDetails.add(details);
 
         userService.createOrderDetail(orderDetails);
-        response.sendRedirect("/");
+        session.removeAttribute("customerIdOrderRoom");
+        session.removeAttribute("customerIdOrderService");
+        if (checkStaff){
+            response.sendRedirect("/update_order?orderId="+order.getId());
+        }else {
+            response.sendRedirect("/");
+        }
+
     }
 
     private void getListOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, ServletException, IOException {
@@ -380,7 +394,11 @@ public class UserCtrl extends HttpServlet {
             order.setId(request.getParameter("orderId"));
             order = userService.getOrderById(order.getId());
             orders.add(order);
-        } else {
+        }else if(request.getParameter("customerId")!=null){
+            order.setCustomerId(request.getParameter("customerId"));
+            orders = userService.getAllOrder(order);
+        }
+        else {
             orders = userService.getAllOrder(order);
         }
         for (Order order1 : orders) {

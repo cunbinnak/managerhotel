@@ -152,6 +152,7 @@
                   <p class="about">Mô tả: ${roomDetail.description}</p>
                     <input type="number" name="amount" value="1">
                     <input type="hidden" name="refType" value="0">
+                    <input type="hidden" name="unit" value="1">
                     <input type="hidden" name="refId" value="${roomDetail.id}">
                     <input type="hidden" name="priceRef" value="${roomDetail.price}">
                     <input type="hidden" name="nameRef" value="${roomDetail.name}">

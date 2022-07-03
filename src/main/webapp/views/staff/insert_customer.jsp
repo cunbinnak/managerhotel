@@ -77,30 +77,33 @@
     </header>
     <main>
         <h3>Thêm mới thông tin khách hàng</h3>
-        <form action="" enctype="multipart/form-data" method="post" >
+        <form action=""  method="post" >
             <table class="table table-striped">
                 <tr>
                     <td>Tên khách hàng</td>
-                    <td><input type="text" name="roomName" class="form-control"></td>
+                    <td><input type="text" name="name" class="form-control"></td>
                 </tr>
 
                 <tr>
                     <td>Địa chỉ</td>
-                    <td><input type="text" name="square" class="form-control"></td>
+                    <td><input type="text" name="address" class="form-control"></td>
                 </tr>
-
+                <tr>
+                    <td>Ngày sinh</td>
+                    <td><input type="date" name="birthDay" class="form-control"></td>
+                </tr>
                 <tr>
                     <td>Số điện thoại</td>
-                    <td><input type="text" name="bedNumber" class="form-control"></td>
+                    <td><input type="text" name="phone" class="form-control"></td>
                 </tr>
 
                 <tr>
                     <td>Email</td>
-                    <td><input type="text" name="peopleNumber" class="form-control"></td>
+                    <td><input type="text" name="email" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Tạo Phòng" class="btn btn-danger"></td>
+                    <td><input type="submit" value="Thêm mới" class="btn btn-danger"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>

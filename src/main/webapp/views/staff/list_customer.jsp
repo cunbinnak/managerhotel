@@ -119,10 +119,18 @@
                     <td>${ cus.phone }</td>
                     <td>${ cus.email }</td>
                     <td>
-                        <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
-                        <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
-                        <a href="" style="margin: 10px">Thêm dịch vụ</a>
-                        <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
+                        <a href="/customer_update?customerId=${cus.id}" style="margin: 10px">Cập nhật thông tin</a>
+                        <form action="order_room" method="post">
+                            <input type="text" name="customerId" value="${cus.id}" hidden>
+                            <input type="submit" value="Đặt phòng">
+                        </form>
+                        <p style="margin-left: 10px"></p>
+                        <form action="order_service" method="post">
+                            <input type="text" name="customerId" value="${cus.id}" hidden style="margint: 15px">
+                            <input type="submit" value="Thêm dịch vụ">
+                        </form>
+                        <p style="margin-left: 10px"></p>
+                        <a href="/order_list?customerId=${cus.id}">Chi tiết và thông tin đặt phòng</a>
                     </td>
                 </tr>
             </c:forEach>
