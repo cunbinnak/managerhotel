@@ -16,5 +16,5 @@ public class DetailOrder {
     private String customerName;
     private String orderType;
     private String status;
-    private List<OrderDetails> OrderDetails;
+    private List<OrderDetails> orderDetails;
 }

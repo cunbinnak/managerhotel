@@ -80,70 +80,93 @@
     </header>
     <main>
 
-        <legend>Tìm kiếm</legend>
+        <legend>Chi tiết đơn hàng</legend>
+        <div class="alert alert-primary" role="alert">
+            <p id="msg"></p>
+        </div>
         <form method="post" action="">
-            <table class="table">
+            <table class="table .table-bordered">
                 <tr>
                     <td>Tên đơn hàng</td>
-                    <td>
-                        <select name="statusOrder" class="form-control" >
-                            <option value="pending">Chờ đặt</option>
+                    <td>Tên khách hàng</td>
+                    <td>Loại</td>
+                    <td>Trạng thái</td>
+                </tr>
+                <c:forEach var="order" items="${detailOrders}">
+                    <c:set var="itemOrder" value="${order}"/>
+                    <tr>
+                        <td><input type="text" name="orderName" value="${ order.orderName }" class="form-control"> </td>
+                        <td><input type="text" name="customerName" value="${ order.customerName }"></td>
+                        <c:set var="type" value="${order.orderType}"/>
+                        <c:if test="${type ==0}">
+                           <td> <input type="text" name="orderType" > Đặt phòng</td>
+                        </c:if>
+                        <c:if test="${ typee ==1}" >
+                            <td><input type="text" name="orderType" > Đặt dịch vụ</td>
+                        </c:if>
+                        <c:set var="sts" value="${ order.status}"/>
+                        <td>
+                        <select name="status" id="" class="form-control">
+                            <option value="${sts}">${sts}</option>
                             <option value="confirm">Xác nhận</option>
-                            <option value="success">Hoàn thành</option>
+                            <option value="success">Thành Công</option>
                             <option value="cancel">Hủy</option>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Loại</td>
-                    <td>
-                        <select name="orderType" class="form-control">
-                            <option value="0">Phòng</option>
-                            <option value="1">Dịch vụ</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
-                    <br> ${ message } <br>
-                </tr>
+                        </td>
+                    </tr>
+                    <tr>
             </table>
+            <br>
+            <br>
+            <h4>Danh sách dịch vụ chi tiết</h4>
+            <table class="table table-striped">
+                <tr>
+                    <th>Tên dịch vụ</th>
+                    <th>Giá</th>
+                    <th>Đơn vị tiền</th>
+                    <th>Số lượng</th>
+                </tr>
+                <c:forEach items="${order.orderDetails}" var="it">
+                    <tr>
+                        <td><input type="text" name="nameRef" value="${it.nameRef}" class="form-control" readonly></td>
+                        <td><input type="text" name="priceRef" value="${it.priceRef}" class="form-control" readonly></td>
+                        <td><input type="text" name="unit" value="${it.unit}" class="form-control" readonly></td>
+                        <td><input type="text" name="txt" value="Hello" onchange="myFunction(this.value)"></td>
+                    </tr>
+                </c:forEach>
+            </table>
+                    </tr>
+                </c:forEach>
+            </table>
+
         </form>
 
-        <br>
-        <h3>Danh đơn hàng</h3>
-        <table class="table .table-bordered">
-            <tr>
-                <td>Tên đơn hàng</td>
-                <td>Tên khách hàng</td>
-                <td>Loại</td>
-                <td>Trạng thái</td>
-            </tr>
-                <tr>
-                    <td><input type="text" value="${ order.orderName }"></td>
-                    <td><input type="text" value="${ order.customerName }"></td>
-                    <td><input type="text" value="${ order.orderType }">Đặt Phòng</td>
-                    <td>
-                        <select name="" id="">
-                            <option value="${order.status}"></option>
-                            <option value="">Chờ</option>
-                            <option value="">Xác nhận</option>
-                            <option value="">Thành Công</option>
-                            <option value="">hủy</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="/update_order?serviceId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>
-                        <a href="/update_order_detail?serviceId=${order.id}" style="margin: 10px">Chi tiết</a>
 
-                    </td>
-                </tr>
-        </table>
     </main>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+<script>
+    function myFunction(val) {
+        alert("The input value has changed. The new value is: " + val);
+        $.ajax({
+            type:"POST",
+            url : "update_order_detail",
+            data : "amount"+$(this).val(),
+            async: false,
+            success : function(response) {
+                data = response;
+                return response;
+            },
+            error: function() {
+                alert('Error occured');
+            }
+        });
+    }
+
+
+</script>
 </body>
 </html>
