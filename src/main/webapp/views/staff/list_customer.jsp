@@ -1,12 +1,10 @@
-
 <%--
   Created by IntelliJ IDEA.
-  User: manhk
-  Date: 6/26/2022
-  Time: 6:06 PM
+  User: AdminCong
+  Date: 7/3/2022
+  Time: 9:29 PM
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -80,82 +78,55 @@
     </header>
     <main>
 
-            <legend>Tìm kiếm</legend>
-            <form method="post" action="">
-                <table class="table">
-                    <tr>
-                        <td>Tên phòng</td>
-                        <td><input type="text" name="searchRoomByName" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>Giá</td>
-                        <td><input type="text" name="searchRoomByPrice" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>Số giường</td>
-                        <td><input type="text" name="searchRoomByBed" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>Số người</td>
-                        <td><input type="text" name="searchRoomByPeople" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>Trạng thái</td>
-                        <td><input type="text" name="searchRoomByStatus" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
-                        <br> ${ message } <br>
-                    </tr>
-                </table>
-            </form>
+        <legend>Tìm kiếm</legend>
+        <form method="post" action="">
+            <table class="table">
+                <tr>
+                    <td>Tên khách hàng</td>
+                    <td><input type="text" name="nameCustomerSearch" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Điện thoại</td>
+                    <td><input type="text" name="phonNumberSearch" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="emailSearch" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
+                    <br> ${ message } <br>
+                </tr>
+            </table>
+        </form>
 
-            <button type="button" class="btn btn-danger"><a href="/insert_room">Thêm mới</a> </button>
-            <br>
-            <h3>Danh sách phòng</h3>
-                <table class="table .table-bordered">
-                    <tr>
-                        <td>Tên phòng</td>
-                        <td>Diện tích</td>
-                        <td>Số giường</td>
-                        <td>Số người</td>
-                        <td>Giá</td>
-                        <td>Giảm giá</td>
-                        <td>Thông tin thêm</td>
-                        <td>Hình ảnh</td>
-                        <td>Trạng thái</td>
-                        <td>Hành động</td>
-                    </tr>
-                    <c:forEach var="room" items="${rooms}">
-                    <tr>
-                        <td>${ room.name }</td>
-                        <td>${ room.square }</td>
-                        <td>${ room.bedNumber }</td>
-                        <td>${ room.peopleNumber }</td>
-                        <td>${ room.price }</td>
-                        <td>${ room.discountPrice }</td>
-                        <td>${ room.description }</td>
-                        <td><img src="images/${room.image}" alt="" style="width: 100px"> </td>
-                        <c:choose>
-                            <c:when test="${ room.status =='0'}">
-                                <td>Đã đặt</td>
-                            </c:when>
-                            <c:when test="${ room.status =='1'}"><td>Còn Phòng</td></c:when>
-                            <c:otherwise>
-                                <td>Hủy phòng</td>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <td>
-                            <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
-                            <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
-                            <a href="" style="margin: 10px">Thêm dịch vụ</a>
-                            <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
-                        </td>
-                    </tr>
-                    </c:forEach>
-                </table>
+        <button type="button" class="btn btn-danger"><a href="/customer_insert">Thêm mới</a> </button>
+        <br>
+        <h3>Danh sách </h3>
+        <table class="table .table-bordered">
+            <tr>
+                <td>Tên khách hàng</td>
+                <td>Địa chỉ</td>
+                <td>Số điện thoại</td>
+                <td>Email</td>
+                <td>Hành động</td>
+            </tr>
+            <c:forEach var="cus" items="${listCustomer}">
+                <tr>
+                    <td>${ cus.name }</td>
+                    <td>${ cus.address }</td>
+                    <td>${ cus.phone }</td>
+                    <td>${ cus.email }</td>
+                    <td>
+                        <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
+                        <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
+                        <a href="" style="margin: 10px">Thêm dịch vụ</a>
+                        <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </main>
 </div>
 
