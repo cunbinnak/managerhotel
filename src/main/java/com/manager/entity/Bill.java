@@ -13,8 +13,7 @@ import java.sql.Timestamp;
 @Entity
 @MappedSuperclass
 public class Bill
-        extends EntityBase
-{
+        extends EntityBase {
 
 //    @Id
 //    @Column(name = "id", length = 36)
