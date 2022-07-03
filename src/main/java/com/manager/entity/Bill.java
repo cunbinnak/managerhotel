@@ -35,6 +35,15 @@ public class Bill
     @Column(name = "status")
     private String status;
 
+    @Column(name = "checkin_month")
+    private String checkinMonth;
+    @Column(name = "checkin_year")
+    private String checkinYear;
+    @Column(name = "checkout_month")
+    private String checkoutMonth;
+    @Column(name = "checkout_year")
+    private String checkoutYear;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

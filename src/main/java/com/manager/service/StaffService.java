@@ -1,5 +1,6 @@
 package com.manager.service;
 
+import com.manager.dto.CreateBillRequest;
 import com.manager.dto.SearchServiceRequest;
 import com.manager.entity.Room;
 import com.manager.entity.Service;
@@ -15,4 +16,6 @@ public interface StaffService {
     Service getServiceDetail(String id) throws SQLException;
 
     void updateService(Service service) throws SQLException;
+
+    void createBill(CreateBillRequest request) throws SQLException;
 }
