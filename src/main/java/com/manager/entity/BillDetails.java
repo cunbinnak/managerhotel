@@ -30,15 +30,15 @@ public class BillDetails
     @Column(name = "price_ref")
     private Double priceRef;
     @Column(name = "ref_type")
-    private Double refType;
+    private String refType;
     @Column(name = "name_ref")
-    private Double nameRef;
+    private String nameRef;
     @Column(name = "price_type")
-    private Double priceType;
+    private String priceType;
     @Column(name = "unit")
     private String unit;
     @Column(name = "amount")
-    private Integer amount;
+    private String amount;
 
     @ManyToOne
     @JoinColumn(name = "id")
