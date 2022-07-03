@@ -47,7 +47,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
     @Override
     public void updateOrderDetail(Map<String, String> spec, String id) {
-        String query = "UPDATE `managerhotel`.`order`";
+        String query = "UPDATE `managerhotel`.`orderdetails`";
         List<String> predicates = new ArrayList<>();
         try {
             if (!spec.isEmpty()) {

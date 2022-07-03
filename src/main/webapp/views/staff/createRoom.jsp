@@ -97,7 +97,11 @@
                 </li><li>
                 <a href="<c:url value='/search_service'/>"><span class="las la-table" ></span>
                     <span>Service</span></a>
-            </li>
+                </li>
+                <li>
+                    <a href="/customers"><span class="la la-opencart"></span>
+                        <span>Customer</span></a>
+                </li>
                 <li>
                     <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>

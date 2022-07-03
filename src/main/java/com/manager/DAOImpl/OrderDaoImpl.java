@@ -80,7 +80,7 @@ public class OrderDaoImpl implements OrderDao {
                     predicates.add(" " + entry.getKey() + "=" + entry.getValue());
                 }
                 String predicate = String.join(" , ", predicates);
-                query = query + predicate + "where id = " + "'" + id + "'";
+                query = query + predicate + " where id = " + "'" + id + "'";
             } else {
                 return;
             }
