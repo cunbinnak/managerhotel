@@ -173,6 +173,9 @@ public class UserServiceImpl implements UserService {
             if (order.getStatus() != null && !order.getStatus().isEmpty()) {
                 spec.put("status", "'" + order.getStatus() + "'");
             }
+            if (order.getCustomerId() != null && !order.getCustomerId().isEmpty()) {
+                spec.put("customer_id", "'" + order.getCustomerId() + "'");
+            }
         }
         return orderDao.findAllOrder(spec) ;
     }

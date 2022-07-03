@@ -149,6 +149,16 @@
 
                         <td>
                             <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
+                            <form action="staff/create_order" method="post">
+                                <input type="text" name="roomId" value="${room.id}" hidden>
+                                <input type="text" name="unit" value="1" hidden>
+                                <input type="number" name="amount" value="1" hidden>
+                                <input type="hidden" name="refType" value="0">
+                                <input type="hidden" name="refId" value="${room.id}">
+                                <input type="hidden" name="priceRef" value="${room.price}">
+                                <input type="hidden" name="nameRef" value="${room.name}">
+                                <input type="submit" value="Đặt phòng" >
+                            </form>
                             <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
                             <a href="" style="margin: 10px">Thêm dịch vụ</a>
                             <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
@@ -161,5 +171,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script>
+
+</script>
 </body>
 </html>

@@ -19,7 +19,7 @@ import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.UUID;
 
-@WebServlet( {"/staff"})
+@WebServlet( {"/staff", "/order_room", "/order_service"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
@@ -39,6 +39,7 @@ public class StaffCtrl extends HttpServlet {
             req.setAttribute("rooms", roomService.findAllRoom(new SearchRoomRequest()));
             req.getRequestDispatcher("/views/staff/room_list.jsp").forward(req, resp);
         }
+
     }
 
     @Override
@@ -47,6 +48,13 @@ public class StaffCtrl extends HttpServlet {
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName",userName);
         String uri = req.getServletPath();
-
+        if (uri.endsWith("/order_room")){
+            session.setAttribute("customerIdOrderRoom",req.getParameter("customerId"));
+            resp.sendRedirect("/rooms");
+        }
+        if(uri.endsWith("/order_service")){
+            session.setAttribute("customerIdOrderService", req.getParameter("customerId"));
+            resp.sendRedirect("/search_service");
+        }
     }
 }

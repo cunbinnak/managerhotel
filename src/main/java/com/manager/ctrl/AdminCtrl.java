@@ -56,10 +56,12 @@ public class AdminCtrl extends HttpServlet {
             if (url.equalsIgnoreCase("/admin")) {
                 List<User> listUser = userService.getListUser();
                 req.setAttribute("listUser", listUser);
+
                 req.getRequestDispatcher("/views" + PATH + "AdminController.jsp").forward(req, resp);
             }
             if (url.equalsIgnoreCase(PATH + "update/user")) {
                 String _userName = req.getParameter("username");
+                getReportBusiness(req,resp,session);
                 req.setAttribute("username", _userName);
                 detailUserGet(req, resp, session, userService);
             }
@@ -88,7 +90,9 @@ public class AdminCtrl extends HttpServlet {
             if (url.equalsIgnoreCase(PATH + "update/user")) {
                 updateUserPost(req, resp, session, userService);
             }
-            if (url.equalsIgnoreCase(PATH + "report/business")) {
+            if (url.equalsIgnoreCase(PATH + "report/business") || url.equalsIgnoreCase("/admin")) {
+                List<User> listUser = userService.getListUser();
+                req.setAttribute("listUser", listUser);
                 getReportBusiness(req, resp, session);
             }
         } catch (IOException | SQLException | ServletException e) {
@@ -113,7 +117,7 @@ public class AdminCtrl extends HttpServlet {
         }
         List<BusinessReport>  reports =  adminService.getBusinessReport(request);
         req.setAttribute("reports", reports);
-        req.getRequestDispatcher(PATH_JSP + "report.jsp").forward(req, resp);
+        req.getRequestDispatcher(PATH_JSP + "AdminController.jsp").forward(req, resp);
     }
 
     private void searchUserGet(HttpServletRequest req, HttpServletResponse resp, UserServiceImpl userService, HttpSession session) throws ServletException, IOException, SQLException {

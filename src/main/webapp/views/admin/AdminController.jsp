@@ -69,114 +69,41 @@
         </div>
     </header>
     <main>
-        <div class="cards">
-            <div class="card-single">
-                <div>
-                    <h1>54</h1>
-                    <span>Customer</span>
-                </div>
-                <div>
-                    <span class="la la-users"></span>
-                </div>
-            </div>
-            <div class="card-single">
-                <div>
-                    <h1>54</h1>
-                    <span>project</span>
-                </div>
-                <div>
-                    <span class="la la-table"></span>
-                </div>
-            </div>
-            <div class="card-single">
-                <div>
-                    <h1>54</h1>
-                    <span>Shopping</span>
-                </div>
-                <div>
-                    <span class="las la-shopping-bag"></span>
-                </div>
-            </div>
-        </div>
-        <div class="recent-grid">
-            <div class="project">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Recent Order</h3>
-                        <button>See All <span class="las la-arrow-right"></span></button>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table width="100%">
-                                <thead>
-                                <tr>
-                                    <td>Order ID</td>
-                                    <td>Full Name</td>
-                                    <td>Last Name</td>
-                                    <td>Address</td>
-                                    <td>status</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nguyen Thanh Cong</td>
-                                    <td>Cong</td>
-                                    <td>Kim Hoa</td>
-                                    <td><span class="status pupple"></span>
-                                        review
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Nguyen Thanh Cong</td>
-                                    <td>Cong</td>
-                                    <td>Kim Hoa</td>
-                                    <td><span class="status pink"></span>
-                                        pending
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Nguyen Thanh Cong</td>
-                                    <td>Cong</td>
-                                    <td>Kim Hoa</td>
-                                    <td><span class="status green"></span>
-                                        inprogess
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-            <div class="customer">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>New Customer</h3>
-                        <a class="las la-arrow-right" href="<c:url value='/admin/search/user'/>"><button>See All </button></a>
-                    </div>
-                    <div class="card-body">
-                        <c:forEach items="${listUser}" var="u">
-                            <div class="customer">
-                                <div class="infor" >
-                                    <div class="infor-name">
-                                        <h4>${u.username}</h4>
-<%--                                        <small>hihi</small>--%>
-                                    </div>
-                                </div>
-                                <div class="contact">
-                                    <span class="las la-user-circle"></span>
-                                    <span class="las la-comment"></span>
-                                    <span class="las la-phone"></span>
-                                </div>
-                            </div>
-                        </c:forEach>
-                </div>
-            </div>
-        </div>
+        <h4>Tìm kiếm</h4>
+        <form method="post" action="">
+            <table class="table">
+                <tr>
+                    <td>Tháng</td>
+                    <td><input type="text" name="month" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Năm</td>
+                    <td><input type="text" name="year" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Tìm kiếm" class="btn btn-outline-success"></td>
+                    <br> ${ message } <br>
+                </tr>
+            </table>
+        </form>
+        <h3>Số liệu danh thu</h3>
+
+        <table class="table table-striped">
+            <tr>
+                <td>Tháng</td>
+                <td>Năm</td>
+                <td>Doanh thu</td>
+            </tr>
+            <c:forEach var="report" items="${reports}">
+                <tr>
+                    <td>${ report.createdMonth }</td>
+                    <td>${ report.createdYear }</td>
+                    <td>${ report.total }</td>
+                </tr>
+            </c:forEach>
+        </table>
     </main>
 </div>
 

@@ -1,11 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: Admin
-  Date: 7/2/2022
-  Time: 1:36 PM
+  Date: 7/3/2022
+  Time: 10:44 PM
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -40,15 +39,19 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" ><span class="las la-table"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="la la-opencart"></span>
+                        <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
@@ -79,24 +82,24 @@
         <form method="post" action="">
             <table class="table">
                 <tr>
-                    <td>Tên đơn hàng</td>
-                    <td>
-                        <select name="statusOrder" class="form-control" >
-                            <option value="pending">Chờ đặt</option>
-                            <option value="confirm">Xác nhận</option>
-                            <option value="success">Hoàn thành</option>
-                            <option value="cancel">Hủy</option>
-                        </select>
-                    </td>
+                    <td>Tên phòng</td>
+                    <td><input type="text" name="searchRoomByName" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>Loại</td>
-                    <td>
-                        <select name="orderType" class="form-control">
-                            <option value="0">Phòng</option>
-                            <option value="1">Dịch vụ</option>
-                        </select>
-                    </td>
+                    <td>Giá</td>
+                    <td><input type="text" name="searchRoomByPrice" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Số giường</td>
+                    <td><input type="text" name="searchRoomByBed" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Số người</td>
+                    <td><input type="text" name="searchRoomByPeople" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Trạng thái</td>
+                    <td><input type="text" name="searchRoomByStatus" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -106,44 +109,47 @@
             </table>
         </form>
 
+        <button type="button" class="btn btn-danger"><a href="/insert_room">Thêm mới</a> </button>
         <br>
-        <h3>Danh đơn hàng</h3>
+        <h3>Danh sách phòng</h3>
         <table class="table .table-bordered">
             <tr>
-                <td>Tên đơn hàng</td>
-                <td>Tên khách hàng</td>
-                <td>Loại</td>
+                <td>Tên phòng</td>
+                <td>Diện tích</td>
+                <td>Số giường</td>
+                <td>Số người</td>
+                <td>Giá</td>
+                <td>Giảm giá</td>
+                <td>Thông tin thêm</td>
+                <td>Hình ảnh</td>
                 <td>Trạng thái</td>
+                <td>Hành động</td>
             </tr>
-            <c:forEach var="order" items="${detailOrders}">
+            <c:forEach var="room" items="${rooms}">
                 <tr>
-                    <td>${ order.orderName }</td>
-                    <td>${ order.customerName }</td>
-                    <c:if test="${ order.orderType ==0}" >
-                            <td>Đặt phòng</td>
-                    </c:if>
-                    <c:if test="${ order.orderType ==1}" >
-                        <td>Đặt dịch vụ</td>
-                    </c:if>
-                    <c:set var="sts" value="${ order.status}"/>
+                    <td>${ room.name }</td>
+                    <td>${ room.square }</td>
+                    <td>${ room.bedNumber }</td>
+                    <td>${ room.peopleNumber }</td>
+                    <td>${ room.price }</td>
+                    <td>${ room.discountPrice }</td>
+                    <td>${ room.description }</td>
+                    <td><img src="images/${room.image}" alt="" style="width: 100px"> </td>
                     <c:choose>
-                        <c:when test="${ sts ==pending}">
-                            <td>Chờ</td>
+                        <c:when test="${ room.status =='0'}">
+                            <td>Đã đặt</td>
                         </c:when>
-                        <c:when test="${ sts ==confirm}">
-                            <td>Xác nhận</td>
-                        </c:when>
-                        <c:when test="${sts ==success}">
-                            <td>Thành công</td>
-                        </c:when>
-                        <c:otherwise >
-                            <td>Hủy</td>
+                        <c:when test="${ room.status =='1'}"><td>Còn Phòng</td></c:when>
+                        <c:otherwise>
+                            <td>Hủy phòng</td>
                         </c:otherwise>
                     </c:choose>
-                    <td>
-                        <a href="/update_order?orderId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>
-                        <a href="/update_order_detail?orderId=${order.id}" style="margin: 10px">Chi tiết</a>
 
+                    <td>
+                        <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
+                        <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
+                        <a href="" style="margin: 10px">Thêm dịch vụ</a>
+                        <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
                     </td>
                 </tr>
             </c:forEach>
