@@ -408,6 +408,14 @@ public class UserCtrl extends HttpServlet {
             req.getRequestDispatcher("").forward(req, resp);
         }
         if (req.getParameter("statusOrder") != null) {
+            if(order.getStatus().equalsIgnoreCase("cancel") || order.getStatus().equalsIgnoreCase("confirm")){
+                req.setAttribute("message", "không chỉnh sủa order này");
+                req.getRequestDispatcher("/views/staff/list_Order.jsp").forward(req, resp);
+            }
+            if(order.getStatus().equalsIgnoreCase("success")){
+
+            }
+            if(req.getParameter("statusOrder").equalsIgnoreCase("success")){}
             order.setStatus(String.valueOf(req.getParameter("statusOrder")));
         }
         userService.updateOrder(order);
