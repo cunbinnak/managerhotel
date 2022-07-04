@@ -82,7 +82,7 @@ public class StaffServiceImpl implements StaffService {
             orders.add(order);
             flag = true;
         }
-        if (request.getCustomerId() != null && flag.equals(true)) {
+        if (request.getCustomerId() != null && flag.equals(false)) {
             order.setCustomerId(request.getCustomerId());
             order.setStatus("success");
             orders = userService.getAllOrder(order);
@@ -99,7 +99,7 @@ public class StaffServiceImpl implements StaffService {
                 bill.setCheckoutDate(request.getCheckoutDate());
                 bill.setCreatedUser(request.getCreatedUser());
                 bill.setIsDeleted(Boolean.FALSE);
-                bill.setStatus(request.getStatus());
+                bill.setStatus("pending");
                 bill.setId(billId);
                 billDAO.newBill(bill);
 
@@ -178,5 +178,9 @@ public class StaffServiceImpl implements StaffService {
             responses.add(billResponse);
         }
         return responses;
+    }
+
+    public Bill getBillById(String id) throws SQLException {
+        return  new BillDAOImpl().getBill(id);
     }
 }

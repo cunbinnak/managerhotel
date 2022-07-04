@@ -3,6 +3,7 @@ package com.manager.DAOImpl;
 
 import com.manager.DAO.BillDAO;
 import com.manager.config.DatabaseSource;
+import com.manager.config.StringUtil;
 import com.manager.entity.Bill;
 import com.manager.entity.Order;
 
@@ -38,7 +39,13 @@ public class BillDAOImpl implements BillDAO {
             ResultSet rs = prepare.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill();
-
+                bill.setId(rs.getString("id"));
+                bill.setCreatedUser(rs.getString("created_user"));
+                bill.setInvoiceDate(rs.getTimestamp("invoice_date"));
+                bill.setCheckinDate(rs.getTimestamp("checkin_date"));
+                bill.setCheckoutDate(rs.getTimestamp("checkout_date"));
+                bill.setCustomerId(rs.getString("customer_id"));
+                bill.setStatus(rs.getString("status"));
                 bills.add(bill);
             }
         } catch (SQLException e) {
@@ -52,7 +59,7 @@ public class BillDAOImpl implements BillDAO {
         String query = "INSERT INTO `managerhotel`.`bill` (`id`, `created_user`, `invoice_date`," +
                 " `checkin_date`, `checkout_date`, `customer_id`, `people_number`, `is_deleted`, `status`, " +
                 "`checkin_month`, `checkout_month`, `checkin_year`, `checkout_year`)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = databaseSource.getDatasource();
         PreparedStatement prepare = connection.prepareStatement(query);
         prepare.setString(1, bill.getId());
@@ -61,7 +68,7 @@ public class BillDAOImpl implements BillDAO {
         prepare.setTimestamp(4, bill.getCheckinDate());
         prepare.setTimestamp(5, bill.getCheckoutDate());
         prepare.setString(6, bill.getCustomerId());
-        prepare.setInt(7, bill.getPeopleNumber());
+        prepare.setInt(7, StringUtil.checkValidInteger(bill.getPeopleNumber()));
         prepare.setBoolean(8, false);
         prepare.setString(9, bill.getStatus());
         prepare.setString(10, String.valueOf(bill.getCheckinDate().getMonth() + 1));
