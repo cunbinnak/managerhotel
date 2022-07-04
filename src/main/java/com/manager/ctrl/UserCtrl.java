@@ -87,7 +87,7 @@ public class UserCtrl extends HttpServlet {
             if (uri.endsWith("/create_order")) {
                 createOrder(req, resp, session);
             }
-            if (uri.endsWith("/order_list")) {
+            if (uri.equalsIgnoreCase("/order_list")) {
                 getListOrder(req, resp, session);
             }
             if (uri.equalsIgnoreCase("/insert_service")) {
@@ -95,6 +95,10 @@ public class UserCtrl extends HttpServlet {
             }
             if (uri.equalsIgnoreCase("/update_order")) {
                 getListOrder(req, resp, session);
+            }
+            if (uri.endsWith("/user/order_list")) {
+                detailOrderUser(req,resp);
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -500,10 +504,7 @@ public class UserCtrl extends HttpServlet {
         if (url.equalsIgnoreCase("/order_list")) {
             request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request, response);
         }
-        if (url.equalsIgnoreCase("/user/order_list")) {
-            detailOrderUser(request,response);
 
-        }
 
     }
 
@@ -584,7 +585,13 @@ public class UserCtrl extends HttpServlet {
             order.setStatus(String.valueOf(req.getParameter("statusOrder")));
         }
         userService.updateOrder(order);
-        resp.sendRedirect("update_order?orderId=" + order.getId());
+
+        HttpSession session = req.getSession();
+        if (session.getAttribute("role").toString().equalsIgnoreCase("user")){
+            resp.sendRedirect("/user/order_list");
+        }else {
+            resp.sendRedirect("update_order?orderId=" + order.getId());
+        }
     }
 
     private void createOrderDetail(HttpServletRequest request, HttpServletResponse response) throws
@@ -659,6 +666,7 @@ public class UserCtrl extends HttpServlet {
 
     private void updateOrderDetail(HttpServletRequest req, HttpServletResponse resp) throws
             SQLException, ServletException, IOException {
+        HttpSession session = req.getSession();
         UserServiceImpl userService = new UserServiceImpl();
         StaffServiceImpl staffService = new StaffServiceImpl();
         if (req.getParameter("orderId") == null) {
@@ -680,7 +688,14 @@ public class UserCtrl extends HttpServlet {
         }
         if (Integer.valueOf(req.getParameter("amount")) < 1) {
             userService.deleteOrderDetailById(orderDetails.getId());
-            resp.sendRedirect("/order_list");
+            if (session.getAttribute("role").toString().equalsIgnoreCase("user")){
+                resp.sendRedirect("/user/order_list");
+                return;
+            }else {
+                resp.sendRedirect("/order_list");
+                return;
+            }
+
         }
         List<Service> services = staffService.findAllService(new SearchServiceRequest());
         for (int i = 0; i < services.size(); i++) {
@@ -701,7 +716,14 @@ public class UserCtrl extends HttpServlet {
         }
         orderDetails.setAmount(req.getParameter("amount"));
         userService.updateOrderDetail(orderDetails);
-        resp.sendRedirect("update_order?orderId=" + order.getId());
+        if (session.getAttribute("role").toString().equalsIgnoreCase("user")){
+            resp.sendRedirect("/order_list");
+            return;
+        }else {
+            resp.sendRedirect("update_order?orderId=" + order.getId());
+            return;
+        }
+
     }
 
 

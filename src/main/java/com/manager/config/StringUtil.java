@@ -7,4 +7,11 @@ public class StringUtil {
         }
         return null;
     }
+
+    public static Integer checkValidInteger(Integer value){
+        if(value != null){
+            return value;
+        }
+        return 0;
+    }
 }

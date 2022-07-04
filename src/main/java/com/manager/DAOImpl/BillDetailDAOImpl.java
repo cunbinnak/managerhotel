@@ -33,8 +33,8 @@ public class BillDetailDAOImpl implements BillDetailDAO {
             prepare.setDouble(6, detail.getPriceRef());
             prepare.setString(7, detail.getNameRef());
             prepare.setString(8, detail.getUnit());
-            prepare.setString(8, detail.getAmount());
-
+            prepare.setString(9, detail.getAmount());
+            prepare.setBoolean(10, false);
             prepare.addBatch();
         }
         try {

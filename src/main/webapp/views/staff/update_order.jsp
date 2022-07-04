@@ -169,6 +169,7 @@
                                 <td></td>
                                 <td>Tên phòng</td>
                                 <td>Giá</td>
+                                <td>Hành động</td>
                             </tr>
                             <c:forEach items="${order.orderDetails}" var="it" varStatus="i">
                                 <tr>
@@ -177,8 +178,9 @@
                                     <td><input type="text" name="nameRef" value="${it.nameRef}" class="form-control" readonly></td>
                                     <td><input type="text" name="priceRef" value="${it.priceRef}" class="form-control" readonly>
                                     </td>
-<%--                                    <td>${ it.nameRef }</td>--%>
-<%--                                    <td>${ it.priceRef }</td>--%>
+                                    <td>
+                                        <button class="btn btn-danger" onclick="huyPhong(${i.index})"> Hủy</button>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </table>
@@ -205,6 +207,7 @@
                             <c:set var="value" value="${it.amount}" />
                             <td><input type="number" id="amount" name="amount" value="${it.amount}"
                                        onchange="myFunction(this.value,${i.index})" class="form-control"></td>
+
                         </tr>
                     </c:forEach>
                 </table>
@@ -331,7 +334,6 @@
 
 <script>
     function myFunction(val,idx) {
-
         var id = $('#orderid').val();
         var orderDetailId = $('.orderDetailId'+idx).val();
         var amount = val;
@@ -390,6 +392,38 @@
             }
         });
     }
+
+    function huyPhong(idx){
+        var id = $('#orderid').val();
+        var orderDetailId = $('.orderDetailId'+idx).val();
+        var amount = 0;
+        var delayInMilliseconds = 1000; //1 second
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/update_order_detail",
+            data: {
+                amount: amount,
+                orderId: id,
+                orderDetailId: orderDetailId
+            },
+            async: false,
+            success: function (response) {
+                data = response;
+                $('#msg').html('Update Thành Công');
+                setTimeout(function() {
+                    $('#msg').html('');
+                },delayInMilliseconds);
+                return response;
+            },
+            error: function () {
+                $('#msg').html('Có lỗi, vui lòng thử lại sau!');
+                setTimeout(function() {
+                    $('#msg').html('');
+                },delayInMilliseconds);
+            }
+        });
+    }
+
 
     function alertThanAmount(){
         var soluong = $("#soluong").text();
