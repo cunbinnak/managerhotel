@@ -554,7 +554,8 @@ public class UserCtrl extends HttpServlet {
                     }
                 }
             }
-            if (!order.getStatus().equalsIgnoreCase("pending") && req.getParameter("statusOrder").equalsIgnoreCase("pending")) {
+            if ((!order.getStatus().equalsIgnoreCase("pending") && req.getParameter("statusOrder").equalsIgnoreCase("pending"))
+                    || req.getParameter("statusOrder").equalsIgnoreCase("cancel") ) {
                 if (order.getOrderType().equalsIgnoreCase("1")) {
                     List<OrderDetails> orderDetails = userService.getOrderDetailByOrderId(order.getId());
                     List<Service> services = staffService.findAllService(new SearchServiceRequest());
