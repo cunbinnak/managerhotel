@@ -27,25 +27,28 @@ public class BillCtrl extends HttpServlet {
         HttpSession session = req.getSession();
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName", userName);
-        UserServiceImpl userService = new UserServiceImpl();
+        StaffServiceImpl staffService = new StaffServiceImpl();
         try {
-
-            if (url.endsWith("search_service")) {
-                SearchServiceRequest request = new SearchServiceRequest();
-                if (session.getAttribute("nameService")!=null){
-                    request.setName(StringUtil.checkValidString(session.getAttribute("nameService").toString()));
+            if (url.endsWith("search_bill")) {
+                Bill bill = new Bill();
+                if(session.getAttribute("customerIdSearchBill") != null){
+                    bill.setCustomerId(session.getAttribute("customerIdSearchBill").toString());
                 }
-
-                StaffServiceImpl staffService = new StaffServiceImpl();
-                req.setAttribute("serviceList", staffService.findAllService(request));
-                req.getRequestDispatcher("/views/staff/list_service.jsp").forward(req, response);
-                session.removeAttribute("nameService");
+                if(session.getAttribute("billIdSearch") != null){
+                    bill.setCustomerId(session.getAttribute("billIdSearch").toString());
+                }
+                if(session.getAttribute("billStatus") != null){
+                    bill.setCustomerId(session.getAttribute("billStatus").toString());
+                }
+                req.setAttribute("billDetail", staffService.getAllBill(bill));
+                req.getRequestDispatcher("/staff/bill_list.jsp").forward(req, response);
+                session.removeAttribute("customerIdSearchBill");
+                session.removeAttribute("billIdSearch");
+                session.removeAttribute("billStatus");
             }
-            if (url.equalsIgnoreCase("/detail_service")) {
-                detailServiceGet(req,response);
-                req.getRequestDispatcher("/views/staff/detail_service.jsp").forward(req,response);
-            }
+            if(url.endsWith("update_bill")){
 
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,17 +61,31 @@ public class BillCtrl extends HttpServlet {
         String userName = session.getAttribute("username").toString();
         req.setAttribute("userName", userName);
         UserServiceImpl userService = new UserServiceImpl();
+        StaffServiceImpl staffService = new StaffServiceImpl();
         try {
-            if (url.equalsIgnoreCase("/search_service")) {
-                session.setAttribute("nameService", StringUtil.checkValidString(req.getParameter("nameService")));
-                response.sendRedirect("search_service");
+            if (url.endsWith("search_bill")) {
+                session.setAttribute("customerIdSearchBill", req.getParameter("customerIdSearchBill"));
+                session.setAttribute("billIdSearch", req.getParameter("billIdSearch"));
+                session.setAttribute("billStatus", req.getParameter("billStatus"));
+                response.sendRedirect("/search_bill");
             }
-            if (url.equalsIgnoreCase("/update_service") || url.equalsIgnoreCase("/detail_service")) {
-                updateService(req, response);
+            if(url.endsWith("create_bill")){
+                CreateBillRequest request = new CreateBillRequest();
+                request.setCreatedUser(session.getAttribute("username").toString());
+                request.setStatus("pending");
+                request.setCheckinDate(Timestamp.valueOf(session.getAttribute("checkInDate").toString()));
+                request.setCheckoutDate(Timestamp.valueOf(session.getAttribute("checkOutDate").toString()));
+                request.setInvoiceDate(Timestamp.valueOf(session.getAttribute("invoiceDate").toString()));
+                request.setOrderId(session.getAttribute("orderId").toString());
+                request.setId(String.valueOf(UUID.randomUUID()));
+                staffService.createBill(request);
+                session.setAttribute("billIdSearch", request.getId());
+                response.sendRedirect("/search_bill");
             }
-            if (url.equalsIgnoreCase("/insert_service")) {
-                insertBill(req, response, session);
+            if(url.endsWith("update_bill")){
+
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -76,110 +93,4 @@ public class BillCtrl extends HttpServlet {
         }
     }
 
-    private void detailServiceGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, SQLException, ServletException {
-        Service service = new Service();
-        StaffServiceImpl staffService = new StaffServiceImpl();
-//        String id = req.getParameter("roomId");
-        String id = req.getParameter("serviceId");
-        // FIX value
-        service = staffService.getServiceDetail(id);
-        req.setAttribute("serviceDetail", service);
-        req.getRequestDispatcher("views/staff/detail_service.jsp").forward(req, resp);
-    }
-
-    private void insertBill(HttpServletRequest req, HttpServletResponse resp, HttpSession session)
-            throws IOException, SQLException, ServletException {
-        StaffServiceImpl staffService = new StaffServiceImpl();
-        Bill bill = new Bill();
-        CreateBillRequest request = new CreateBillRequest();
-        request.setCreatedUser(req.getAttribute("username").toString());
-        request.setOrderId("1");
-        request.setCheckinDate(new Timestamp(System.currentTimeMillis()));
-        request.setCheckoutDate(new Timestamp(System.currentTimeMillis()));
-        request.setInvoiceDate(new Timestamp(System.currentTimeMillis()));
-//        if (req.getParameter("serviceName") != null) {
-//            service.setName(String.valueOf(req.getParameter("serviceName")));
-//        }
-//        if (req.getParameter("price") != null) {
-//            service.setPrice(Double.valueOf(req.getParameter("price")));
-//        }
-//        if (req.getParameter("amount") != null) {
-//            service.setAmount(req.getParameter("amount"));
-//        }
-//        if (req.getParameter("description") != null) {
-//            service.setDescription(req.getParameter("description"));
-//        }
-//        if (req.getParameter("unit") != null) {
-//            service.setUnit(req.getParameter("unit"));
-//        }
-        staffService.createBill(request);
-        resp.sendRedirect("/service");
-    }
-
-    private void updateService(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, SQLException, ServletException {
-        StaffServiceImpl staffService = new StaffServiceImpl();
-        Service service = new Service();
-        if (req.getParameter("name") != null) {
-            service.setName(req.getParameter("name"));
-        }
-        if (req.getParameter("description") != null) {
-            service.setDescription(req.getParameter("description"));
-        }
-        if (req.getParameter("price") != null) {
-            service.setPrice(Double.valueOf(req.getParameter("price")));
-        }
-        String imagePath = uploadFileService(req, resp);
-        if (imagePath != null && !imagePath.isEmpty()) {
-            service.setImage(imagePath);
-        }
-        if (req.getParameter("amount") != null) {
-            service.setAmount(String.valueOf(req.getParameter("amount")));
-        }
-        if (req.getParameter("unit") != null) {
-            service.setUnit(String.valueOf(req.getParameter("unit")));
-        }
-        String serviceId = req.getParameter("serviceId");
-        service.setId(serviceId);
-        staffService.updateService(service);
-        resp.sendRedirect("/search_service");
-    }
-
-    private String uploadFileService(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        Part part = request.getPart("fileimage");
-        if (part !=null && part.getSubmittedFileName() != null &&  !part.getSubmittedFileName().isEmpty() ){
-            String realPath = request.getServletContext().getRealPath("/images");
-            String nameFile = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-            if(!Files.exists(Paths.get(realPath))){
-                Files.createDirectory(Paths.get(realPath));
-            }
-            part.write(realPath+"/"+nameFile);
-            return  nameFile;
-        }
-        return null;
-    }
-
-    private String extractFileNameService(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
-    }
-
-    public File getFolderUploadService(HttpServletRequest req) {
-        String path = "views/image/service";
-        String imagePath = req.getServletContext().getRealPath(path);
-        File folderUpload = new File(imagePath);
-        if (!folderUpload.exists()) {
-            folderUpload.mkdirs();
-        }
-        System.out.println(imagePath);
-        return folderUpload;
-    }
 }

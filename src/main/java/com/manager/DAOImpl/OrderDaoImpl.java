@@ -38,7 +38,7 @@ public class OrderDaoImpl implements OrderDao {
             ResultSet rs = prepare.executeQuery();
             while (rs.next()) {
                 Order order = new Order();
-
+                order.setStatus(rs.getString("status"));
                 order.setId(rs.getString("id"));
                 order.setOrderType(rs.getString("order_type"));
                 order.setCustomerId(rs.getString("customer_id"));

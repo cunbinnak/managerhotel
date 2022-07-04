@@ -225,5 +225,19 @@ public class UserServiceImpl implements UserService {
         orderDetailDao.updateOrderDetail(spec, orderDetails.getId());
     }
 
+    @Override
+    public List<OrderDetails> getAllOrderDetail(OrderDetails orderDetails) throws SQLException {
+        OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (orderDetails != null) {
+            if (orderDetails.getOrderId() != null && !orderDetails.getOrderId().isEmpty()) {
+                spec.put("order_id", "'" + orderDetails.getOrderId() + "'");
+            }
+            if (orderDetails.getRefId() != null && !orderDetails.getRefId().isEmpty()) {
+                spec.put("ref_id", "'" + orderDetails.getRefId() + "'");
+            }
+        }
+        return orderDetailDao.findAllOrderDetail(spec) ;
+    }
 
 }

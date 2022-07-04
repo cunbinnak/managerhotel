@@ -150,6 +150,7 @@
                     <input type="hidden" name="refType" value="0">
                     <input type="hidden" name="unit" value="1">
                     <input type="hidden" name="refId" value="${roomDetail.id}">
+                    <input type="hidden" name="roomId" value="${roomDetail.id}">
                     <input type="hidden" name="priceRef" value="${roomDetail.price}">
                     <input type="hidden" name="nameRef" value="${roomDetail.name}">
                     <div class="cart mt-4 align-items-center">
