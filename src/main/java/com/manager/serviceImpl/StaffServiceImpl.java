@@ -72,7 +72,6 @@ public class StaffServiceImpl implements StaffService {
         Order order = orderDao.getOrder(request.getOrderId());
         if(order != null){
             List<OrderDetails> orderDetails = orderDetailDao.getOrderDetailByOrderId(request.getOrderId());
-
             //Create bill
             Bill bill = new Bill();
             String billId = UUID.randomUUID().toString();
@@ -82,10 +81,7 @@ public class StaffServiceImpl implements StaffService {
             bill.setCheckoutDate(request.getCheckoutDate());
             bill.setCreatedUser(request.getCreatedUser());
             bill.setIsDeleted(Boolean.FALSE);
-            bill.setCheckinMonth(String.valueOf(bill.getCheckinDate().getMonth() + 1));
-            bill.setCheckoutMonth(String.valueOf(bill.getCheckoutDate().getMonth() + 1));
-            bill.setCheckinYear(String.valueOf(bill.getCheckinDate().getYear() + 1900));
-            bill.setCheckoutYear(String.valueOf(bill.getCheckoutDate().getYear() + 1900));
+            bill.setStatus(request.getStatus());
             bill.setId(billId);
             billDAO.newBill(bill);
 
@@ -101,14 +97,43 @@ public class StaffServiceImpl implements StaffService {
                 billDetail.setRefType(orderDetail.getRefType());
                 billDetail.setCreatedUser(orderDetail.getCreatedUser());
                 billDetail.setId(UUID.randomUUID().toString());
-
                 billDetails.add(billDetail);
             }
             if(!billDetails.isEmpty()){
                 billDetailDAO.newBillDetail(billDetails);
             }
-
         }
     }
 
+    @Override
+    public void updateBill(Bill bill) {
+        BillDAOImpl billDAO = new BillDAOImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (bill != null) {
+            if (bill.getStatus() != null && !bill.getStatus().isEmpty()) {
+                spec.put("status", "'" + bill.getStatus() + "'");
+            }
+        } else {
+            return;
+        }
+        billDAO.updateBill(spec, bill.getId());
+    }
+
+    @Override
+    public List<Bill> getAllBill(Bill bill) throws SQLException {
+        BillDAOImpl billDAO = new BillDAOImpl();
+        Map<String, String> spec = new HashMap<>();
+        if (bill != null) {
+            if (bill.getId() != null && !bill.getId().isEmpty()) {
+                spec.put("id", "'" + bill.getId() + "'");
+            }
+            if (bill.getCustomerId() != null && !bill.getCustomerId().isEmpty()) {
+                spec.put("customer_id", "'" + bill.getCustomerId() + "'");
+            }
+            if (bill.getStatus() != null && !bill.getStatus().isEmpty()) {
+                spec.put("status", "'" + bill.getStatus() + "'");
+            }
+        }
+        return billDAO.findAlBill(spec);
+    }
 }

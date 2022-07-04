@@ -15,5 +15,5 @@ public class CreateBillRequest {
     private Timestamp checkinDate;
     private Timestamp checkoutDate;
     private String createdUser;
-
+    private String status;
 }

@@ -444,7 +444,7 @@ public class UserCtrl extends HttpServlet {
     private void updateOrder(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, SQLException, ServletException {
         UserServiceImpl userService = new UserServiceImpl();
-
+        StaffServiceImpl staffService = new StaffServiceImpl();
         if(req.getParameter("orderId") == null){
             req.setAttribute("message", "Chưa chọn order nào");
             req.getRequestDispatcher("/views/staff/list_Order.jsp").forward(req, resp);
@@ -455,14 +455,33 @@ public class UserCtrl extends HttpServlet {
             req.getRequestDispatcher("").forward(req, resp);
         }
         if (req.getParameter("statusOrder") != null) {
-            if(order.getStatus().equalsIgnoreCase("cancel") || order.getStatus().equalsIgnoreCase("confirm")){
+            if(order.getStatus().equalsIgnoreCase("cancel") || order.getStatus().equalsIgnoreCase("success")){
                 req.setAttribute("message", "không chỉnh sủa order này");
                 req.getRequestDispatcher("/views/staff/list_Order.jsp").forward(req, resp);
             }
-            if(order.getStatus().equalsIgnoreCase("success")){
-
+            if(order.getStatus().equalsIgnoreCase("pending") && (req.getParameter("statusOrder").equalsIgnoreCase("confirm")
+                    || req.getParameter("statusOrder").equalsIgnoreCase("success"))){
+                List<OrderDetails> orderDetails = userService.getOrderDetailByOrderId(order.getId());
+                List<Service> services = staffService.findAllService(new SearchServiceRequest());
+                for (OrderDetails details : orderDetails) {
+                    for(int i =0; i <services.size(); i++){
+                        if(details.getRefId().equalsIgnoreCase(services.get(i).getId())){
+                            services.get(i).setAmount(String.valueOf(Integer.valueOf(services.get(i).getAmount()) - Integer.valueOf(details.getAmount())));
+                        }
+                    }
+                }
             }
-            if(req.getParameter("statusOrder").equalsIgnoreCase("success")){}
+            if(!order.getStatus().equalsIgnoreCase("pending") && req.getParameter("statusOrder").equalsIgnoreCase("pending")){
+                List<OrderDetails> orderDetails = userService.getOrderDetailByOrderId(order.getId());
+                List<Service> services = staffService.findAllService(new SearchServiceRequest());
+                for (OrderDetails details : orderDetails) {
+                    for(int i =0; i <services.size(); i++){
+                        if(details.getRefId().equalsIgnoreCase(services.get(i).getId())){
+                            services.get(i).setAmount(String.valueOf(Integer.valueOf(services.get(i).getAmount()) + Integer.valueOf(details.getAmount())));
+                        }
+                    }
+                }
+            }
             order.setStatus(String.valueOf(req.getParameter("statusOrder")));
 
         }
@@ -474,7 +493,7 @@ public class UserCtrl extends HttpServlet {
         Order order = new Order();
         UserServiceImpl userService = new UserServiceImpl();
         List<OrderDetails> orderDetails = new ArrayList<>();
-
+        StaffServiceImpl staffService = new StaffServiceImpl();
         OrderDetails details = new OrderDetails();
         if(request.getParameter("amount")!=null){
             if(Integer.valueOf(request.getParameter("amount") ) < 1){
@@ -491,8 +510,19 @@ public class UserCtrl extends HttpServlet {
         details.setPriceRef(Double.valueOf(request.getParameter("priceRef")));
         details.setNameRef(request.getParameter("nameRef"));
         details.setId(String.valueOf(UUID.randomUUID()));
-        orderDetails.add(details);
 
+        List<OrderDetails> orderDetailDtos = userService.getOrderDetailByOrderId(details.getOrderId());
+        List<Service> services = staffService.findAllService(new SearchServiceRequest());
+            for(int i =0; i <services.size(); i++){
+                if(details.getRefId().equalsIgnoreCase(services.get(i).getId())){
+                    if(Integer.valueOf(details.getAmount()) < Integer.valueOf(services.get(i).getAmount())){
+                        request.setAttribute("message", "Số lượng sp không hợp lệ");
+                        request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request, response);
+                    }
+                    break;
+                }
+        }
+        orderDetails.add(details);
         userService.createOrderDetail(orderDetails);
         response.sendRedirect("/order_list");
     }
