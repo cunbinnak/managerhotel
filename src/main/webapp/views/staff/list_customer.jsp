@@ -39,7 +39,7 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -47,7 +47,7 @@
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/customers"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
                         <span>Customer</span></a>
                 </li>
                 <li>
@@ -119,18 +119,18 @@
                     <td>${ cus.phone }</td>
                     <td>${ cus.email }</td>
                     <td>
-                        <a href="/customer_update?customerId=${cus.id}" style="margin: 10px">Cập nhật thông tin</a>
+                        <a href="/customer_update?customerId=${cus.id}" style="margin: 10px" class="btn btn-primary">Cập nhật thông tin</a>
                         <form action="order_room" method="post">
                             <input type="text" name="customerId" value="${cus.id}" hidden>
-                            <input type="submit" value="Đặt phòng">
+                            <input type="submit" value="Đặt phòng" class="btn btn-primary">
                         </form>
                         <p style="margin-left: 10px"></p>
                         <form action="order_service" method="post">
-                            <input type="text" name="customerId" value="${cus.id}" hidden style="margint: 15px">
-                            <input type="submit" value="Thêm dịch vụ">
+                            <input type="text" name="customerId" value="${cus.id}" hidden style="margint: 15px" >
+                            <input type="submit" value="Thêm dịch vụ" class="btn btn-primary">
                         </form>
                         <p style="margin-left: 10px"></p>
-                        <a href="/order_list?customerId=${cus.id}">Chi tiết và thông tin đặt phòng</a>
+                        <a href="/order_list?customerId=${cus.id}" class="btn btn-primary">Chi tiết và thông tin đặt phòng</a>
                     </td>
                 </tr>
             </c:forEach>

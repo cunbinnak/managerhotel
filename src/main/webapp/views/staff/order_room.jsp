@@ -39,7 +39,7 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -47,7 +47,7 @@
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/customers"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
                         <span>Customer</span></a>
                 </li>
                 <li>

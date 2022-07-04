@@ -39,7 +39,7 @@ public class ServiceCtrl extends HttpServlet {
             }
             if (url.equalsIgnoreCase("/detail_service")) {
                 detailServiceGet(req,response);
-                req.getRequestDispatcher("/views/staff/detail_service.jsp").forward(req,response);
+//                req.getRequestDispatcher("/views/staff/detail_service.jsp").forward(req,response);
             }
 
         } catch (SQLException e) {

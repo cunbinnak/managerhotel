@@ -168,7 +168,7 @@
       <div class="d-flex justify-content-center row">
         <div class="col-md-8">
           <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-            <div class="mr-1"><img class="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"></div>
+            <div class="mr-1"><img class="rounded" src="image/${detaiOrderUser}" width="70"></div>
             <div class="d-flex flex-column align-items-center product-details"><span class="font-weight-bold">Basic T-shirt</span>
               <div class="d-flex flex-row product-desc">
                 <div class="size mr-1"><span class="text-grey">Size:</span><span class="font-weight-bold">&nbsp;M</span></div>
