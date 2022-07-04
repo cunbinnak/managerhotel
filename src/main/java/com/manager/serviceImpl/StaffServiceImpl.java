@@ -72,39 +72,54 @@ public class StaffServiceImpl implements StaffService {
         BillDAOImpl billDAO = new BillDAOImpl();
         BillDetailDAOImpl billDetailDAO = new BillDetailDAOImpl();
         OrderDaoImpl orderDao = new OrderDaoImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
-        Order order = orderDao.getOrder(request.getOrderId());
-        if (order != null) {
-            List<OrderDetails> orderDetails = orderDetailDao.getOrderDetailByOrderId(request.getOrderId());
-            //Create bill
-            Bill bill = new Bill();
-            String billId = UUID.randomUUID().toString();
-            bill.setCustomerId(order.getCustomerId());
-            bill.setInvoiceDate(request.getInvoiceDate());
-            bill.setCheckinDate(request.getCheckinDate());
-            bill.setCheckoutDate(request.getCheckoutDate());
-            bill.setCreatedUser(request.getCreatedUser());
-            bill.setIsDeleted(Boolean.FALSE);
-            bill.setStatus(request.getStatus());
-            bill.setId(billId);
-            billDAO.newBill(bill);
+        List<Order> orders = new ArrayList<>();
+        Order order = new Order();
+        Boolean flag = false;
+        if (request.getOrderId() != null) {
+            order = orderDao.getOrder(request.getOrderId());
+            orders.add(order);
+            flag = true;
+        }
+        if (request.getCustomerId() != null && flag.equals(true)) {
+            order.setCustomerId(request.getCustomerId());
+            order.setStatus("success");
+            orders = userService.getAllOrder(order);
+        }
+        for (Order order1 : orders) {
+            if (order1.getStatus().equalsIgnoreCase("success")) {
+                List<OrderDetails> orderDetails = orderDetailDao.getOrderDetailByOrderId(order1.getId());
+                //Create bill
+                Bill bill = new Bill();
+                String billId = UUID.randomUUID().toString();
+                bill.setCustomerId(order.getCustomerId());
+                bill.setInvoiceDate(request.getInvoiceDate());
+                bill.setCheckinDate(request.getCheckinDate());
+                bill.setCheckoutDate(request.getCheckoutDate());
+                bill.setCreatedUser(request.getCreatedUser());
+                bill.setIsDeleted(Boolean.FALSE);
+                bill.setStatus(request.getStatus());
+                bill.setId(billId);
+                billDAO.newBill(bill);
 
-            //creted billDetail
-            List<BillDetails> billDetails = new ArrayList<>();
-            for (OrderDetails orderDetail : orderDetails) {
-                BillDetails billDetail = new BillDetails();
-                billDetail.setBillId(billId);
-                billDetail.setAmount(orderDetail.getAmount());
-                billDetail.setRefId(orderDetail.getRefId());
-                billDetail.setNameRef(orderDetail.getNameRef());
-                billDetail.setPriceRef(orderDetail.getPriceRef());
-                billDetail.setRefType(orderDetail.getRefType());
-                billDetail.setCreatedUser(orderDetail.getCreatedUser());
-                billDetail.setId(UUID.randomUUID().toString());
-                billDetails.add(billDetail);
-            }
-            if (!billDetails.isEmpty()) {
-                billDetailDAO.newBillDetail(billDetails);
+                //creted billDetail
+                List<BillDetails> billDetails = new ArrayList<>();
+                for (OrderDetails orderDetail : orderDetails) {
+                    BillDetails billDetail = new BillDetails();
+                    billDetail.setBillId(billId);
+                    billDetail.setAmount(orderDetail.getAmount());
+                    billDetail.setRefId(orderDetail.getRefId());
+                    billDetail.setNameRef(orderDetail.getNameRef());
+                    billDetail.setPriceRef(orderDetail.getPriceRef());
+                    billDetail.setRefType(orderDetail.getRefType());
+                    billDetail.setCreatedUser(orderDetail.getCreatedUser());
+                    billDetail.setId(UUID.randomUUID().toString());
+                    billDetails.add(billDetail);
+                }
+                if (!billDetails.isEmpty()) {
+                    billDetailDAO.newBillDetail(billDetails);
+                }
             }
         }
     }
