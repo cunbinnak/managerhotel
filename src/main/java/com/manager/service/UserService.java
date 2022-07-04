@@ -39,6 +39,7 @@ public interface UserService {
 
     List<OrderDetails> getOrderDetailByOrderId(String orderId) throws SQLException;
     OrderDetails getOrderDetailById(String id) throws SQLException;
+    List<OrderDetails> getAllOrderDetail(OrderDetails orderDetails) throws SQLException;
     void deleteOrderDetailById(String id) throws SQLException;
     void createOrderDetail(List<OrderDetails> orderDetails) throws SQLException;
     void updateOrderDetail(OrderDetails orderDetails) throws SQLException;

@@ -128,7 +128,7 @@
                     <td>
                         <select name="status" id="status" class="form-control">
                             <c:if test="${ order.status =='pending'}">
-                                <option value="penđing">Chờ</option>
+                                <option value="pending">Chờ</option>
                                 <option value="confirm">Xác nhận</option>
                                 <option value="success">Thành Công</option>
                                 <option value="cancel">Hủy</option>
@@ -245,8 +245,6 @@
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-success" style="margin-right: 15px">Thêm</button>
-
-                                <button type="button" class="btn btn-danger">Hủy</button>
                             </td>
                         </tr>
 
@@ -301,11 +299,10 @@
                                 </td>
                                 <td>
                                     <input type="text" name="description" value="${r.description}" class="form-control" readonly>
+                                    <input type="hidden" name="amount" value="1" class="form-control" readonly>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-success" style="margin-right: 15px">Thêm</button>
-
-                                    <button type="button" class="btn btn-danger">Hủy</button>
                                 </td>
                             </tr>
 

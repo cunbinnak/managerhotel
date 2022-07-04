@@ -21,4 +21,6 @@ public interface OrderDetailDao {
     OrderDetails getOrderDetailById(String id) throws SQLException;
 
     List<BusinessReport> getBusinessReport(BusinessReportRequest req) throws SQLException;
+
+    List<OrderDetails> findAllOrderDetail(Map<String, String> spec) throws SQLException;
 }

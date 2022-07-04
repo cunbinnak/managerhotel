@@ -1,5 +1,6 @@
 package com.manager.service;
 
+import com.manager.dto.BillResponse;
 import com.manager.dto.CreateBillRequest;
 import com.manager.dto.SearchServiceRequest;
 import com.manager.entity.Bill;
@@ -22,5 +23,5 @@ public interface StaffService {
 
     void updateBill(Bill bill);
 
-    List<Bill> getAllBill(Bill bill) throws SQLException;
+    List<BillResponse> getAllBill(Bill bill) throws SQLException;
 }

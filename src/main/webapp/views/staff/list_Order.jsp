@@ -127,18 +127,18 @@
                     </c:if>
                     <c:set var="sts" value="${ order.status}"/>
                     <c:choose>
-                        <c:when test="${ sts ==pending}">
+                        <c:when test="${ sts =='pending'}">
                             <td>Chờ</td>
                         </c:when>
-                        <c:when test="${ sts ==confirm}">
+                        <c:when test="${ sts =='confirm'}">
                             <td>Xác nhận</td>
                         </c:when>
-                        <c:when test="${sts ==success}">
+                        <c:when test="${sts =='success'}">
                             <td>Thành công</td>
                         </c:when>
-                        <c:otherwise >
+                        <c:when test="${sts =='cancel'}">
                             <td>Hủy</td>
-                        </c:otherwise>
+                        </c:when>
                     </c:choose>
                     <td>
                         <a href="/update_order?orderId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>

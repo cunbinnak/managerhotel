@@ -4,6 +4,7 @@ import com.manager.DAO.OrderDetailDao;
 import com.manager.config.DatabaseSource;
 import com.manager.dto.BusinessReport;
 import com.manager.dto.BusinessReportRequest;
+import com.manager.entity.Order;
 import com.manager.entity.OrderDetails;
 
 import java.sql.Connection;
@@ -68,6 +69,43 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
         }
     }
 
+
+    @Override
+    public List<OrderDetails> findAllOrderDetail(Map<String, String> spec) throws SQLException {
+        List<OrderDetails> orders = new ArrayList<>();
+        String query = "SELECT * FROM managerhotel.orderdetails ";
+        List<String> predicates = new ArrayList<>();
+        if (!spec.isEmpty()) {
+            query = query + "where ";
+            for (Map.Entry<String, String> entry : spec.entrySet()) {
+                predicates.add(" " + entry.getKey() + " = " + entry.getValue());
+            }
+            String predicate = String.join(" AND ", predicates);
+            query = query + predicate;
+        }
+        System.out.println(query);
+        Connection connection = databaseSource.getDatasource();
+        PreparedStatement prepare = connection.prepareStatement(query);
+        try {
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()) {
+                OrderDetails orderDetail = new OrderDetails();
+                orderDetail.setId(rs.getString("id"));
+                orderDetail.setOrderId(rs.getString("order_id"));
+                orderDetail.setAmount(rs.getString("amount"));
+                orderDetail.setNameRef(rs.getString("name_ref"));
+                orderDetail.setRefId(rs.getString("ref_id"));
+                orderDetail.setPriceRef(rs.getDouble("price_ref"));
+                orderDetail.setRefType(rs.getString("ref_type"));
+                orderDetail.setUnit(rs.getString("unit"));
+                orders.add(orderDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
     @Override
     public void deleteOrderDetailById(String id) throws SQLException {
         String query = "delete from orderdetails where id = ?";
@@ -98,6 +136,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
                 orderDetail.setOrderId(rs.getString("order_id"));
                 orderDetail.setAmount(rs.getString("amount"));
                 orderDetail.setNameRef(rs.getString("name_ref"));
+                orderDetail.setRefId(rs.getString("ref_id"));
                 orderDetail.setPriceRef(rs.getDouble("price_ref"));
                 orderDetail.setRefType(rs.getString("ref_type"));
                 orderDetail.setUnit(rs.getString("unit"));
@@ -124,6 +163,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
                 orderDetail.setOrderId(rs.getString("order_id"));
                 orderDetail.setAmount(rs.getString("amount"));
                 orderDetail.setNameRef(rs.getString("name_ref"));
+                orderDetail.setRefId(rs.getString("ref_id"));
                 orderDetail.setPriceRef(rs.getDouble("price_ref"));
                 orderDetail.setRefType(rs.getString("ref_type"));
                 orderDetail.setUnit(rs.getString("unit"));

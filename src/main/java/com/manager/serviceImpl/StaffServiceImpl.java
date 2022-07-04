@@ -2,6 +2,7 @@ package com.manager.serviceImpl;
 
 import com.manager.DAO.OrderDao;
 import com.manager.DAOImpl.*;
+import com.manager.dto.BillResponse;
 import com.manager.dto.CreateBillRequest;
 import com.manager.dto.SearchServiceRequest;
 import com.manager.entity.*;
@@ -44,6 +45,9 @@ public class StaffServiceImpl implements StaffService {
             if (service.getName() != null && !service.getName().isEmpty()) {
                 spec.put("name", "'" + service.getName() + "'");
             }
+            if (service.getAmount() != null && !service.getAmount().isEmpty()) {
+                spec.put("amount", "'" + service.getAmount() + "'");
+            }
             if (service.getDescription() != null && !service.getDescription().isEmpty()) {
                 spec.put("description", "'" + service.getDescription() + "'");
             }
@@ -55,22 +59,22 @@ public class StaffServiceImpl implements StaffService {
             }
             if (service.getUnit() != null) {
                 spec.put("unit", "'" + service.getUnit() + "'");
-            } else {
-                return;
             }
-            serviceDAO.updateService(spec, service.getId());
+        } else {
+            return;
         }
+        serviceDAO.updateService(spec, service.getId());
     }
 
     @Override
     public void createBill(CreateBillRequest request) throws SQLException {
-    //Get order and orderDetail by order
+        //Get order and orderDetail by order
         BillDAOImpl billDAO = new BillDAOImpl();
         BillDetailDAOImpl billDetailDAO = new BillDetailDAOImpl();
         OrderDaoImpl orderDao = new OrderDaoImpl();
         OrderDetailDaoImpl orderDetailDao = new OrderDetailDaoImpl();
         Order order = orderDao.getOrder(request.getOrderId());
-        if(order != null){
+        if (order != null) {
             List<OrderDetails> orderDetails = orderDetailDao.getOrderDetailByOrderId(request.getOrderId());
             //Create bill
             Bill bill = new Bill();
@@ -87,7 +91,7 @@ public class StaffServiceImpl implements StaffService {
 
             //creted billDetail
             List<BillDetails> billDetails = new ArrayList<>();
-            for(OrderDetails orderDetail :orderDetails){
+            for (OrderDetails orderDetail : orderDetails) {
                 BillDetails billDetail = new BillDetails();
                 billDetail.setBillId(billId);
                 billDetail.setAmount(orderDetail.getAmount());
@@ -99,7 +103,7 @@ public class StaffServiceImpl implements StaffService {
                 billDetail.setId(UUID.randomUUID().toString());
                 billDetails.add(billDetail);
             }
-            if(!billDetails.isEmpty()){
+            if (!billDetails.isEmpty()) {
                 billDetailDAO.newBillDetail(billDetails);
             }
         }
@@ -120,8 +124,10 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Bill> getAllBill(Bill bill) throws SQLException {
+    public List<BillResponse> getAllBill(Bill bill) throws SQLException {
         BillDAOImpl billDAO = new BillDAOImpl();
+        BillDetailDAOImpl billDetailDAO = new BillDetailDAOImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         Map<String, String> spec = new HashMap<>();
         if (bill != null) {
             if (bill.getId() != null && !bill.getId().isEmpty()) {
@@ -134,6 +140,28 @@ public class StaffServiceImpl implements StaffService {
                 spec.put("status", "'" + bill.getStatus() + "'");
             }
         }
-        return billDAO.findAlBill(spec);
+        List<Bill> bills = billDAO.findAlBill(spec);
+        List<BillResponse> responses = new ArrayList<>();
+        for (Bill bill1 : bills) {
+            List<BillDetails> billDetails = billDetailDAO.getBillByOrderId(bill1.getId());
+            Double totalPrice = 0.0;
+            for (BillDetails details : billDetails) {
+                totalPrice += details.getPriceRef();
+            }
+            BillResponse billResponse = new BillResponse();
+            billResponse.setId(bill1.getId());
+            billResponse.setCustomerId(bill1.getCustomerId());
+            Customer customer = userService.findCustomerById(bill1.getCustomerId());
+            billResponse.setCustomerName(customer.getName());
+            billResponse.setCreatedUser(bill1.getCreatedUser());
+            billResponse.setCheckinDate(bill1.getCheckinDate());
+            billResponse.setCheckoutDate(bill1.getCheckoutDate());
+            billResponse.setInvoiceDate(bill1.getInvoiceDate());
+            billResponse.setStatus(bill1.getStatus());
+            billResponse.setTotalPrice(totalPrice);
+            billResponse.setDetails(billDetails);
+            responses.add(billResponse);
+        }
+        return responses;
     }
 }
