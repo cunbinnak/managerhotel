@@ -49,8 +49,12 @@
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" class="active"><span class="las la-table"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
                         <span>Service</span></a>
+                </li>
+                <li>
+                    <a href="/customers"><span class="las la-table"></span>
+                        <span>Customer</span></a>
                 </li>
                 <li>
                     <a href="/order_list"><span class="la la-opencart"></span>
@@ -117,7 +121,8 @@
                     <td>${ sv.unit }</td>
                     <td><img src="images/${sv.image}" alt="" style="width: 100px"></td>
                     <td>
-                        <a href="/detail_service?serviceId=${sv.id}" style="margin: 10px">Chi tiết</a>
+                        <a href="/detail_service?serviceId=${sv.id}" style="margin: 10px" class="btn btn-primary">Chi tiết</a>
+                        <c:if test="${customerIdOrderRoom!=null || customerIdOrderService!=null }">
                         <form action="staff/create_order" method="post">
                             <input type="text" name="unit" value="${ sv.unit }" hidden>
                             <input type="number" name="amount" value="1" hidden>
@@ -125,9 +130,9 @@
                             <input type="hidden" name="refId" value="${sv.id}">
                             <input type="hidden" name="priceRef" value="${sv.price}">
                             <input type="hidden" name="nameRef" value="${sv.name}">
-                            <input type="submit" value="Đặt dịch vụ" >
+                            <input type="submit" value="Đặt dịch vụ" class="btn btn-primary">
                         </form>
-                        <a href="/detail_service?serviceId=${sv.id}">Xóa Phòng</a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

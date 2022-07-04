@@ -44,11 +44,15 @@
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" ><span class="las la-table"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
+                        <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
@@ -141,8 +145,8 @@
                         </c:when>
                     </c:choose>
                     <td>
-                        <a href="/update_order?orderId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>
-                        <a href="/update_order_detail?orderId=${order.id}" style="margin: 10px">Chi tiết</a>
+                        <a href="/update_order?orderId=${order.id}" style="margin: 10px" class="btn btn-primary">Cập nhật đơn hàng</a>
+<%--                        <a href="/update_order_detail?orderId=${order.id}" style="margin: 10px" class="btn btn-primary">Chi tiết</a>--%>
 
                     </td>
                 </tr>

@@ -32,7 +32,51 @@
   <link rel="stylesheet" href="<c:url value='/template/css/aos.css'/>">
 
   <link rel="stylesheet" href="<c:url value='/template/css/style.css'/>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
 
+    body {
+      font-family: 'Manrope', sans-serif;
+      background:#eee;
+    }
+
+    .size span {
+      font-size: 11px;
+    }
+
+    .color span {
+      font-size: 11px;
+    }
+
+    .product-deta {
+      margin-right: 70px;
+    }
+
+    .gift-card:focus {
+      box-shadow: none;
+    }
+
+    .pay-button {
+      color: #fff;
+    }
+
+    .pay-button:hover {
+      color: #fff;
+    }
+
+    .pay-button:focus {
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .text-grey {
+      color: #a39f9f;
+    }
+
+    .qty i {
+      font-size: 11px;
+    }
+  </style>
 </head>
 <body>
 <div class="site-wrap">
@@ -124,7 +168,7 @@
       <div class="d-flex justify-content-center row">
         <div class="col-md-8">
           <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-            <div class="mr-1"><img class="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"></div>
+            <div class="mr-1"><img class="rounded" src="image/${detaiOrderUser}" width="70"></div>
             <div class="d-flex flex-column align-items-center product-details"><span class="font-weight-bold">Basic T-shirt</span>
               <div class="d-flex flex-row product-desc">
                 <div class="size mr-1"><span class="text-grey">Size:</span><span class="font-weight-bold">&nbsp;M</span></div>
@@ -136,8 +180,10 @@
             <div>
               <h5 class="text-grey">$20.00</h5>
             </div>
-            <div class="d-flex align-items-center"><i class="fa fa-trash mb-1 text-danger"></i></div>
+            <div class="d-flex align-items-center"><i class="fa fa-trash mb-1 text-danger"> <a href="">Hủy</a> </i></div>
+
           </div>
+
         </div>
       </div>
 

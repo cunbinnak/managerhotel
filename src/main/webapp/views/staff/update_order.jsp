@@ -34,23 +34,23 @@
 <input type="checkbox" id="nav-toggle">
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2><span class="lab la-accusoft"></span><span>Dev Hotel</span></h2>
+        <h2><span class="lab la-accusoft"></span><span>Dev Hotel</span> </h2>
     </div>
     <div class="sidebar-menu">
         <ul>
             <c:if test="${role=='ADMIN'}">
                 <li>
-                    <a href="<c:url value='/admin'/>"><span class="las la-igloo"></span>
+                    <a href="<c:url value='/admin'/>" ><span class="las la-igloo"></span>
                         <span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="<c:url value='/admin/search/user'/>"><span class="las la-users"></span>
+                    <a href="<c:url value='/admin/search/user'/>" ><span class="las la-users"></span>
                         <span>User</span></a>
                 </li>
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -58,7 +58,11 @@
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
+                        <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
@@ -240,8 +244,8 @@
 
                             </td>
                             <td>
-                                <input type="number" name="amount"  class="form-control" required>
-                                <p style="margin-left: 20px">Còn lại: ${sv.amount}</p>
+                                <input type="number" name="amount" id="actualInput"  class="form-control" onchange="alertThanAmount()" required>
+                                <p style="margin-left: 20px" id="soluong">Còn lại: ${sv.amount}</p> <span id="anounce"></span>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-success" style="margin-right: 15px">Thêm</button>
@@ -385,6 +389,18 @@
                 },delayInMilliseconds);
             }
         });
+    }
+
+    function alertThanAmount(){
+        var soluong = $("#soluong").text();
+        var index = soluong.indexOf(":");
+        var actualSoluong = soluong.substring(index+1);
+        var inputSelect =  $('#actualInput').val();
+        if(Number(actualSoluong < inputSelect)){
+            $('#anounce').html('Không được lơn hơn số còn lại')
+        }else {
+            $('#anounce').html('')
+        }
     }
 
 </script>

@@ -43,11 +43,15 @@
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" ><span class="las la-table"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
+                        <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
