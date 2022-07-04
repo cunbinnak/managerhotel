@@ -81,27 +81,35 @@
 <input type="checkbox" id="nav-toggle">
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2><span class="lab la-accusoft"></span><span>Dev Hotel</span></h2>
+        <h2><span class="lab la-accusoft"></span><span>Dev Hotel</span> </h2>
     </div>
     <div class="sidebar-menu">
         <ul>
             <c:if test="${role=='ADMIN'}">
                 <li>
-                    <a href="<c:url value='/admin'/>"><span class="las la-igloo"></span>
+                    <a href="<c:url value='/admin'/>" ><span class="las la-igloo"></span>
                         <span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="<c:url value='/admin/search/user'/>" class="active"><span class="las la-users"></span>
+                    <a href="<c:url value='/admin/search/user'/>" ><span class="las la-users"></span>
                         <span>User</span></a>
                 </li>
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
-                    <a href="/admin/order"><span class="la la-opencart"></span>
+                    <a href="/search_service"><span class="las la-table"></span>
+                        <span>Service</span></a>
+                </li>
+                <li>
+                    <a href="/customers"><span class="las la-table"></span>
+                        <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>

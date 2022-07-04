@@ -41,7 +41,7 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -49,7 +49,7 @@
                         <span>Service</span></a>
                 </li>
                 <li>
-                    <a href="/customers"><span class="la la-opencart"></span>
+                    <a href="/customers"><span class="las la-table"></span>
                         <span>Customer</span></a>
                 </li>
                 <li>
@@ -148,7 +148,8 @@
                         </c:choose>
 
                         <td>
-                            <a href="/update_room?idroom=${room.id}" style="margin: 10px">Chi tiết</a>
+                            <a href="/update_room?idroom=${room.id}" style="margin: 10px" class="btn btn-primary">Chi tiết</a>
+                            <c:if test="${customerIdOrderRoom!=null || customerIdOrderService!=null }">
                             <form action="staff/create_order" method="post">
                                 <input type="text" name="roomId" value="${room.id}" hidden>
                                 <input type="text" name="unit" value="1" hidden>
@@ -157,11 +158,9 @@
                                 <input type="hidden" name="refId" value="${room.id}">
                                 <input type="hidden" name="priceRef" value="${room.price}">
                                 <input type="hidden" name="nameRef" value="${room.name}">
-                                <input type="submit" value="Đặt phòng" >
+                                <input type="submit" value="Đặt phòng"  class="btn btn-primary">
                             </form>
-                            <a href="/update_room?idroom=${room.id}">Đặt phòng</a>
-                            <a href="" style="margin: 10px">Thêm dịch vụ</a>
-                            <a href="/update_room?idroom=${room.id}">Hủy Phòng</a>
+                            </c:if>
                         </td>
                     </tr>
                     </c:forEach>

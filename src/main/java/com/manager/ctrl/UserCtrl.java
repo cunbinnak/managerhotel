@@ -501,7 +501,8 @@ public class UserCtrl extends HttpServlet {
             request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request, response);
         }
         if (url.equalsIgnoreCase("/user/order_list")) {
-            request.getRequestDispatcher("/views/web/shoppingcart.jsp").forward(request, response);
+            detailOrderUser(request,response);
+
         }
 
     }
@@ -835,7 +836,8 @@ public class UserCtrl extends HttpServlet {
             Order order = new Order();
             order.setCustomerId(customer.getId());
             order.setStatus("pending");
-            userService.getAllOrder(order);
+            request.setAttribute("detaiOrderUser", userService.getAllOrder(order));
+            request.getRequestDispatcher("/views/web/shoppingcart.jsp").forward(request, response);
         }
     }
 }
