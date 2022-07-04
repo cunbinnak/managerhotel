@@ -118,8 +118,15 @@
                     <td><img src="images/${sv.image}" alt="" style="width: 100px"></td>
                     <td>
                         <a href="/detail_service?serviceId=${sv.id}" style="margin: 10px">Chi tiết</a>
-                        <a href="/detail_service?serviceId=${sv.id}">Đặt phòng</a>
-                        <a href="/detail_service?serviceId=${sv.id}">Hủy Phòng</a>
+                        <form action="staff/create_order" method="post">
+                            <input type="text" name="unit" value="${ sv.unit }" hidden>
+                            <input type="number" name="amount" value="1" hidden>
+                            <input type="hidden" name="refType" value="1">
+                            <input type="hidden" name="refId" value="${sv.id}">
+                            <input type="hidden" name="priceRef" value="${sv.price}">
+                            <input type="hidden" name="nameRef" value="${sv.name}">
+                            <input type="submit" value="Đặt dịch vụ" >
+                        </form>
                         <a href="/detail_service?serviceId=${sv.id}">Xóa Phòng</a>
                     </td>
                 </tr>

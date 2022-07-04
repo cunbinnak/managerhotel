@@ -1,11 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: Admin
-  Date: 7/2/2022
-  Time: 1:36 PM
+  Date: 7/3/2022
+  Time: 10:34 PM
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -40,15 +39,18 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table" ></span>
                         <span>Room</span></a>
+                </li><li>
+                <a href="<c:url value='/search_service'/>"><span class="las la-table" ></span>
+                    <span>Service</span></a>
+            </li>
+                <li>
+                    <a href="/customers"><span class="la la-opencart"></span>
+                        <span>Customer</span></a>
                 </li>
                 <li>
-                    <a href="/search_service" ><span class="las la-table"></span>
-                        <span>Service</span></a>
-                </li>
-                <li>
-                    <a href="/order_list" class="active"><span class="la la-opencart"></span>
+                    <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
             </c:if>
@@ -69,85 +71,44 @@
                 <h4>${userName}</h4>
             </div>
             <div class="sigout" *ngIf="username">
-                <a href="/authen/logout">Đăng xuất</a>
+                <p ><a href="<c:url value='logout'/>"> Đăng xuất</a></p>
             </div>
         </div>
     </header>
     <main>
-
-        <legend>Tìm kiếm</legend>
-        <form method="post" action="">
-            <table class="table">
+        <h3>Cập nhật thông tin khách hàng</h3>
+        <form action=""  method="post" >
+            <table class="table table-striped">
                 <tr>
-                    <td>Tên đơn hàng</td>
-                    <td>
-                        <select name="statusOrder" class="form-control" >
-                            <option value="pending">Chờ đặt</option>
-                            <option value="confirm">Xác nhận</option>
-                            <option value="success">Hoàn thành</option>
-                            <option value="cancel">Hủy</option>
-                        </select>
-                    </td>
+                    <td>Tên khách hàng</td>
+                    <td><input type="text" name="name" value="${customerDetail.name}" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Địa chỉ</td>
+                    <td><input type="text" name="address" value="${customerDetail.address}" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>Loại</td>
-                    <td>
-                        <select name="orderType" class="form-control">
-                            <option value="0">Phòng</option>
-                            <option value="1">Dịch vụ</option>
-                        </select>
-                    </td>
+                    <td>Ngày sinh</td>
+                    <td><input type="date" name="birthDay" value="${customerDetail.birthDay}" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td><input type="text" name="phone" value="${customerDetail.phone}" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="email" value="${customerDetail.email}" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Tìm kiếm" class="btn btn-success"></td>
+                    <td><input type="submit" value="Cập nhật" class="btn btn-danger"></td>
                     <br> ${ message } <br>
                 </tr>
             </table>
         </form>
 
-        <br>
-        <h3>Danh đơn hàng</h3>
-        <table class="table .table-bordered">
-            <tr>
-                <td>Tên đơn hàng</td>
-                <td>Tên khách hàng</td>
-                <td>Loại</td>
-                <td>Trạng thái</td>
-            </tr>
-            <c:forEach var="order" items="${detailOrders}">
-                <tr>
-                    <td>${ order.orderName }</td>
-                    <td>${ order.customerName }</td>
-                    <c:if test="${ order.orderType ==0}" >
-                            <td>Đặt phòng</td>
-                    </c:if>
-                    <c:if test="${ order.orderType ==1}" >
-                        <td>Đặt dịch vụ</td>
-                    </c:if>
-                    <c:set var="sts" value="${ order.status}"/>
-                    <c:choose>
-                        <c:when test="${ sts ==pending}">
-                            <td>Chờ</td>
-                        </c:when>
-                        <c:when test="${ sts ==confirm}">
-                            <td>Xác nhận</td>
-                        </c:when>
-                        <c:when test="${sts ==success}">
-                            <td>Thành công</td>
-                        </c:when>
-                        <c:otherwise >
-                            <td>Hủy</td>
-                        </c:otherwise>
-                    </c:choose>
-                    <td>
-                        <a href="/update_order?orderId=${order.id}" style="margin: 10px">Cập nhật đơn hàng</a>
-                        <a href="/update_order_detail?orderId=${order.id}" style="margin: 10px">Chi tiết</a>
-
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
     </main>
 </div>
 
