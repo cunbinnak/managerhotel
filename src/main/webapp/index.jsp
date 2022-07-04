@@ -73,33 +73,21 @@
                                     <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
                                     <ul class="site-menu js-clone-nav d-none d-lg-block">
                                         <li class="active">
-                                            <a href="<c:url value='/home'/>">Trang chủ</a>
+                                            <a href="<c:url value='/'/>">Trang chủ</a>
                                         </li>
                                         <li class="has-children">
-                                            <a href="<c:url value='/user'/>">Phòng</a>
+                                            <a href="<c:url value=''/>">Dịch vụ</a>
                                             <ul class="dropdown arrow-top">
-                                                <li><a href="rooms.html">Hiện có</a></li>
-                                                <li><a href="rooms.html">Phòng đơn</a></li>
-                                                <li><a href="rooms.html">Phòng đôi</a></li>
-                                                <li><a href="rooms.html">Phòng gia đình</a></li>
-                                                <li class="has-children">
-                                                    <a href="rooms.html">Dịch vụ</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="rooms.html">Phòng cao cấp</a></li>
-                                                        <li><a href="rooms.html">Tắm hơi</a></li>
-                                                        <li><a href="rooms.html">Ăn uống</a></li>
-
-                                                    </ul>
-                                                </li>
-
+                                                <c:forEach items="${services}" var="ser" >
+                                                <li><a href="/">${ser.name}</a></li>
+                                                </c:forEach>
                                             </ul>
                                         </li>
-<%--                                        <li><a href="events.html">Sự kiện</a></li>--%>
-<%--                                        <li><a href="about.html">Thông tin</a></li>--%>
-                                        <li><a href="contact.html">Liên hệ</a></li>
+                                        <li >
+                                            <a href="/user/order_list">Thông tin đơn hàng</a> </li>
                                         <c:choose>
                                             <c:when test="${username !=null}">
-                                                <li><a href="/authen/logout">Xin Chào: ${username}</a></li>
+                                                <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
                                             </c:when>
                                             <c:otherwise>
                                                 <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
@@ -218,56 +206,58 @@
                 </div>
             </div>
             <div class="row">
+                <c:forEach items="${services}" var="sv">
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="text-center p-4 item">
-                        <span class="flaticon-pool display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Hồ bơi</h2>
+                        <img src="image/${sv.image}" alt="" class="img-fluid">
+                        <h2 class="h5">${sv.name}</h2>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-desk display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Gọi thức ăn nhanh</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-exit display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Thoát hiểm an toàn</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-parking display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Bãi đổ xe</h2>
-                    </div>
-                </div>
+                </c:forEach>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-desk display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Gọi thức ăn nhanh</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-exit display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Thoát hiểm an toàn</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-parking display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Bãi đổ xe</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-hair-dryer display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Tạo mẫu tóc</h2>
-                    </div>
-                </div>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-hair-dryer display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Tạo mẫu tóc</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-minibar display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Quầy bar</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-drink display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Thức uống</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <span class="flaticon-cab display-3 mb-3 d-block text-primary"></span>
-                        <h2 class="h5">Thuê ô tô</h2>
-                    </div>
-                </div>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-minibar display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Quầy bar</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-drink display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Thức uống</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="col-sm-6 col-md-4 col-lg-3">--%>
+<%--                    <div class="text-center p-4 item">--%>
+<%--                        <span class="flaticon-cab display-3 mb-3 d-block text-primary"></span>--%>
+<%--                        <h2 class="h5">Thuê ô tô</h2>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
             </div>
         </div>
     </div>

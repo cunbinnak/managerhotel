@@ -25,10 +25,11 @@ import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @WebServlet({"/user/add-to-cart", "", "/rooms", "/room_detail", "/insert_room", "/update_room",
-        "/user/create_order","/staff/create_order", "/update_order","/update_order_detail", "/order_list", "/insert_service","/create_OrderDetail"})
+        "/user/create_order","/staff/create_order", "/update_order","/update_order_detail", "/order_list", "/user/order_list","/insert_service","/create_OrderDetail"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -52,9 +53,11 @@ public class UserCtrl extends HttpServlet {
         }
         String uri = req.getServletPath();
         RoomServiceImpl roomService = new RoomServiceImpl();
+        StaffServiceImpl staffService = new StaffServiceImpl();
         try {
             if (uri.isEmpty()) {
                 req.setAttribute("rooms", roomService.findAllRoom(new SearchRoomRequest()));
+                req.setAttribute("services",staffService.findAllService( new SearchServiceRequest()));
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
             if (uri.equalsIgnoreCase("/rooms")) {
@@ -437,6 +440,11 @@ public class UserCtrl extends HttpServlet {
             request.setAttribute("detailOrders", detailOrders);
             userService.updateOrder(order);
             request.getRequestDispatcher("/views/staff/list_Order.jsp").forward(request,response);
+        }
+        if (url.equalsIgnoreCase("/user/order_list")){
+            request.setAttribute("detailOrders", detailOrders);
+            userService.updateOrder(order);
+            request.getRequestDispatcher("/views/web/shoppingcart.jsp").forward(request,response);
         }
 
     }
