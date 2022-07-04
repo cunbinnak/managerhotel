@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Admin
-  Date: 6/28/2022
-  Time: 11:50 PM
+  Date: 7/4/2022
+  Time: 12:33 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Room Detail</title>
+  <title>Order</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -49,59 +49,59 @@
 
   <div class="site-navbar-wrap js-site-navbar bg-white">
 
-      <div class="container">
-          <div class="site-navbar bg-light">
-              <div class="py-1">
-                  <div class="row align-items-center">
-                      <div class="col-2">
-                          <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
-                      </div>
-                      <div class="col-10">
-                          <nav class="site-navigation text-right" role="navigation">
-                              <div class="container">
+    <div class="container">
+      <div class="site-navbar bg-light">
+        <div class="py-1">
+          <div class="row align-items-center">
+            <div class="col-2">
+              <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
+            </div>
+            <div class="col-10">
+              <nav class="site-navigation text-right" role="navigation">
+                <div class="container">
 
-                                  <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
-                                  <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                      <li class="active">
-                                          <a href="<c:url value='/'/>">Trang chủ</a>
-                                      </li>
-                                      <li class="has-children">
-                                          <a href="<c:url value=''/>">Dịch vụ</a>
-                                          <ul class="dropdown arrow-top">
-                                              <c:forEach items="${services}" var="ser" >
-                                                  <li><a href="/">${ser.name}</a></li>
-                                              </c:forEach>
-                                          </ul>
-                                      </li>
-                                      <li >
-                                          <a href="">Thông tin đơn hàng</a> </li>
-                                      <c:choose>
-                                          <c:when test="${username !=null}">
-                                              <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
-                                          </c:when>
-                                          <c:otherwise>
-                                              <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
-                                          </c:otherwise>
-                                      </c:choose>
+                  <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
+                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                    <li class="active">
+                      <a href="<c:url value='/'/>">Trang chủ</a>
+                    </li>
+                    <li class="has-children">
+                      <a href="<c:url value=''/>">Dịch vụ</a>
+                      <ul class="dropdown arrow-top">
+                        <c:forEach items="${services}" var="ser" >
+                          <li><a href="/">${ser.name}</a></li>
+                        </c:forEach>
+                      </ul>
+                    </li>
+                    <li >
+                      <a href="">Thông tin đơn hàng</a> </li>
+                    <c:choose>
+                      <c:when test="${username !=null}">
+                        <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
+                      </c:when>
+                      <c:otherwise>
+                        <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+                      </c:otherwise>
+                    </c:choose>
 
 
-                                  </ul>
-                              </div>
-                          </nav>
-                      </div>
-                  </div>
-              </div>
+                  </ul>
+                </div>
+              </nav>
+            </div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
 
-    <c:if test="${msg}">
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Well done!</h4>
-            <hr>
-            <p class="mb-0">${msg}</p>
-        </div>
-    </c:if>
+  <c:if test="${msg}">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Well done!</h4>
+      <hr>
+      <p class="mb-0">${msg}</p>
+    </div>
+  </c:if>
   <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='/template/images/hero_1.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
     <div class="container">
       <div class="row align-items-center justify-content-center">
@@ -118,68 +118,44 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-          <h2 class="mb-5">Rooms detail</h2>
+          <h2 class="mb-5">Order detail</h2>
         </div>
       </div>
-      <div class="row">
-          <form action="user/create_order" method="post">
-        <div class="col-md">
-          <div class="card">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="images p-3">
-                      <img src="images/${roomDetail.image}" alt=""  class="img img-fluid">
-<%--                      <img src="images/${roomdetail.image}" alt="" class="img-fluid">--%>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="product p-4">
-                  <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">${roomDetail.name}</span>
-<%--                    <h5 class="text-uppercase">${roomdetail.description}</h5>--%>
-                    <div class="price d-flex flex-row align-items-center"> <span class="act-price">${roomdetail.price}</span>
-                        <c:set var="priceDis" scope="session" value="${roomDetail.price/100 * roomdetail.discountPrice}"/>
-                      <div class="ml-2"> <small class="dis-price">${roomDetail.price - priceDis}</small> <span>${roomdetail.discountPrice} %OFF</span </div>
-                        <br>
-                        <p> số người : ${roomDetail.peopleNumber}</p>
-                        <br>
-                        <p> số giường : ${roomDetail.bedNumber}</p>
-                    </div>
-                  </div>
-                  <p class="about">Mô tả: ${roomDetail.description}</p>
-                    <input type="number" name="amount" value="1">
-                    <input type="hidden" name="refType" value="0">
-                    <input type="hidden" name="unit" value="1">
-                    <input type="hidden" name="refId" value="${roomDetail.id}">
-                    <input type="hidden" name="priceRef" value="${roomDetail.price}">
-                    <input type="hidden" name="nameRef" value="${roomDetail.name}">
-                    <div class="cart mt-4 align-items-center">
-                          <button type="submit" class="btn btn-danger text-uppercase mr-2 px-4">Đặt phòng</button>
-                      <i class="fa fa-heart text-muted"></i>
-                      <i class="fa fa-share-alt text-muted"></i>
-                  </div>
-                </div>
+      <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+          <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+            <div class="mr-1"><img class="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70"></div>
+            <div class="d-flex flex-column align-items-center product-details"><span class="font-weight-bold">Basic T-shirt</span>
+              <div class="d-flex flex-row product-desc">
+                <div class="size mr-1"><span class="text-grey">Size:</span><span class="font-weight-bold">&nbsp;M</span></div>
+                <div class="color"><span class="text-grey">Color:</span><span class="font-weight-bold">&nbsp;Grey</span></div>
               </div>
             </div>
+            <div class="d-flex flex-row align-items-center qty"><i class="fa fa-minus text-danger"></i>
+              <h5 class="text-grey mt-1 mr-1 ml-1">2</h5><i class="fa fa-plus text-success"></i></div>
+            <div>
+              <h5 class="text-grey">$20.00</h5>
+            </div>
+            <div class="d-flex align-items-center"><i class="fa fa-trash mb-1 text-danger"></i></div>
           </div>
         </div>
-          </form>
       </div>
 
-<%--      <div class="row mt-5">--%>
-<%--        <div class="col-md-12 text-center">--%>
-<%--          <div class="site-block-27">--%>
-<%--            <ul>--%>
-<%--              <li><a href="#">&lt;</a></li>--%>
-<%--              <li class="active"><span>1</span></li>--%>
-<%--              <li><a href="#">2</a></li>--%>
-<%--              <li><a href="#">3</a></li>--%>
-<%--              <li><a href="#">4</a></li>--%>
-<%--              <li><a href="#">5</a></li>--%>
-<%--              <li><a href="#">&gt;</a></li>--%>
-<%--            </ul>--%>
-<%--          </div>--%>
-<%--        </div>--%>
-<%--      </div>--%>
+      <%--      <div class="row mt-5">--%>
+      <%--        <div class="col-md-12 text-center">--%>
+      <%--          <div class="site-block-27">--%>
+      <%--            <ul>--%>
+      <%--              <li><a href="#">&lt;</a></li>--%>
+      <%--              <li class="active"><span>1</span></li>--%>
+      <%--              <li><a href="#">2</a></li>--%>
+      <%--              <li><a href="#">3</a></li>--%>
+      <%--              <li><a href="#">4</a></li>--%>
+      <%--              <li><a href="#">5</a></li>--%>
+      <%--              <li><a href="#">&gt;</a></li>--%>
+      <%--            </ul>--%>
+      <%--          </div>--%>
+      <%--        </div>--%>
+      <%--      </div>--%>
     </div>
   </div>
   <footer class="site-footer">
@@ -266,22 +242,22 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
+  document.addEventListener('DOMContentLoaded', function() {
+    var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
 
-        for (var i = 0; i < total; i++) {
-            new MediaElementPlayer(mediaElements[i], {
-                pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
-                shimScriptAccess: 'always',
-                success: function () {
-                    var target = document.body.querySelectorAll('.player'), targetTotal = target.length;
-                    for (var j = 0; j < targetTotal; j++) {
-                        target[j].style.visibility = 'visible';
-                    }
-                }
-            });
+    for (var i = 0; i < total; i++) {
+      new MediaElementPlayer(mediaElements[i], {
+        pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
+        shimScriptAccess: 'always',
+        success: function () {
+          var target = document.body.querySelectorAll('.player'), targetTotal = target.length;
+          for (var j = 0; j < targetTotal; j++) {
+            target[j].style.visibility = 'visible';
+          }
         }
-    });
+      });
+    }
+  });
 </script>
 </body>
 </html>
