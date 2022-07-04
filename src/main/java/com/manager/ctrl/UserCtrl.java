@@ -798,12 +798,44 @@ public class UserCtrl extends HttpServlet {
         return folderUpload;
     }
 
-    private void detailBillUser(HttpServletRequest request, HttpServletResponse response) {
-
+    private void detailBillUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        HttpSession session = request.getSession();
+        UserServiceImpl userService = new UserServiceImpl();
+        StaffServiceImpl staffService = new StaffServiceImpl();
+        Customer customer = new Customer();
+        if (session.getAttribute("username") != null ) {
+            User user = userService.findByUserName(session.getAttribute("username").toString());
+            if (user.getCustomerId() != null && !user.getCustomerId().isEmpty()) {
+                customer = userService.findCustomerById(user.getCustomerId());
+            } else {
+                request.setAttribute("message", "Không có quyền");
+                request.getRequestDispatcher("").forward(request, response);
+                return;
+            }
+            Bill bill = new Bill();
+            bill.setCustomerId(customer.getId());
+            bill.setStatus("SUCCESS");
+            staffService.getAllBill(bill);
+        }
     }
 
-    private void detailOrderUser(HttpServletRequest request, HttpServletResponse response) {
-
-
+    private void detailOrderUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        HttpSession session = request.getSession();
+        UserServiceImpl userService = new UserServiceImpl();
+        Customer customer = new Customer();
+        if (session.getAttribute("username") != null ) {
+            User user = userService.findByUserName(session.getAttribute("username").toString());
+            if (user.getCustomerId() != null && !user.getCustomerId().isEmpty()) {
+                customer = userService.findCustomerById(user.getCustomerId());
+            } else {
+                request.setAttribute("message", "Không có quyền");
+                request.getRequestDispatcher("").forward(request, response);
+                return;
+            }
+            Order order = new Order();
+            order.setCustomerId(customer.getId());
+            order.setStatus("pending");
+            userService.getAllOrder(order);
+        }
     }
 }
