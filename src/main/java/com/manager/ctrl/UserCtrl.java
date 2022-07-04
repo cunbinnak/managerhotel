@@ -837,7 +837,25 @@ public class UserCtrl extends HttpServlet {
             Order order = new Order();
             order.setCustomerId(customer.getId());
             order.setStatus("pending");
-            request.setAttribute("detaiOrderUser", userService.getAllOrder(order));
+
+            List<Order> orders = userService.getAllOrder(order);
+            List<DetailOrder> detailOrders = new ArrayList<>();
+            for (Order order1 : orders) {
+                DetailOrder detailOrder = new DetailOrder();
+                if (order1.getOrderType().equalsIgnoreCase("0")) {
+                    detailOrder.setOrderName("Đặt phòng");
+                } else {
+                    detailOrder.setOrderName("Dịch vụ");
+                }
+                detailOrder.setId(order1.getId());
+                detailOrder.setOrderType(order1.getOrderType());
+                detailOrder.setOrderDetails(userService.getOrderDetailByOrderId(order1.getId()));
+                detailOrder.setStatus(order1.getStatus());
+                detailOrder.setCustomerName(StringUtil.checkValidString(customer.getName()));
+                detailOrder.setCustomerPhone(StringUtil.checkValidString(customer.getPhone()));
+                detailOrders.add(detailOrder);
+            }
+            request.setAttribute("detaiOrderUser", detailOrders);
             request.getRequestDispatcher("/views/web/shoppingcart.jsp").forward(request, response);
         }
     }
