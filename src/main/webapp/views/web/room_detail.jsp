@@ -54,7 +54,7 @@
               <div class="py-1">
                   <div class="row align-items-center">
                       <div class="col-2">
-                          <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
+                          <h2 class="mb-0 site-logo"><a href="/">Dev Hotel</a></h2>
                       </div>
                       <div class="col-10">
                           <nav class="site-navigation text-right" role="navigation">
@@ -73,17 +73,18 @@
                                               </c:forEach>
                                           </ul>
                                       </li>
-                                      <li >
-                                          <a href="">Thông tin đơn hàng</a> </li>
+                                      <li>
+                                          <a href="/user/order_list">Thông tin đơn hàng</a> </li>
+                                      <li>
+                                          <a href="/search_bill">Thông tin hóa đơn</a> </li>
                                       <c:choose>
                                           <c:when test="${username !=null}">
-                                              <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
+                                              <li><a href="/authen/logout">${username} - Đăng xuất</a></li>
                                           </c:when>
                                           <c:otherwise>
                                               <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
                                           </c:otherwise>
                                       </c:choose>
-
 
                                   </ul>
                               </div>
@@ -143,6 +144,16 @@
                         <p> số người : ${roomDetail.peopleNumber}</p>
                         <br>
                         <p> số giường : ${roomDetail.bedNumber}</p>
+                        <br>
+                        <c:if test="${roomDetail.status ==0}">
+                            <p>Trạng thái: Đã đặt </p>
+                        </c:if>
+                        <c:if test="${roomDetail.status ==1}">
+                            <p>Trạng thái: Còn phòng </p>
+                        </c:if>
+                        <c:if test="${roomDetail.status ==2}">
+                            <p>Trạng thái: Đang sửa chữa </p>
+                        </c:if>
                     </div>
                   </div>
                   <p class="about">Mô tả: ${roomDetail.description}</p>
@@ -166,85 +177,77 @@
           </form>
       </div>
 
-<%--      <div class="row mt-5">--%>
-<%--        <div class="col-md-12 text-center">--%>
-<%--          <div class="site-block-27">--%>
-<%--            <ul>--%>
-<%--              <li><a href="#">&lt;</a></li>--%>
-<%--              <li class="active"><span>1</span></li>--%>
-<%--              <li><a href="#">2</a></li>--%>
-<%--              <li><a href="#">3</a></li>--%>
-<%--              <li><a href="#">4</a></li>--%>
-<%--              <li><a href="#">5</a></li>--%>
-<%--              <li><a href="#">&gt;</a></li>--%>
-<%--            </ul>--%>
-<%--          </div>--%>
-<%--        </div>--%>
-<%--      </div>--%>
+
     </div>
   </div>
-  <footer class="site-footer">
-    <div class="container">
-
-
-      <div class="row">
-        <div class="col-md-4">
-          <h3 class="footer-heading mb-4 text-white">About</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat amet.</p>
-          <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-6">
-              <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
-              <ul class="list-unstyled">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Approach</a></li>
-                <li><a href="#">Sustainability</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Careers</a></li>
-              </ul>
+    <div class="py-5 quick-contact-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div>
+                        <span class="icon-room text-white h2 d-block"></span>
+                        <h2>Địa chỉ</h2>
+                        <p class="mb-0">Kinh Đô Tower <br>  93 Lò Đúc - Hai Bà Trưng - Hà Nội</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div>
+                        <span class="icon-clock-o text-white h2 d-block"></span>
+                        <h2>Thời gian phục vụ</h2>
+                        <p class="mb-0">Tất cả các ngày trong tuần từ 6:30 - 19:30 <br>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div>
+                        <span class="icon-comments text-white h2 d-block"></span>
+                        <h2>Lấy liên hệ</h2>
+                        <p class="mb-0">Email: info@yoursite.com <br>
+                            Phone: (123) 3240-345-9348 </p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-              <h3 class="footer-heading mb-4 text-white">Ministries</h3>
-              <ul class="list-unstyled">
-                <li><a href="#">Children</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Bible Study</a></li>
-                <li><a href="#">Church</a></li>
-                <li><a href="#">Missionaries</a></li>
-              </ul>
-            </div>
-          </div>
         </div>
-
-
-        <div class="col-md-2">
-          <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
-          <div class="col-md-12">
-            <p>
-              <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-              <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
-
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="row pt-5 mt-5 text-center">
-        <div class="col-md-12">
-          <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy; <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made with <i class="icon-heart text-primary" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
-        </div>
-
-      </div>
     </div>
-  </footer>
+
+
+    <footer class="site-footer">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="footer-heading mb-4 text-white">Về chúng tôi</h3>
+                    <p>Chúng tôi với phương châm đem đến sự tiện nghi và sang trọng cho quý khách</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="footer-heading mb-4 text-white">Trang Chính</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="/">Trang chủ</a></li>
+                                <li><a href="/">dịch vụ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-2">
+
+                </div>
+            </div>
+            <div class="row pt-5 mt-5 text-center">
+                <div class="col-md-12">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy; <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made with <i class="icon-heart text-primary" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
 </div>
 
 <script src="<c:url value='/template/js/jquery-3.3.1.min.js'/> "></script>

@@ -92,7 +92,7 @@
             </c:if>
             <c:if test="${role=='STAFF'}">
                 <li>
-                    <a href="<c:url value='/rooms'/>" class="active"><span class="las la-table"></span>
+                    <a href="<c:url value='/rooms'/>" ><span class="las la-table"></span>
                         <span>Room</span></a>
                 </li>
                 <li>
@@ -102,6 +102,10 @@
                 <li>
                     <a href="/customers"><span class="las la-table"></span>
                         <span>Customer</span></a>
+                </li>
+                <li>
+                    <a href="/search_bill"><span class="las la-table"></span>
+                        <span>Bill</span></a>
                 </li>
                 <li>
                     <a href="/order_list"><span class="la la-opencart"></span>
@@ -117,10 +121,9 @@
             <label for="nav-toggle">
                 <span class="las la-bars"></span>
             </label>
-            Dasboard
+            Trang quản lý
         </h2>
         <div class="wrapuser">
-            <img src="../../../assets/images/person_1.jpg" width="30px" height="30px" alt="">
             <div>
                 <h4>${userName}</h4>
             </div>

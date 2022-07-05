@@ -98,15 +98,13 @@
                 <div class="py-1">
                     <div class="row align-items-center">
                         <div class="col-2">
-                            <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
+                            <h2 class="mb-0 site-logo"><a href="/">Dev Hotel</a></h2>
                         </div>
                         <div class="col-10">
                             <nav class="site-navigation text-right" role="navigation">
                                 <div class="container">
 
-                                    <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#"
-                                                                                                   class="site-menu-toggle js-menu-toggle"><span
-                                            class="icon-menu h3"></span></a></div>
+                                    <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
                                     <ul class="site-menu js-clone-nav d-none d-lg-block">
                                         <li class="active">
                                             <a href="<c:url value='/'/>">Trang chủ</a>
@@ -114,22 +112,23 @@
                                         <li class="has-children">
                                             <a href="<c:url value=''/>">Dịch vụ</a>
                                             <ul class="dropdown arrow-top">
-                                                <c:forEach items="${services}" var="ser">
+                                                <c:forEach items="${services}" var="ser" >
                                                     <li><a href="/">${ser.name}</a></li>
                                                 </c:forEach>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="">Thông tin đơn hàng</a></li>
+                                            <a href="/user/order_list">Thông tin đơn hàng</a> </li>
+                                        <li>
+                                            <a href="/search_bill">Thông tin hóa đơn</a> </li>
                                         <c:choose>
                                             <c:when test="${username !=null}">
-                                                <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
+                                                <li><a href="/authen/logout">${username} - Đăng xuất</a></li>
                                             </c:when>
                                             <c:otherwise>
                                                 <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
                                             </c:otherwise>
                                         </c:choose>
-
 
                                     </ul>
                                 </div>
@@ -170,20 +169,6 @@
             </div>
             <div class="d-flex justify-content-center row">
                 <div class="col-md-8">
-                    <%--          <c:set var="hihi" value="${detaiOrderUser}" scope="session"/>--%>
-                    <%--          <c:forEach items="${hihi.orderDetails}" var="dt">--%>
-                    <%--          <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">--%>
-                    <%--            <div class="d-flex flex-column align-items-center product-details"><span class="font-weight-bold">${dt.nameRef}</span>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="d-flex flex-row align-items-center qty"><i class="fa fa-minus text-danger"></i>--%>
-                    <%--              <h5 class="text-grey mt-1 mr-1 ml-1">2</h5><i class="fa fa-plus text-success"></i></div>--%>
-                    <%--            <div>--%>
-                    <%--              <h5 class="text-grey">${dt.priceRef}</h5>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="d-flex align-items-center"><i class="fa fa-trash mb-1 text-danger"> <a href="">Hủy</a> </i></div>--%>
-                    <%--          </div>--%>
-                    <%--          </c:forEach>--%>
-                    <%--        </div>--%>
                     <table class="table .table-bordered">
                         <tr>
                             <td></td>
@@ -347,21 +332,7 @@
                     </table>
                 </div>
 
-                <%--      <div class="row mt-5">--%>
-                <%--        <div class="col-md-12 text-center">--%>
-                <%--          <div class="site-block-27">--%>
-                <%--            <ul>--%>
-                <%--              <li><a href="#">&lt;</a></li>--%>
-                <%--              <li class="active"><span>1</span></li>--%>
-                <%--              <li><a href="#">2</a></li>--%>
-                <%--              <li><a href="#">3</a></li>--%>
-                <%--              <li><a href="#">4</a></li>--%>
-                <%--              <li><a href="#">5</a></li>--%>
-                <%--              <li><a href="#">&gt;</a></li>--%>
-                <%--            </ul>--%>
-                <%--          </div>--%>
-                <%--        </div>--%>
-                <%--      </div>--%>
+
             </div>
         </div>
         <footer class="site-footer">
@@ -370,32 +341,16 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <h3 class="footer-heading mb-4 text-white">About</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat
-                            amet.</p>
-                        <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
+                        <h3 class="footer-heading mb-4 text-white">Về chúng tôi</h3>
+                        <p>Chúng tôi với phương châm đem đến sự tiện nghi và sang trọng cho quý khách</p>
                     </div>
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
+                                <h3 class="footer-heading mb-4 text-white">Trang Chính</h3>
                                 <ul class="list-unstyled">
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Approach</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h3 class="footer-heading mb-4 text-white">Ministries</h3>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Children</a></li>
-                                    <li><a href="#">Women</a></li>
-                                    <li><a href="#">Bible Study</a></li>
-                                    <li><a href="#">Church</a></li>
-                                    <li><a href="#">Missionaries</a></li>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><a href="/">dịch vụ</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -403,29 +358,14 @@
 
 
                     <div class="col-md-2">
-                        <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-                                <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-                                <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-                                <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
 
-                            </p>
-                        </div>
                     </div>
                 </div>
                 <div class="row pt-5 mt-5 text-center">
                     <div class="col-md-12">
                         <p>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script data-cfasync="false"
-                                    src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-                            <script>document.write(new Date().getFullYear());</script>
-                            All Rights Reserved | This template is made with <i class="icon-heart text-primary"
-                                                                                aria-hidden="true"></i> by <a
-                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            Copyright &copy; <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made with <i class="icon-heart text-primary" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

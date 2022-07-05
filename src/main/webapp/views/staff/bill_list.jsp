@@ -68,10 +68,9 @@
             <label for="nav-toggle">
                 <span class="las la-bars"></span>
             </label>
-            Dasboard
+            Trang quản lý
         </h2>
         <div class="wrapuser">
-            <img src="../../../assets/images/person_1.jpg" width="30px" height="30px" alt="">
             <div>
                 <h4>${userName}</h4>
             </div>

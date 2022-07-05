@@ -43,7 +43,12 @@ public class BillCtrl extends HttpServlet {
                     bill.setStatus(session.getAttribute("billStatus").toString());
                 }
                 req.setAttribute("billDetail", staffService.getAllBill(bill));
-                req.getRequestDispatcher("/views/staff/bill_list.jsp").forward(req, response);
+                if (session.getAttribute("role").toString().equalsIgnoreCase("user")){
+                    req.getRequestDispatcher("/views/web/bill_list_user.jsp").forward(req, response);
+                }else {
+                    req.getRequestDispatcher("/views/staff/bill_list.jsp").forward(req, response);
+                }
+
                 session.removeAttribute("customerIdSearchBill");
                 session.removeAttribute("billIdSearch");
                 session.removeAttribute("billStatus");

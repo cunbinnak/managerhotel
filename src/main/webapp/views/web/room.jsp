@@ -51,7 +51,7 @@
         <div class="py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <h2 class="mb-0 site-logo"><a href="index.html">Dev Hotel</a></h2>
+              <h2 class="mb-0 site-logo"><a href="/">Dev Hotel</a></h2>
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
@@ -59,32 +59,29 @@
 
                   <div class="d-inline-block d-lg-none  ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
-                    <li >
-                      <a href="<c:url value='/home'/>">Trang chủ</a>
+                    <li class="active">
+                      <a href="<c:url value='/'/>">Trang chủ</a>
                     </li>
-                    <li class="has-children active" >
-                      <a href="<c:url value='/user'/>">Phòng</a>
+                    <li class="has-children">
+                      <a href="<c:url value=''/>">Dịch vụ</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="rooms.html">Hiện có</a></li>
-                        <li><a href="rooms.html">Phòng đơn</a></li>
-                        <li><a href="rooms.html">Phòng đôi</a></li>
-                        <li><a href="rooms.html">Phòng gia đình</a></li>
-                        <li class="has-children">
-                          <a href="rooms.html">Dịch vụ</a>
-                          <ul class="dropdown">
-                            <li><a href="rooms.html">Phòng cao cấp</a></li>
-                            <li><a href="rooms.html">Tắm hơi</a></li>
-                            <li><a href="rooms.html">Ăn uống</a></li>
-
-                          </ul>
-                        </li>
-
+                        <c:forEach items="${services}" var="ser" >
+                          <li><a href="/">${ser.name}</a></li>
+                        </c:forEach>
                       </ul>
                     </li>
-<%--                    <li><a href="events.html">Sự kiện</a></li>--%>
-<%--                    <li><a href="about.html">Thông tin</a></li>--%>
-                    <li><a href="contact.html">Liên hệ</a></li>
-                    <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+                    <li>
+                      <a href="/user/order_list">Thông tin đơn hàng</a> </li>
+                    <li>
+                      <a href="/search_bill">Thông tin hóa đơn</a> </li>
+                    <c:choose>
+                      <c:when test="${username !=null}">
+                        <li><a href="/authen/logout">${username} - Đăng xuất</a></li>
+                      </c:when>
+                      <c:otherwise>
+                        <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
+                      </c:otherwise>
+                    </c:choose>
 
                   </ul>
                 </div>
@@ -195,37 +192,52 @@
 
 
 
+  <div class="py-5 quick-contact-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <div>
+            <span class="icon-room text-white h2 d-block"></span>
+            <h2>Địa chỉ</h2>
+            <p class="mb-0">Kinh Đô Tower <br>  93 Lò Đúc - Hai Bà Trưng - Hà Nội</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-center">
+          <div>
+            <span class="icon-clock-o text-white h2 d-block"></span>
+            <h2>Thời gian phục vụ</h2>
+            <p class="mb-0">Tất cả các ngày trong tuần từ 6:30 - 19:30 <br>
+          </div>
+        </div>
+        <div class="col-md-4 text-center">
+          <div>
+            <span class="icon-comments text-white h2 d-block"></span>
+            <h2>Lấy liên hệ</h2>
+            <p class="mb-0">Email: info@yoursite.com <br>
+              Phone: (123) 3240-345-9348 </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <footer class="site-footer">
     <div class="container">
 
 
       <div class="row">
         <div class="col-md-4">
-          <h3 class="footer-heading mb-4 text-white">About</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat amet.</p>
-          <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
+          <h3 class="footer-heading mb-4 text-white">Về chúng tôi</h3>
+          <p>Chúng tôi với phương châm đem đến sự tiện nghi và sang trọng cho quý khách</p>
         </div>
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6">
-              <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
+              <h3 class="footer-heading mb-4 text-white">Trang Chính</h3>
               <ul class="list-unstyled">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Approach</a></li>
-                <li><a href="#">Sustainability</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Careers</a></li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <h3 class="footer-heading mb-4 text-white">Ministries</h3>
-              <ul class="list-unstyled">
-                <li><a href="#">Children</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Bible Study</a></li>
-                <li><a href="#">Church</a></li>
-                <li><a href="#">Missionaries</a></li>
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/">dịch vụ</a></li>
               </ul>
             </div>
           </div>
@@ -233,16 +245,7 @@
 
 
         <div class="col-md-2">
-          <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
-          <div class="col-md-12">
-            <p>
-              <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-              <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
 
-            </p>
-          </div>
         </div>
       </div>
       <div class="row pt-5 mt-5 text-center">
