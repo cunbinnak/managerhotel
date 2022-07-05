@@ -1,28 +1,20 @@
-<%--<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>--%>
-<%--<!DOCTYPE html>--%>
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>JSP - Hello World</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<h1><%= "Hello World!" %>--%>
-<%--</h1>--%>
-<%--<br/>--%>
-<%--<a href="hello-servlet">Hello Servlet</a>--%>
-<%--</body>--%>
-<%--</html>--%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> >
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 7/5/2022
+  Time: 11:57 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 <head>
-    <title>Dev &mdash; Hotel</title>
+    <title>Room Detail</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Work+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="<c:url value='/template/css/bootstrap.min.css'/> ">
     <link rel="stylesheet" href="<c:url value='/template/css/magnific-popup.css'/>">
     <link rel="stylesheet" href="<c:url value='/template/css/jquery-ui.css'/>">
@@ -41,10 +33,8 @@
 
     <link rel="stylesheet" href="<c:url value='/template/css/style.css'/>">
 
-
 </head>
 <body>
-
 <div class="site-wrap">
 
     <div class="site-mobile-menu">
@@ -79,22 +69,21 @@
                                             <a href="<c:url value=''/>">Dịch vụ</a>
                                             <ul class="dropdown arrow-top">
                                                 <c:forEach items="${services}" var="ser" >
-                                                <li><a href="/">${ser.name}</a></li>
+                                                    <li><a href="/">${ser.name}</a></li>
                                                 </c:forEach>
                                             </ul>
                                         </li>
-                                        <li>
+                                        <li >
                                             <a href="/user/order_list">Thông tin đơn hàng</a> </li>
-                                        <li>
-                                            <a href="/search_bill">Thông tin hóa đơn</a> </li>
                                         <c:choose>
                                             <c:when test="${username !=null}">
-                                                <li><a href="/authen/logout">${username} - Đăng xuất</a></li>
+                                                <li><a href="/authen/logout">Xin Chào: ${username} - Đăng xuất</a></li>
                                             </c:when>
                                             <c:otherwise>
                                                 <li><a href="<c:url value='/authen/login'/>">Đăng nhập</a></li>
                                             </c:otherwise>
                                         </c:choose>
+
 
                                     </ul>
                                 </div>
@@ -106,137 +95,63 @@
         </div>
     </div>
 
-
-    <div class="slide-one-item home-slider owl-carousel">
-
-        <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='template/images/hero_1.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-md-7 text-center" data-aos="fade">
-
-                        <h1 class="mb-2">Welcome To Suites</h1>
-                        <h2 class="caption">Hotel &amp; Resort</h2>
-                    </div>
+    <c:if test="${msg}">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <hr>
+            <p class="mb-0">${msg}</p>
+        </div>
+    </c:if>
+    <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='/template/images/hero_1.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-7 text-center" data-aos="fade">
+                    <span class="caption mb-3">Luxurious Rooms</span>
+                    <h1 class="mb-4">Hotel Rooms</h1>
                 </div>
             </div>
         </div>
-
-        <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='template/images/hero_2.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-md-7 text-center" data-aos="fade">
-                        <h1 class="mb-2">Unique Experience</h1>
-                        <h2 class="caption">Enjoy With Us</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="site-blocks-cover overlay" style="background-image: url(<c:url value='template/images/hero_3.jpg'/>);" data-aos="fade" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-md-7 text-center" data-aos="fade">
-                        <h1 class="mb-2">Relaxing Room</h1>
-                        <h2 class="caption">Your Room, Your Stay</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
 
     <div class="site-section bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-                    <h2 class="mb-5">Danh sách phòng</h2>
+                    <h2 class="mb-5">Bill Detail</h2>
                 </div>
             </div>
             <div class="row">
-                <c:forEach items="${rooms}" var="r">
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="hotel-room text-center">
-                            <a href="/room_detail?idroom=${r.id}" class="d-block mb-0 thumbnail"><img src="images/${r.image}" alt="Image" class="img-fluid"></a>
-                            <div class="hotel-room-body">
-                                <h3 class="heading mb-0"><a href="/room_detail?idroom=${r.id}">${r.name}</a></h3>
-                                <strong class="price">${r.price} / một đêm</strong>
+                    <div class="col-md">
+
+                            <div class="row">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Người tạo</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Ngày tạo hóa đơn</th>
+                                        <th>Ngày nhận phòng</th>
+                                        <th>Ngày trả phòng</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                    <c:forEach var="bill" items="${billDetail}">
+                                        <tr>
+                                            <td>${ bill.createdUser }</td>
+                                            <td>${ bill.totalPrice }</td>
+                                            <td>${ bill.invoiceDate }</td>
+                                            <td>${ bill.checkinDate }</td>
+                                            <td>${ bill.checkoutDate }</td>
+                                            <td>${ bill.customerName }</td>
+                                            <td>${ bill.status }</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
                             </div>
-                        </div>
                     </div>
-                </c:forEach>
             </div>
         </div>
     </div>
-
-
-    <div class="site-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 mb-5 mb-md-0">
-
-                    <div class="img-border">
-                        <a href="<c:url value='https://vimeo.com/28959265'/>" class="popup-vimeo image-play">
-                  <span class="icon-wrap">
-                    <span class="icon icon-play"></span>
-                  </span>
-                            <img src="<c:url value='/template/images/img_2.jpg'/>" alt="" class="img-fluid">
-                        </a>
-                    </div>
-
-                    <img src="<c:url value='/template/images/img_1.jpg'/>" alt="Image" class="img-fluid image-absolute">
-
-                </div>
-                <div class="col-md-5 ml-auto">
-
-
-                    <div class="section-heading text-left">
-                        <h2 class="mb-5">Thông tin</h2>
-                    </div>
-                    <p class="mb-4">Khách sạn Hoàng Hôn luôn mang vẻ đẹp hiện đại xen lẫn nét cổ kính. Đặt khách sạn sớm nhất để hưởng trọn ưu đãi, hứa hẹn một kì nghỉ với những ...</p>
-                    <p><a href="https://vimeo.com/28959265" class="popup-vimeo text-uppercase">Xem Video <span class="icon-arrow-right small"></span></a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="site-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-                    <h2 class="mb-5">Dịch Vụ</h2>
-                </div>
-            </div>
-            <div class="row">
-                <c:forEach items="${services}" var="sv">
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="text-center p-4 item">
-                        <img src="image/${sv.image}" alt="" class="img-fluid">
-                        <h2 class="h5">${sv.name}</h2>
-                    </div>
-                </div>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
-
-    <div class="py-5 upcoming-events" style="background-image: url('images/hero_1.jpg'); background-attachment: fixed;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h2 class="text-white">Summer Promo 50% Off</h2>
-                    <a href="#" class="text-white btn btn-outline-warning rounded-0 text-uppercase">Avail Now</a>
-                </div>
-                <div class="col-md-6">
-                    <span class="caption">The Promo will start in</span>
-                    <div id="date-countdown"></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-
     <div class="py-5 quick-contact-info">
         <div class="container">
             <div class="row">
@@ -344,6 +259,5 @@
         }
     });
 </script>
-
 </body>
 </html>

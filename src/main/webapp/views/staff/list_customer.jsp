@@ -51,6 +51,10 @@
                         <span>Customer</span></a>
                 </li>
                 <li>
+                    <a href="/search_bill"><span class="las la-table"></span>
+                        <span>Bill</span></a>
+                </li>
+                <li>
                     <a href="/order_list"><span class="la la-opencart"></span>
                         <span>Order</span></a>
                 </li>
@@ -64,10 +68,9 @@
             <label for="nav-toggle">
                 <span class="las la-bars"></span>
             </label>
-            Dasboard
+            Trang quản lý
         </h2>
         <div class="wrapuser">
-            <img src="../../../assets/images/person_1.jpg" width="30px" height="30px" alt="">
             <div>
                 <h4>${userName}</h4>
             </div>
@@ -131,6 +134,7 @@
                         </form>
                         <p style="margin-left: 10px"></p>
                         <a href="/order_list?customerId=${cus.id}" class="btn btn-primary">Chi tiết và thông tin đặt phòng</a>
+                        <p style="margin-left: 10px"></p>
                         <a href="/create_bill?customerId=${cus.id}" class="btn btn-primary">Xuất hóa đơn</a>
                     </td>
                 </tr>
