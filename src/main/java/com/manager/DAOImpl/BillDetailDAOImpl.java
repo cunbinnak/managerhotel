@@ -103,7 +103,6 @@ public class BillDetailDAOImpl implements BillDetailDAO {
         try {
             prepare.setString(1, id);
             ResultSet rs = prepare.executeQuery();
-
             while (rs.next()) {
                 billDetail.setId(rs.getString("id"));
                 billDetail.setBillId(rs.getString("bill_id"));

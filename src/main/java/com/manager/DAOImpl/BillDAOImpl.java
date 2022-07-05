@@ -115,6 +115,13 @@ public class BillDAOImpl implements BillDAO {
         try {
             ResultSet rs = prepare.executeQuery();
             while (rs.next()){
+                billDto.setId(rs.getString("id"));
+                billDto.setCreatedUser(rs.getString("created_user"));
+                billDto.setInvoiceDate(rs.getTimestamp("invoice_date"));
+                billDto.setCheckinDate(rs.getTimestamp("checkin_date"));
+                billDto.setCheckoutDate(rs.getTimestamp("checkout_date"));
+                billDto.setCustomerId(rs.getString("customer_id"));
+                billDto.setStatus(rs.getString("status"));
             }
         }catch (SQLException e) {
             e.printStackTrace();

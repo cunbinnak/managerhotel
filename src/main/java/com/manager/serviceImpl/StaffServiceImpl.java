@@ -84,11 +84,11 @@ public class StaffServiceImpl implements StaffService {
         }
         if (request.getCustomerId() != null && flag.equals(false)) {
             order.setCustomerId(request.getCustomerId());
-            order.setStatus("success");
+            order.setStatus("confirm");
             orders = userService.getAllOrder(order);
         }
         for (Order order1 : orders) {
-            if (order1.getStatus().equalsIgnoreCase("success")) {
+            if (order1.getStatus().equalsIgnoreCase("confirm")) {
                 List<OrderDetails> orderDetails = orderDetailDao.getOrderDetailByOrderId(order1.getId());
                 //Create bill
                 Bill bill = new Bill();

@@ -1,26 +1,22 @@
 package com.manager.ctrl;
 
-import com.manager.config.StringUtil;
+import com.manager.DAOImpl.BillDetailDAOImpl;
 import com.manager.dto.CreateBillRequest;
-import com.manager.dto.SearchServiceRequest;
-import com.manager.entity.Bill;
-import com.manager.entity.Service;
+import com.manager.entity.*;
+import com.manager.serviceImpl.RoomServiceImpl;
 import com.manager.serviceImpl.StaffServiceImpl;
 import com.manager.serviceImpl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-import java.io.File;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import java.util.UUID;
 
 @WebServlet({"/search_bill", "/detail_bill", "/update_bill","/create_bill"})
@@ -69,6 +65,7 @@ public class BillCtrl extends HttpServlet {
         req.setAttribute("userName", userName);
         UserServiceImpl userService = new UserServiceImpl();
         StaffServiceImpl staffService = new StaffServiceImpl();
+        RoomServiceImpl roomService = new RoomServiceImpl();
         try {
             if (url.endsWith("search_bill")) {
                 session.setAttribute("customerIdSearchBill", req.getParameter("customerIdSearchBill"));
@@ -105,17 +102,45 @@ public class BillCtrl extends HttpServlet {
             }
             if(url.endsWith("update_bill")){
                 Bill bill = new Bill();
-                if (req.getParameter("billId")!=null){
+                if (req.getParameter("billId") !=null){
                     bill = staffService.getBillById(req.getParameter("billId"));
                 }
                 if(bill!=null && req.getParameter("status")!=null && !req.getParameter("status").equalsIgnoreCase(bill.getStatus())){
-
+                    if(bill.getStatus().equalsIgnoreCase("cancel") || bill.getStatus().equalsIgnoreCase("success")){
+                        session.setAttribute("billIdSearch", bill.getId());
+                        response.sendRedirect("/search_bill");
+                        return;
+                    }
+                    if(bill.getStatus().equalsIgnoreCase("pending") && req.getParameter("status").equalsIgnoreCase("cancel")){
+                        BillDetailDAOImpl billDetailDAO = new BillDetailDAOImpl();
+                        List<BillDetails> billDetailsLists = billDetailDAO.getBillByOrderId(bill.getId());
+                        for(BillDetails billDetailsList : billDetailsLists){
+                            if(billDetailsList.getRefType().equalsIgnoreCase("0")){
+                                Room room = roomService.getRoomDetail(billDetailsList.getRefId());
+                                room.setStatus("1");
+                                roomService.updateRoom(room);
+                            } else {
+                               Service service =  staffService.getServiceDetail(billDetailsList.getRefId());
+                               service.setAmount(String.valueOf(Integer.valueOf(service.getAmount()) + Integer.valueOf(billDetailsList.getAmount())));
+                               staffService.updateService(service);
+                            }
+                        }
+                    }
+                    if(bill.getStatus().equalsIgnoreCase("pending") && req.getParameter("status").equalsIgnoreCase("success")){
+                        Order order = new Order();
+                        order.setCustomerId(bill.getCustomerId());
+                        order.setStatus("confirm");
+                        List<Order> orders = userService.getAllOrder(order);
+                        for (Order order1 : orders){
+                            order1.setStatus("success");
+                            userService.updateOrder(order1);
+                        }
+                    }
                     bill.setStatus(req.getParameter("status"));
                     staffService.updateBill(bill);
                 }
                 response.sendRedirect("/search_bill");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
