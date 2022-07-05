@@ -25,8 +25,10 @@ public class BillCtrl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         String url = req.getServletPath();
         HttpSession session = req.getSession();
-        String userName = session.getAttribute("username").toString();
-        req.setAttribute("userName", userName);
+        if(session.getAttribute("username") != null){
+            String userName = session.getAttribute("username").toString();
+            req.setAttribute("userName", userName);
+        }
         StaffServiceImpl staffService = new StaffServiceImpl();
         try {
             if (url.endsWith("search_bill")) {
@@ -66,8 +68,10 @@ public class BillCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         String url = req.getServletPath();
         HttpSession session = req.getSession();
-        String userName = session.getAttribute("username").toString();
-        req.setAttribute("userName", userName);
+        if(session.getAttribute("username") != null){
+            String userName = session.getAttribute("username").toString();
+            req.setAttribute("userName", userName);
+        }
         UserServiceImpl userService = new UserServiceImpl();
         StaffServiceImpl staffService = new StaffServiceImpl();
         RoomServiceImpl roomService = new RoomServiceImpl();
